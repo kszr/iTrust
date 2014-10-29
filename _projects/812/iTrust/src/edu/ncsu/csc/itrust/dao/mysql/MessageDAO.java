@@ -45,11 +45,11 @@ public class MessageDAO {
 	 * @throws SQLException
 	 * @throws DBException 
 	 */
-	
+
 	public List<MessageBean> getMessagesFor(long mid) throws SQLException, DBException {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		
+
 		try {
 			conn = factory.getConnection();
 			ps = conn.prepareStatement("SELECT * FROM message WHERE to_id = ? ORDER BY sent_date DESC");
@@ -61,7 +61,7 @@ public class MessageDAO {
 			ps.close();
 			return mbList;
 		} catch(SQLException e) {
-			
+
 			throw new DBException(e);
 		}finally{
 			DBUtil.closeConnection(conn, ps);
@@ -80,25 +80,25 @@ public class MessageDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try{
-		conn = factory.getConnection();
-		ps = conn.prepareStatement("SELECT * FROM message WHERE to_id = ? ORDER BY sent_date ASC");
-		ps.setLong(1, mid);
-		ResultSet rs = ps.executeQuery();
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM message WHERE to_id = ? ORDER BY sent_date ASC");
+			ps.setLong(1, mid);
+			ResultSet rs = ps.executeQuery();
 
-		List<MessageBean> mbList = this.mbLoader.loadList(rs);
-		
-		rs.close();
-		ps.close();
-		return mbList;
-	} catch(SQLException e) {
-		
-		throw new DBException(e);
-	}finally{
-		DBUtil.closeConnection(conn, ps);
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+
 	}
 
-	}
-	
 	/**
 	 * Gets all the messages for a certain user MID sorted by name ascending.
 	 * @param mid The MID of the user to be looked up.
@@ -111,31 +111,31 @@ public class MessageDAO {
 		PreparedStatement ps = null;
 		ResultSet rs;
 		try{
-		conn = factory.getConnection();
-		if(mid >= 999999999){
-			ps = conn.prepareStatement("SELECT message.* FROM message, patients WHERE message.from_id=patients.mid AND message.to_id=? ORDER BY patients.lastName ASC, patients.firstName ASC, message.sent_date ASC");
-			ps.setLong(1, mid);
-			rs = ps.executeQuery();
-		}
-		else{
-			ps = conn.prepareStatement("SELECT message.* FROM message, personnel WHERE message.from_id=personnel.mid AND message.to_id=? ORDER BY personnel.lastName ASC, personnel.firstName ASC, message.sent_date ASC");
-			ps.setLong(1, mid);
-			rs = ps.executeQuery();
-		}
+			conn = factory.getConnection();
+			if(mid >= 999999999){
+				ps = conn.prepareStatement("SELECT message.* FROM message, patients WHERE message.from_id=patients.mid AND message.to_id=? ORDER BY patients.lastName ASC, patients.firstName ASC, message.sent_date ASC");
+				ps.setLong(1, mid);
+				rs = ps.executeQuery();
+			}
+			else{
+				ps = conn.prepareStatement("SELECT message.* FROM message, personnel WHERE message.from_id=personnel.mid AND message.to_id=? ORDER BY personnel.lastName ASC, personnel.firstName ASC, message.sent_date ASC");
+				ps.setLong(1, mid);
+				rs = ps.executeQuery();
+			}
 
-		List<MessageBean> mbList = this.mbLoader.loadList(rs);
-		
-		rs.close();
-		ps.close();
-		return mbList;
-	} catch(SQLException e) {
-		
-		throw new DBException(e);
-	}finally{
-		DBUtil.closeConnection(conn, ps);
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
 	}
-	}
-	
+
 	/**
 	 * Gets all the messages for a certain user MID sorted by name descending.
 	 * @param mid The MID of the user to be looked up.
@@ -148,31 +148,31 @@ public class MessageDAO {
 		PreparedStatement ps = null;
 		ResultSet rs;
 		try{
-		conn = factory.getConnection();
-		if(mid >= 999999999){
-			ps = conn.prepareStatement("SELECT message.* FROM message, patients WHERE message.from_id=patients.mid AND message.to_id=? ORDER BY patients.lastName DESC, patients.firstName DESC, message.sent_date DESC");
-			ps.setLong(1, mid);
-			rs = ps.executeQuery();
-		}
-		else{
-			ps = conn.prepareStatement("SELECT message.* FROM message, personnel WHERE message.from_id=personnel.mid AND message.to_id=? ORDER BY personnel.lastName DESC, personnel.firstName DESC, message.sent_date DESC");
-			ps.setLong(1, mid);
-			rs = ps.executeQuery();
+			conn = factory.getConnection();
+			if(mid >= 999999999){
+				ps = conn.prepareStatement("SELECT message.* FROM message, patients WHERE message.from_id=patients.mid AND message.to_id=? ORDER BY patients.lastName DESC, patients.firstName DESC, message.sent_date DESC");
+				ps.setLong(1, mid);
+				rs = ps.executeQuery();
+			}
+			else{
+				ps = conn.prepareStatement("SELECT message.* FROM message, personnel WHERE message.from_id=personnel.mid AND message.to_id=? ORDER BY personnel.lastName DESC, personnel.firstName DESC, message.sent_date DESC");
+				ps.setLong(1, mid);
+				rs = ps.executeQuery();
+			}
+
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
 		}
 
-		List<MessageBean> mbList = this.mbLoader.loadList(rs);
-		rs.close();
-		ps.close();
-		return mbList;
-	} catch(SQLException e) {
-		
-		throw new DBException(e);
-	}finally{
-		DBUtil.closeConnection(conn, ps);
 	}
 
-	}
-	
 	/**
 	 * Gets all the messages from a certain user MID.
 	 * @param mid The MID of the user to be looked up.
@@ -180,30 +180,30 @@ public class MessageDAO {
 	 * @throws SQLException
 	 * @throws DBException 
 	 */
-	
+
 	public List<MessageBean> getMessagesFrom(long mid) throws SQLException, DBException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try{
-		conn = factory.getConnection();
-		ps = conn.prepareStatement("SELECT * FROM message WHERE from_id = ? ORDER BY sent_date DESC");
-		ps.setLong(1, mid);
-		ResultSet rs = ps.executeQuery();
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM message WHERE from_id = ? ORDER BY sent_date DESC");
+			ps.setLong(1, mid);
+			ResultSet rs = ps.executeQuery();
 
-		List<MessageBean> mbList = this.mbLoader.loadList(rs);
-		
-		rs.close();
-		ps.close();
-		return mbList;
-	} catch(SQLException e) {
-		
-		throw new DBException(e);
-	}finally{
-		DBUtil.closeConnection(conn, ps);
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+
 	}
 
-	}
-	
 	/**
 	 * Gets all the messages for a certain user MID sorted by ascending time.
 	 * @param mid The MID of the user to be looked up.
@@ -214,26 +214,26 @@ public class MessageDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try{
-		conn = factory.getConnection();
-		ps = conn.prepareStatement("SELECT * FROM message WHERE from_id = ? ORDER BY sent_date ASC");
-		ps.setLong(1, mid);
-		ResultSet rs = ps.executeQuery();
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM message WHERE from_id = ? ORDER BY sent_date ASC");
+			ps.setLong(1, mid);
+			ResultSet rs = ps.executeQuery();
 
-		List<MessageBean> mbList = this.mbLoader.loadList(rs);
-		
-		rs.close();
-		ps.close();
-		return mbList;
-	} catch(SQLException e) {
-		
-		throw new DBException(e);
-	}finally{
-		DBUtil.closeConnection(conn, ps);
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+
+
 	}
 
-
-	}
-	
 	/**
 	 * Gets all the messages for a certain user MID sorted by name ascending.
 	 * @param mid The MID of the user to be looked up.
@@ -246,31 +246,31 @@ public class MessageDAO {
 		PreparedStatement ps = null;
 		ResultSet rs;
 		try{
-		conn = factory.getConnection();
-		if(mid >= 999999999){
-			ps = conn.prepareStatement("SELECT message.* FROM message, patients WHERE message.to_id=patients.mid AND message.from_id=? ORDER BY patients.lastName ASC, patients.firstName ASC, message.sent_date ASC");
-			ps.setLong(1, mid);
-			rs = ps.executeQuery();
-		}
-		else{
-			ps = conn.prepareStatement("SELECT message.* FROM message, personnel WHERE message.to_id=personnel.mid AND message.from_id=? ORDER BY personnel.lastName ASC, personnel.firstName ASC, message.sent_date ASC");
-			ps.setLong(1, mid);
-			rs = ps.executeQuery();
-		}
+			conn = factory.getConnection();
+			if(mid >= 999999999){
+				ps = conn.prepareStatement("SELECT message.* FROM message, patients WHERE message.to_id=patients.mid AND message.from_id=? ORDER BY patients.lastName ASC, patients.firstName ASC, message.sent_date ASC");
+				ps.setLong(1, mid);
+				rs = ps.executeQuery();
+			}
+			else{
+				ps = conn.prepareStatement("SELECT message.* FROM message, personnel WHERE message.to_id=personnel.mid AND message.from_id=? ORDER BY personnel.lastName ASC, personnel.firstName ASC, message.sent_date ASC");
+				ps.setLong(1, mid);
+				rs = ps.executeQuery();
+			}
 
-		List<MessageBean> mbList = this.mbLoader.loadList(rs);
-		
-		rs.close();
-		ps.close();
-		return mbList;
-	} catch(SQLException e) {
-		
-		throw new DBException(e);
-	}finally{
-		DBUtil.closeConnection(conn, ps);
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
 	}
-	}
-	
+
 	/**
 	 * Gets all the messages for a certain user MID sorted by name descending.
 	 * @param mid The MID of the user to be looked up.
@@ -294,15 +294,15 @@ public class MessageDAO {
 				ps.setLong(1, mid);
 				rs = ps.executeQuery();
 			}
-		
+
 			List<MessageBean> mbList = this.mbLoader.loadList(rs);
-		
+
 			rs.close();
 			ps.close();
-		return mbList;
+			return mbList;
 		} catch(SQLException e) {
-		
-		throw new DBException(e);
+
+			throw new DBException(e);
 		}finally{
 			DBUtil.closeConnection(conn, ps);
 		}
@@ -320,24 +320,24 @@ public class MessageDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try{
-		conn = factory.getConnection();
-		ps = conn.prepareStatement(
-			"INSERT INTO message (from_id, to_id, sent_date, message, subject, been_read, parent_msg_id, original_msg_id) "
-		  + "  VALUES (?, ?, NOW(), ?, ?, ?, ?, ?)");
-		this.mbLoader.loadParameters(ps, mBean);
+			conn = factory.getConnection();
+			ps = conn.prepareStatement(
+					"INSERT INTO message (from_id, to_id, sent_date, message, subject, been_read, parent_msg_id, original_msg_id) "
+							+ "  VALUES (?, ?, NOW(), ?, ?, ?, ?, ?)");
+			this.mbLoader.loadParameters(ps, mBean);
 
-		ps.executeUpdate();
-		ps.close();
+			ps.executeUpdate();
+			ps.close();
 
-	} catch(SQLException e) {
-		
-		throw new DBException(e);
-	}finally{
-		DBUtil.closeConnection(conn, ps);
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+
 	}
 
-	}
-	
 	public void updateRead(MessageBean mBean) throws DBException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -348,37 +348,81 @@ public class MessageDAO {
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
-			
+
 			throw new DBException(e);
 		} finally {
 			DBUtil.closeConnection(conn, ps);
 		}
 	}
-	
+
 	public List<MessageBean> getCCdMessages(long refID) throws SQLException, DBException{
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try{
-		ResultSet rs;
+			ResultSet rs;
 
-		conn = factory.getConnection();
-		ps = conn.prepareStatement("SELECT * FROM message WHERE original_msg_id=?");
-		ps.setLong(1, refID);
-		rs = ps.executeQuery();
-		
-		List<MessageBean> mbList = this.mbLoader.loadList(rs);
-		
-		rs.close();
-		ps.close();
-		return mbList;
-	} catch(SQLException e) {
-		
-		throw new DBException(e);
-	}finally{
-		DBUtil.closeConnection(conn, ps);
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM message WHERE original_msg_id=?");
+			ps.setLong(1, refID);
+			rs = ps.executeQuery();
+
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+
+
 	}
 
+	public List<MessageBean> getMessagesFromTimeDescending(long mid) throws SQLException, DBException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM message WHERE to_id = ? ORDER BY sent_date DESC");
+			ps.setLong(1, mid);
+			ResultSet rs = ps.executeQuery();
 
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}	
 	}
-	
+
+	public List<MessageBean> getMessagesTimeDescending(long mid) throws SQLException, DBException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = factory.getConnection();
+			ps = conn.prepareStatement("SELECT * FROM message WHERE to_id = ? ORDER BY sent_date DESC");
+			ps.setLong(1, mid);
+			ResultSet rs = ps.executeQuery();
+
+			List<MessageBean> mbList = this.mbLoader.loadList(rs);
+
+			rs.close();
+			ps.close();
+			return mbList;
+		} catch(SQLException e) {
+
+			throw new DBException(e);
+		}finally{
+			DBUtil.closeConnection(conn, ps);
+		}
+	}
+
 }

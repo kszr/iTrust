@@ -133,6 +133,14 @@ public class ViewMyMessagesAction {
 		return messageDAO.getMessagesFromNameDescending(loggedInMID);
 	}
 	
+	public List<MessageBean> getAllMyMessagesTimeDescending() throws DBException, SQLException {
+		return messageDAO.getMessagesFromTimeDescending(loggedInMID);
+	}
+	
+	public List<MessageBean> getAllMySentMessagesTimeDescending() throws DBException, SQLException {
+		return messageDAO.getMessagesTimeDescending(loggedInMID);
+	}
+	
 	
 	/**
 	 * Gets a list of messages for a user based on their filter criteria.
@@ -297,5 +305,15 @@ public class ViewMyMessagesAction {
 	 */
 	public List<MessageBean> getCCdMessages(long refID) throws DBException, SQLException{
 		return messageDAO.getCCdMessages(refID);
+	}
+	
+	/**
+	 * Does a thing with the filter
+	 * @param newfilter
+	 * @return validated filter
+	 */
+	public String validateAndCreateFilter(String newfilter) {
+		
+		return "Error";
 	}
 }

@@ -12,8 +12,9 @@
 <%@page import="edu.ncsu.csc.itrust.action.EditPatientAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.EditPersonnelAction"%>
 
-			<script src="/iTrust/DataTables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
-			<script type="text/javascript">
+<script src="/iTrust/DataTables/media/js/jquery.dataTables.min.js"
+	type="text/javascript"></script>
+<script type="text/javascript">
 				jQuery.fn.dataTableExt.oSort['lname-asc']  = function(x,y) {
 					var a = x.split(" ");
 					var b = y.split(" ");
@@ -26,7 +27,7 @@
 					return ((a[1] < b[1]) ? 1 : ((a[1] > b[1]) ?  -1 : 0));
 				};
 			</script>
-			<script type="text/javascript">	
+<script type="text/javascript">	
    				$(document).ready(function() {
        				$("#mailbox").dataTable( {
        					"aaColumns": [ [2,'dsc'] ],
@@ -35,9 +36,9 @@
        				});
    				});
 			</script>
-			<style type="text/css" title="currentStyle">
-				@import "/iTrust/DataTables/media/css/demo_table.css";		
-			</style>
+<style type="text/css" title="currentStyle">
+@import "/iTrust/DataTables/media/css/demo_table.css";
+</style>
 
 <%
 
@@ -55,14 +56,201 @@ PatientDAO patientDAO = new PatientDAO(prodDAO);
 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 ViewMyMessagesAction action = new ViewMyMessagesAction(prodDAO, loggedInMID.longValue());
-
-List<MessageBean> messages = outbox?action.getAllMySentMessages():action.getAllMyMessages();
+EditPersonnelAction f_action = new EditPersonnelAction(prodDAO, loggedInMID.longValue(), loggedInMID.toString());
+List<MessageBean> messages = null;
 session.setAttribute("messages", messages);
-		
-if(messages.size() > 0) { %>
 
+PersonnelDAO dao = new PersonnelDAO(prodDAO);
+
+//Edit Filter backend
+boolean editing = false;
+String headerMessage = "";
+String[] fields = new String[6];
+if(request.getParameter("edit") != null && request.getParameter("edit").equals("true")) {
+	editing = true;
+	
+	int i;
+	for(i=0; i<6; i++) {
+		fields[i] = "";
+	}
+	
+	if(request.getParameter("cancel") != null) 
+		response.sendRedirect("messageInbox.jsp"); 
+	else if(request.getParameter("test") != null || request.getParameter("save") != null) {
+		boolean error = false;
+		String nf = "";
+		nf += request.getParameter("sender").replace(",","")+",";
+		nf += request.getParameter("subject").replace(",","")+",";
+		nf += request.getParameter("hasWords").replace(",","")+",";
+		nf += request.getParameter("notWords").replace(",","")+",";
+		nf += request.getParameter("startDate").replace(",","")+",";
+		nf += request.getParameter("endDate");
+		
+		//Validate Filter
+		nf = action.validateAndCreateFilter(nf);
+		if(nf.startsWith("Error")) {
+			error = true;
+			headerMessage = nf;
+		}
+		
+		if(!error) {
+			if(request.getParameter("test") != null) {
+				response.sendRedirect("messageInbox.jsp?edit=true&testFilter="+nf);
+			} else if(request.getParameter("save") != null) {
+				f_action.editMessageFilter(nf);
+				response.sendRedirect("messageInbox.jsp?filter=true"); 
+			}
+		}
+	}
+	
+	if(request.getParameter("testFilter") != null) {
+		String filter = request.getParameter("testFilter");
+		String[] f = filter.split(",", -1);
+		for(i=0; i<6; i++) {
+			try {
+				fields[i] = f[i];
+			} catch(ArrayIndexOutOfBoundsException e) {
+				//do nothing
+			}
+		}
+	} else {
+		String filter = dao.getPersonnel(loggedInMID.longValue()).getMessageFilter();
+		if(!filter.equals("")) {
+			String[] f = filter.split(",", -1);
+			for(i=0; i<6; i++) {
+				try {
+					fields[i] = f[i];
+				} catch(ArrayIndexOutOfBoundsException e) {
+					//do nothing
+				}
+			}
+		}
+	}
+}
+	
+//Sorts messages
+if(request.getParameter("sort") != null) {
+	if(request.getParameter("sortby").equals("name")) {
+		if(request.getParameter("sorthow").equals("asce")) {
+			messages = outbox?action.getAllMySentMessagesNameAscending():action.getAllMyMessagesNameAscending();
+		} else {
+			messages = outbox?action.getAllMySentMessagesNameDescending():action.getAllMyMessagesNameDescending();
+		}
+	} else if(request.getParameter("sortby").equals("time")) {
+		if(request.getParameter("sorthow").equals("asce")) {
+			messages = outbox?action.getAllMySentMessagesTimeAscending():action.getAllMyMessagesTimeAscending();
+		} else {
+			messages = outbox?action.getAllMySentMessagesTimeDescending():action.getAllMyMessagesTimeDescending();
+		}
+	}
+}
+else {
+	messages = outbox?action.getAllMySentMessages():action.getAllMyMessages();
+}
+
+if(messages.size()>0) {
+	session.setAttribute("messages", messages);
+}
+
+//Filters Messages
+boolean is_filtered = false;
+if((request.getParameter("filter") != null && request.getParameter("filter").equals("true")) || request.getParameter("testFilter") != null) {
+	String filter = "";
+	if(request.getParameter("testFilter") != null) {
+		filter = request.getParameter("testFilter");
+	} else {
+		filter = dao.getPersonnel(loggedInMID.longValue()).getMessageFilter();
+	}
+	if(!filter.equals("") && !filter.equals(",,,,,")) {
+		List<MessageBean> filtered = action.filterMessages(messages, filter);
+		messages = filtered;
+		is_filtered = true;
+	}
+}
+	
+	if(editing) {
+		%>
+<div class="filterEdit">
+	<div align="center">
+		<span style="font-size: 13pt; font-weight: bold;">Edit Message
+			Filter</span>
+		<%= headerMessage.equals("") ? "" : "<br /><span class=\"iTrustMessage\">"+headerMessage+"</span><br /><br />" %>
+		<form method="post" action="messageInbox.jsp?edit=true">
+			<table>
+				<tr style="text-align: right;">
+					<td><label for="sender">Sender: </label> <input type="text"
+						name="sender" id="sender"
+						value="<%= StringEscapeUtils.escapeHtml("" + (fields[0] )) %>" />
+					</td>
+					<td style="padding-left: 10px; padding-right: 10px;"><label
+						for="hasWords">Has the words: </label> <input type="text"
+						name="hasWords" id="hasWords"
+						value="<%= StringEscapeUtils.escapeHtml("" + (fields[2] )) %>" />
+					</td>
+					<td><label for="startDate">Start Date: </label> <input
+						type="text" name="startDate" id="startDate"
+						value="<%= StringEscapeUtils.escapeHtml("" + (fields[4] )) %>" />
+						<input type="button" value="Select Date"
+						onclick="displayDatePicker('startDate');" /></td>
+				</tr>
+				<tr style="text-align: right;">
+					<td><label for="subject">Subject: </label> <input type="text"
+						name="subject" id="subject"
+						value="<%= StringEscapeUtils.escapeHtml("" + (fields[1] )) %>" />
+					</td>
+					<td style="padding-left: 10px; padding-right: 10px;"><label
+						for="notWords">Does not have the words: </label> <input
+						type="text" name="notWords" id="notWords"
+						value="<%= StringEscapeUtils.escapeHtml("" + (fields[3] )) %>" />
+					</td>
+					<td><label for="endDate">End Date: </label> <input type="text"
+						name="endDate" id="endDate"
+						value="<%= StringEscapeUtils.escapeHtml("" + (fields[5] )) %>" />
+						<input type="button" value="Select Date"
+						onclick="displayDatePicker('endDate');" /></td>
+				</tr>
+				<tr style="text-align: center;">
+					<td colspan="3"><input type="submit" name="test"
+						value="Test Filter" /> <input type="submit" name="save"
+						value="Save" /> <input type="submit" name="cancel" value="Cancel" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+<br />
+<%
+	}
+	
+	%>
+<form method="post"
+	action="messageInbox.jsp<%= StringEscapeUtils.escapeHtml("" + (is_filtered?"?filter=true":"" )) %>">
+	<table>
+		<tr>
+			<td><select name="sortby">
+					<option value="time">Sort</option>
+					<option value="name">Name</option>
+					<option value="time">Time</option>
+			</select></td>
+			<td><select name="sorthow">
+					<option value="desc">Order</option>
+					<option value="asce">Ascending</option>
+					<option value="desc">Descending</option>
+			</select></td>
+			<td><input type="submit" name="sort" value="Sort" /></td>
+		</tr>
+		<tr>
+			<td><a href="messageInbox.jsp?edit=true">Edit Filter</a></td>
+			<td><a href="messageInbox.jsp?filter=true">Apply Filter</a></td>
+		</tr>
+	</table>
+</form>
+<br />
+
+<% if(messages.size() > 0) { %>
 <table id="mailbox" class="display fTable">
-	<thead>		
+	<thead>
 		<tr>
 			<th><%= outbox?"Receiver":"Sender" %></th>
 			<th>Subject</th>
@@ -71,7 +259,7 @@ if(messages.size() > 0) { %>
 		</tr>
 	</thead>
 	<tbody>
-	<% 
+		<% 
 	int index=-1;
 	for(MessageBean message : messages) {
 		String style = "";
@@ -100,14 +288,15 @@ if(messages.size() > 0) { %>
 				}
 				toString += ccNameParts[ccNameParts.length - 1] + ")";
 			}			
-			%>					
-				<tr <%=style%>>
-					<td><%= StringEscapeUtils.escapeHtml("" + ( toString)) %></td>
-					<td><%= StringEscapeUtils.escapeHtml("" + ( message.getSubject() )) %></td>
-					<td><%= StringEscapeUtils.escapeHtml("" + ( dateFormat.format(message.getSentDate()) )) %></td>
-					<td><a href="<%= outbox?"viewMessageOutbox.jsp?msg=" + StringEscapeUtils.escapeHtml("" + ( index )):"viewMessageInbox.jsp?msg=" + StringEscapeUtils.escapeHtml("" + ( index )) %>">Read</a></td>
-				</tr>			
-			<%
+			%>
+		<tr <%=style%>>
+			<td><%= StringEscapeUtils.escapeHtml("" + ( toString)) %></td>
+			<td><%= StringEscapeUtils.escapeHtml("" + ( message.getSubject() )) %></td>
+			<td><%= StringEscapeUtils.escapeHtml("" + ( dateFormat.format(message.getSentDate()) )) %></td>
+			<td><a
+				href="<%= outbox?"viewMessageOutbox.jsp?msg=" + StringEscapeUtils.escapeHtml("" + ( index )):"viewMessageInbox.jsp?msg=" + StringEscapeUtils.escapeHtml("" + ( index )) %>">Read</a></td>
+		</tr>
+		<%
 		}
 		
 	}	
@@ -115,7 +304,7 @@ if(messages.size() > 0) { %>
 	</tbody>
 </table>
 <%} else { %>
-	<div>
-		<i>You have no messages</i>
-	</div>
+<div>
+	<i>You have no messages</i>
+</div>
 <%	} %>

@@ -32,6 +32,14 @@ public class PersonnelBean implements Serializable {
 	private String phone = "";
 	private String email = "";
 	private String specialty = "";
+	private String filter = "";
+	
+	public void setMessageFilter(String filter) {
+		this.filter = filter;
+	}
+	public String getMessageFilter() {
+		return this.filter;
+	}
 
 	public String getEmail() {
 		return email;
