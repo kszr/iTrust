@@ -96,7 +96,8 @@ public enum ValidationFormat {
 	REFERRAL_NOTES("[a-zA-Z0-9\\s'\"?!:;\\-.,_\n\t()\\\\/]{1,500}",
 			//MESSAGES_BODY("[^<>&]{1,1000}",
 			 "Up to 500 alphanumeric characters, with space, and other punctuation"),
-	PRIORITY("[1-3]", "Priority must be between 1 and 3");
+	PRIORITY("[1-3]", "Priority must be between 1 and 3"),
+	THRESHOLDFORMALARIA("^[0-9]*$", "has to be a number");
 
 	private Pattern regex;
 	private String description;
