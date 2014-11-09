@@ -10,6 +10,9 @@ pageTitle = "iTrust - Please Select a Patient";
 <%@include file="/header.jsp" %>
 
 <%
+	boolean isObstetrics = request.getParameter("forward") != null && request.getParameter("forward").contains("hcp/obstetricsPage.jsp");
+	boolean isAudit = request.getParameter("forward") != null && request.getParameter("forward").contains("hcp/auditPage.jsp");
+
 	String uid_pid = request.getParameter("UID_PATIENTID");
 	session.setAttribute("pid", uid_pid);
 	if (null != uid_pid && !"".equals(uid_pid)) {
@@ -22,9 +25,6 @@ pageTitle = "iTrust - Please Select a Patient";
 		firstName = "";
 	if(lastName == null)
 		lastName = "";
-	
-
-	boolean isAudit = request.getParameter("forward") != null && request.getParameter("forward").contains("hcp/auditPage.jsp");
 %>
 
 <%@include file="/util/getUserFrame.jsp"%>
@@ -74,8 +74,11 @@ pageTitle = "iTrust - Please Select a Patient";
 	<%
 		if( (!"".equals(firstName)) || (!"".equals(lastName))){
 			SearchUsersAction searchAction = new SearchUsersAction(prodDAO,loggedInMID.longValue());
+			List<PatientBean> patients;
+			System.out.println("searching for patient");
 			out.println("Searching for users named " + StringEscapeUtils.escapeHtml("" + firstName) + " " + StringEscapeUtils.escapeHtml("" + lastName) + "<br />");
-			List<PatientBean> patients = searchAction.searchForPatientsWithName(firstName,lastName);
+			patients = searchAction.searchForPatientsWithName(firstName,lastName);
+			 
 	%>
 			<span class="searchResults">Found <%=StringEscapeUtils.escapeHtml("" + patients.size())%> Records</span>
 			<table class="fancyTable" style="width:80%;">
@@ -125,6 +128,7 @@ pageTitle = "iTrust - Please Select a Patient";
 				q : q,
 				forward : "<%= StringEscapeUtils.escapeHtml(request.getParameter("forward")) %>",
 				isAudit : <%= isAudit %>,
+				isObstetrics: <%= isObstetrics %>,
 				allowDeactivated : $("#allowDeactivated").attr("checked")
 			},
 			success : function(e){
@@ -153,6 +157,14 @@ pageTitle = "iTrust - Please Select a Patient";
 </script>
 <h2> Select a Patient</h2>
 <b>Search by name or MID:</b><br/>
+<%
+if(isObstetrics){
+%>
+<i></i>(Obstetrics will search for female patients only)</i><br/>
+<%
+}
+%>
+
 <%
 if(isAudit){
  %>

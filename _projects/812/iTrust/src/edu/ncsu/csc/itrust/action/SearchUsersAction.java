@@ -115,7 +115,7 @@ public class SearchUsersAction {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Search for all patients with first name and last name given in parameters.
 	 * @param query query
@@ -123,6 +123,27 @@ public class SearchUsersAction {
 	 */
 	public List<PatientBean> fuzzySearchForPatients(String query) {
 		return fuzzySearchForPatients(query, false);
+	}
+	
+	/**
+	 * Search for all *female* patients with first name and last name given in parameters.
+	 * @param query query
+	 * @param allowDeactivated allowDeactivated
+	 * @return A java.util.List of PatientBeans
+	 */
+	public List<PatientBean> fuzzySearchForFemalePatients(String query, boolean allowDeactivated){
+		List<PatientBean> patientList= this.fuzzySearchForPatients(query, allowDeactivated);
+		if(patientList != null){
+			List<PatientBean> femalePatientList = new ArrayList<PatientBean>();
+			for(PatientBean p : patientList){
+				if("Female".equals(p.getGender().toString())){
+					femalePatientList.add(p);
+				}
+			}
+			return femalePatientList;
+		}
+		
+		return null;
 	}
 	
 	/**

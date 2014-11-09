@@ -53,12 +53,15 @@ public class PatientSearchServlet extends HttpServlet {
 			return;
 		}
 		boolean isAudit = request.getParameter("isAudit") != null && request.getParameter("isAudit").equals("true");
+		boolean isObstetrics = request.getParameter("isObstetrics") != null && request.getParameter("isObstetrics").equals("true");
 		boolean deactivated = request.getParameter("allowDeactivated") != null && request.getParameter("allowDeactivated").equals("checked");
 		String forward = request.getParameter("forward");
 		List<PatientBean> search = null;
 		if(query.isEmpty() && deactivated){
 			search = sua.getDeactivated();
-		} else {
+		} else if(isObstetrics){
+			search = sua.fuzzySearchForFemalePatients(query, deactivated);
+		}else {
 			search = sua.fuzzySearchForPatients(query, deactivated);
 		}
 		StringBuffer result = new StringBuffer("<span class=\"searchResults\">Found " + search.size() + " Records</span>");
