@@ -66,7 +66,7 @@ public class EditPersonnelAction extends PersonnelBaseAction {
 	 * Edits the saved message filter for a member.
 	 * @param nf
 	 */
-	public void editMessageFilter(String nf) throws ITrustException {
-		// Only to make sure the program doesn't crash at this point.
+	public void editMessageFilter(String nf, long mid) throws ITrustException {
+		personnelDAO.setMessageFilter(nf, mid);
 	}
 } 

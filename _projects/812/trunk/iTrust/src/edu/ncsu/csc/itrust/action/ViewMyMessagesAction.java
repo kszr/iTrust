@@ -200,7 +200,7 @@ public class ViewMyMessagesAction {
 				DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 				Date s = format.parse(f[4]);
 				if(s.after(m.getSentDate()))
-						continue;
+					continue;
 				
 			}
 			/**
@@ -308,12 +308,21 @@ public class ViewMyMessagesAction {
 	}
 	
 	/**
-	 * Does a thing with the filter
+	 * Does a thing with the filter.
+	 * 
+	 * Talking to myself:
+	 * A filter should not crash under any circumstances on 
+	 * "sender", "subject", "hasWords", or "notWords".
+	 * This means that it is only possible for it to fail
+	 * if the "startDate" and "endDate" formats are wrong
+	 * or if startDate > endDate or something like that. Yes.
+	 *
+	 * @TODO Implement actual error checking or whatever. At this point 
+	 *		 I'm returning whatever gets passed in.
 	 * @param newfilter
 	 * @return validated filter
 	 */
 	public String validateAndCreateFilter(String newfilter) {
-		
-		return "Error";
+		return newfilter;
 	}
 }

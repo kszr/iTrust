@@ -41,6 +41,9 @@ public class PatientBeanTest extends TestCase {
 		p.setSecurityAnswer("Answer");
 		p.setPassword("password");
 		p.setConfirmPassword("confirm");
+		//Test message filter thing
+		p.setMessageFilter("Nancy,throat,cats,,,");
+		assertEquals("Nancy,throat,cats,,,", p.getMessageFilter());
 		assertEquals(BloodType.ABNeg, p.getBloodType());
 		assertNull(p.getDateOfBirth());
 		assertEquals(-1, p.getAge());
