@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import edu.ncsu.csc.itrust.enums.BloodType;
 import edu.ncsu.csc.itrust.enums.Ethnicity;
 import edu.ncsu.csc.itrust.enums.Gender;
@@ -61,6 +62,14 @@ public class PatientBean implements Serializable, Comparable<PatientBean> {
 	private String spiritualPractices = "";
 	private String alternateName = "";
 	private String dateOfDeactivationStr = "";
+	private String filter = ",,,,,";
+	
+	public void setMessageFilter(String filter) {
+		this.filter = filter;
+	}
+	public String getMessageFilter() {
+		return this.filter;
+	}
 
 
 	public BloodType getBloodType() {
