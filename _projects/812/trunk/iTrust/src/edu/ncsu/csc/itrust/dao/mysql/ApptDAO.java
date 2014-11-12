@@ -104,6 +104,27 @@ public class ApptDAO {
 
 	}
 	
+	public List<ApptBean> getFutureAppts(int daysInAdvance) throws SQLException, DBException {
+		Connection conn = null;
+		PreparedStatement pstring = null;
+		try{
+			conn = factory.getConnection();
+			pstring = conn.prepareStatement("SELECT * FROM appointment WHERE sched_date > NOW() AND sched_date <= DATE_ADD(NOW(), INTERVAL ? DAY) ORDER BY sched_date;");
+
+			pstring.setInt(1, daysInAdvance);
+			
+			final ResultSet results = pstring.executeQuery();
+			final List<ApptBean> abList = this.abloader.loadList(results);
+			results.close();
+			pstring.close();
+			return abList;
+		} catch (SQLException e) {
+			throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, pstring);
+		}
+	}
+	
 	public void scheduleAppt(final ApptBean appt) throws SQLException, DBException {
 		Connection conn = null;
 		PreparedStatement pstring = null;
