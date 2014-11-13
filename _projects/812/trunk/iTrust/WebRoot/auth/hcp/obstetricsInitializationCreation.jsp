@@ -62,4 +62,8 @@ pageTitle = "iTrust - Obstetrics Initialization";
     </tr>
 </table>
 
+<br/>
+<br/>
+<input type=button value="Create" onclick="">
+
 <%@include file="/footer.jsp" %>
