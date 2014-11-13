@@ -166,6 +166,14 @@ public class DAOFactory {
 	public NDCodesDAO getNDCodesDAO() {
 		return new NDCodesDAO(this);
 	}
+	
+	/**
+	 * 
+	 * @return this DAOFactory's ObstetricsVisitDAO
+	 */
+	public ObstetricsVisitDAO getObstetricsVisitDAO() {
+		return new ObstetricsVisitDAO(this);
+	}
 
 	/**
 	 * 
