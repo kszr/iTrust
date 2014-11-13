@@ -639,3 +639,32 @@ CREATE TABLE IF NOT EXISTS zipcodes (
   `full_state` varchar(50) default NULL,
   PRIMARY KEY `zip` (`zip`)
 ) ENGINE=innoDB;
+
+
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+CREATE TABLE IF NOT EXISTS obstetricsinitializationrecords(
+	PatientID BIGINT unsigned NOT NULL COMMENT 'MID of the patient',
+	HCPID BIGINT unsigned NOT NULL,
+	creationDate DATE NOT NULL,
+	LMP DATE NOT NULL
+)ENGINE=innoDB;
+
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+CREATE TABLE IF NOT EXISTS priorpregnancies(
+	PatientID BIGINT unsigned NOT NULL COMMENT 'MID of the patient',
+	yearOfContraception INT NOT NULL,
+	numberOfWeeksPregnant INT NOT NULL,
+	hoursInLabor DOUBLE,
+	deliveryType varchar(50) NOT NULL
+)ENGINE=innoDB;
+
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+CREATE TABLE IF NOT EXISTS obstetricsofficevists(
+	visitDate DATE NOT NULL,
+	numberOfWeeksPregnant INT NOT NULL,
+	BloodPressureSystolic INT NOT NULL,
+	BloodPressureDiastolic INT NOT NULL,
+	FHR INT NOT NULL DEFAULT 0,
+	FHU DOUBLE NOT NULL
+)ENGINE=innoDB;
+
