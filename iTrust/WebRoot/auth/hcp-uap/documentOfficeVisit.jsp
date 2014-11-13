@@ -1,9 +1,12 @@
+<%@page import="edu.ncsu.csc.itrust.beans.ObstetricsVisitBean"%>
 <%@taglib uri="/WEB-INF/tags.tld" prefix="itrust"%>
 <%@page errorPage="/auth/exceptionHandler.jsp"%>
 
 <%@page import="java.util.List"%>
 <%@page import="edu.ncsu.csc.itrust.action.AddOfficeVisitAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.AddObstetricsVisitAction"%>
 <%@page import="edu.ncsu.csc.itrust.beans.OfficeVisitBean"%>
+<%@page import="edu.ncsu.csc.itrust.beans.ObstetricsVisitBean"%>
 
 <%@include file="/global.jsp"%>
 
@@ -25,27 +28,34 @@
 		return;
 	}
 
-	AddOfficeVisitAction action = new AddOfficeVisitAction(prodDAO,
+	AddOfficeVisitAction officeAction = new AddOfficeVisitAction(prodDAO,
 			pidString);
-	long pid = action.getPid();
-	List<OfficeVisitBean> visits = action.getAllOfficeVisits();
+	AddObstetricsVisitAction obstetricsAction = new AddObstetricsVisitAction(prodDAO, pidString);
+	long pid = officeAction.getPid();
+	List<OfficeVisitBean> officeVisits = officeAction.getAllOfficeVisits();
+	List<ObstetricsVisitBean> obstetricsVisits = obstetricsAction.getAllObstetricsVisits();
 	if ("true".equals(request.getParameter("formIsFilled"))) {
-		response.sendRedirect("/iTrust/auth/hcp-uap/editOfficeVisit.jsp");
+		if (request.getParameter("officeVisit") != null) {
+			response.sendRedirect("/iTrust/auth/hcp-uap/editOfficeVisit.jsp");
+		} else if (request.getParameter("obstetricsVisit") != null) {
+			response.sendRedirect("/iTrust/auth/hcp-uap/editObstetricsVisit.jsp");
+		}
 		return;
 	}
 %>
 
 <div align=center>
 	<form action="documentOfficeVisit.jsp" method="post" id="formMain">
-
 		<input type="hidden" name="formIsFilled" value="true" /> <br /> <br />
-		Are you sure you want to document a <em>new</em> visit for <b><%=StringEscapeUtils.escapeHtml("" + (action.getUserName()))%></b>?<br />
+		Are you sure you want to document a <em>new</em> visit for <b><%=StringEscapeUtils.escapeHtml("" + (officeAction.getUserName()))%></b>?<br />
 		<br /> <input style="font-size: 150%; font-weight: bold;" type=submit
-			value="Yes, Document <%=visitName%>">
+			name=officeVisit value="Yes, Document <%=visitName%>">
+		<br /> <input style="font-size: 150%; font-weight: bold;" type=submit
+			name=obstetricsVisit value="Yes, Document Obstetrics Visit">
 	</form>
 	<br /> Click on an old office visit to modify:<br />
 	<%
-		for (OfficeVisitBean ov : visits) {
+		for (OfficeVisitBean ov : officeVisits) {
 	%>
 	<%
 		if (ov.isERIncident()) {
@@ -68,7 +78,20 @@
 	<%
 		}
 	%>
-
+	
+	<br /> Click on an old obstetrics visit to modify:<br />
+	<%
+		for (ObstetricsVisitBean ov : obstetricsVisits) {
+			if (!userRole.equals("er")) {
+	%>
+	<a
+				href="/iTrust/auth/hcp-uap/editObstetricsVisit.jsp?ovID=<%=StringEscapeUtils.escapeHtml(""
+								+ (ov.getID()))%>"><%=StringEscapeUtils.escapeHtml(""
+								+ (ov.getVisitDateStr()))%></a><br />
+	<%
+			}
+		}
+	%>
 	<br /> <br /> <br />
 </div>
 <%@include file="/footer.jsp"%>

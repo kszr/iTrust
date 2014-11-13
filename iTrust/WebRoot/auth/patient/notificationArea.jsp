@@ -288,9 +288,9 @@ BillingDAO bills = prodDAO.getBillingDAO();
 			if (!surveyAction.isSurveyCompleted(ov.getID())){
 	%>
 				<li>
-				<a href="survey.jsp?ovID=<%= StringEscapeUtils.escapeHtml("" + (ov.getVisitID())) %>&ovDate=<%= StringEscapeUtils.escapeHtml("" + (ov.getVisitDateStr())) %>">
+				<a href="survey.jsp?ovID=<%=StringEscapeUtils.escapeHtml("" + (ov.getID()))%>&ovDate=<%=StringEscapeUtils.escapeHtml("" + (ov.getVisitDateStr()))%>">
 					<img class="icon" style="border:0px" src="/iTrust/image/icons/survey.png" /></a>
-				<a href="survey.jsp?ovID=<%= StringEscapeUtils.escapeHtml("" + (ov.getVisitID())) %>&ovDate=<%= StringEscapeUtils.escapeHtml("" + (ov.getVisitDateStr())) %>">
+				<a href="survey.jsp?ovID=<%=StringEscapeUtils.escapeHtml("" + (ov.getID()))%>&ovDate=<%= StringEscapeUtils.escapeHtml("" + (ov.getVisitDateStr())) %>">
 					Survey
 				</a> for <%= StringEscapeUtils.escapeHtml("" + (ov.getVisitDateStr())) %>
 				</li>
