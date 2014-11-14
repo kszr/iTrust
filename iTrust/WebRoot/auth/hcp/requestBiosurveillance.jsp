@@ -1,12 +1,10 @@
-<%@page
-	import="edu.ncsu.csc.itrust.action.RequestBioSurveillanceAnalysisAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.RequestBioSurveillanceAnalysisAction"%>
 <%@taglib uri="/WEB-INF/tags.tld" prefix="itrust"%>
 <%@page errorPage="/auth/exceptionHandler.jsp"%>
 
 <%@page import="java.util.List"%>
 <%@page import="edu.ncsu.csc.itrust.beans.BioSurveillanceBean"%>
-<%@page
-	import="edu.ncsu.csc.itrust.action.RequestBiosurveillanceTrendAction"%>
+<%@page import="edu.ncsu.csc.itrust.action.RequestBiosurveillanceTrendAction"%>
 
 
 <%@page import="edu.ncsu.csc.itrust.exception.FormValidationException"%>
@@ -39,7 +37,6 @@
 		String analysisThreshold = request
 				.getParameter("analysisThreshold");
 
-
 			try {
 				System.out.println("in analysis");
 
@@ -61,72 +58,81 @@
 
 				if (ra.requestBioAnalysis(bb)) {
 					//System.out.println("success request analysis");
-%>
-<div align=center>
-	<span class="iTrustError"> The area you requested DOES contain
-		the epidemic you have chosen!!!</span>
-</div>
-<%
+					%>
+					<div align=center>
+						<span class="iTrustError"> The area you requested DOES contain
+							the epidemic you have chosen!!!</span>
+					</div>
+					<%
 				}
 
 				else {
 					System.out.println("FAIL request analysis");
-%>
-<div align=center>
-	<span class="iTrustError"> The area you requested DOES NOT
-		contain the epidemic you have chosen.</span>
-</div>
-<%
+					%>
+					<div align=center>
+						<span class="iTrustError"> The area you requested DOES NOT
+							contain the epidemic you have chosen.</span>
+					</div>
+					<%
 				}
 			}
 			//print out the form validator
 			catch (FormValidationException e) {
-%>
-<div align=center>
-	<span class="iTrustError"><%=StringEscapeUtils.escapeHtml(e.getMessage())%></span>
-</div>
-<%
-	}
+				%>
+				<div align=center>
+					<span class="iTrustError"><%=StringEscapeUtils.escapeHtml(e.getMessage())%></span>
+				</div>
+				<%
+			}
 		
 
 	}
 	//IF redirected from trend form submit
 	if (trendFormIsFilled) {
 		try {
-			System.out.println("in Analysis");
+			System.out.println("in Trend");
 
 			//variables for trend
 			String trendDiagCode = request
 					.getParameter("trendDiagnosisCode");
-					
-	
-
+			
 			String trendZipCode = request.getParameter("trendZipCode");
 			String trendDate = request.getParameter("trendDate");
 			BioSurveillanceBean bb = new BioSurveillanceBean(
 					trendDiagCode, trendZipCode, trendDate);
 
-			RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction();
+			RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction(prodDAO);
 
-			if (rt.requestBioTrendVerify(bb))
-			{
-				 String site = new String("/iTrust/auth/hcp/requestSurveillanceTrendResult.jsp?zipcode="+trendZipCode
-						 +"&date="+trendDate+"&diagcode="+trendDiagCode
-						 );
-				   response.setStatus(response.SC_MOVED_TEMPORARILY);
-				   response.setHeader("Location", site); 
-				System.out.println("success request trend");
-			}
-			else
+			if (rt.requestBioTrendVerify(bb)) {
+				if (bb.getDiagnosisCode().contains("84") || bb.getDiagnosisCode().contains("487")) {
+					String site = new String(
+							"/iTrust/auth/hcp/requestSurveillanceTrendResult.jsp?zipcode="
+									+ trendZipCode + "&date="
+									+ trendDate + "&diagcode="
+									+ trendDiagCode);
+					response.setStatus(response.SC_MOVED_TEMPORARILY);
+					response.setHeader("Location", site);
+					System.out.println("success request trend");
+				}
+				else {
+					%>
+					<div align=center>
+						<span class="iTrustError"> There is no Epidemic Detection Algorithm for this Diagnosis Code. </span>
+					</div>
+					<%	
+				}
+			} else {
+
 				System.out.println("FAIL request trend");
+			}
 			//print out form validate error
 		} catch (FormValidationException e) {
-%>
-<div align=center>
-	<span class="iTrustError"><%=StringEscapeUtils.escapeHtml(e.getMessage())%></span>
-</div>
-<%
-	}
+			%>
+			<div align=center>
+				<span class="iTrustError"><%=StringEscapeUtils.escapeHtml(e.getMessage())%></span>
+			</div>
+			<%
+		}
 	}
 %>
 
