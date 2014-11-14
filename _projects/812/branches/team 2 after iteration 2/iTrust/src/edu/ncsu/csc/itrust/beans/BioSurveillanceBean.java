@@ -11,7 +11,12 @@ public class BioSurveillanceBean {
 	String zipCode;
 	String date;
 	String threshold;
-	
+	/**
+	 * Constructor for with threshold
+	 * @param diagnosisCode
+	 * @param zipCode
+	 * @param date
+	 */
 
 
 	public BioSurveillanceBean(String diagnosisCode, String zipCode,
@@ -24,7 +29,7 @@ public class BioSurveillanceBean {
 	}
 
 	/**
-	 * Constructor for without 
+	 * Constructor for without threshold
 	 * @param diagnosisCode
 	 * @param zipCode
 	 * @param date

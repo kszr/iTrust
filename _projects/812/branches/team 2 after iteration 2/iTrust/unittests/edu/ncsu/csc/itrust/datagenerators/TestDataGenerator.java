@@ -49,6 +49,18 @@ public class TestDataGenerator {
 		this.DIR = projectHome + "/sql/data";
 		this.factory = factory;
 	}
+	//By team 2 for adding office vist influenza test
+	public void addOfficeVisitsWithInfluenza() throws SQLException,FileNotFoundException,IOException
+	{
+		new DBBuilder(factory).executeSQLFile(DIR + "/ovAdditionalInfluenza.sql");
+	}
+	//By team 2 for add patients profile with same zipcode
+	public void addThreePatiensWithSameZipCode() throws SQLException,FileNotFoundException,IOException
+	{
+		new DBBuilder(factory).executeSQLFile(DIR + "/patientSameZipCode1.sql");
+		new DBBuilder(factory).executeSQLFile(DIR + "/patientSameZipCode2.sql");
+		new DBBuilder(factory).executeSQLFile(DIR + "/patientSameZipCode3.sql");
+	}
 
 	public void additionalOfficeVisits() throws SQLException, FileNotFoundException, IOException {
 		new DBBuilder(factory).executeSQLFile(DIR + "/ovAdditional.sql");
