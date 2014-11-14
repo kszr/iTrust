@@ -76,7 +76,10 @@ public class RequestBioSurveillanceAnalysisAction {
 				Date oneWeekDate = oneWeekBefore.getTime();
 				System.out.println("Begin time"+twoWeeksDate.toString());
 				
+				
 				List<OfficeVisitBean> beans = ovDAO.getAllOfficeVisitsForDiagnosis("487.00");
+				//List<OfficeVisitBean> beans = ovDAO.getAllOfficeVisits(1000000);
+				
 				System.out.println("BEAN size " + beans.size());
 				for(int i =0 ;i <beans.size();i++)
 				{
@@ -87,23 +90,26 @@ public class RequestBioSurveillanceAnalysisAction {
 				PatientBean patient = patientDAO.getPatient(patientID);
 				String patientZip = patient.getZip().substring(0, Math.min(patient.getZip().length(), 3));
 				String inputZip = requestBio.getZipCode().substring(0,Math.min(requestBio.getZipCode().length(),3));
-				System.out.println("Patient Zip Code = " + patientZip);
+				System.out.println("Patient " + patientID+ "Zip Code = " + patientZip);
 				System.out.println("Input Zip Code = " + inputZip);
 				
 				
 //week one is two weeks before
 
 
-				
-				if(twoWeeksDate.compareTo(officeVisitDate)>=0 && oneWeekDate.compareTo(officeVisitDate) <= 0 && patientZip.equals(inputZip) )
+				System.out.println("2nd week check " + officeVisitDate.compareTo(twoWeeksDate));
+				System.out.println("1st week check " + officeVisitDate.compareTo(oneWeekDate));
+				System.out.println("2weekdate = " + twoWeeksDate + "1st weekdate = " + oneWeekDate);
+				System.out.println("officeVisitDate = " + officeVisitDate);
+				if(officeVisitDate.compareTo(twoWeeksDate)>=0 && officeVisitDate.compareTo(oneWeekDate) < 0 && patientZip.equals(inputZip) )
 				{
 					numberOfCasesWeekOne++;
 				}
-				if(oneWeekDate.compareTo(officeVisitDate)>=0 && requestDate.compareTo(officeVisitDate) <= 0 && patientZip.equals(inputZip))
+				else if(officeVisitDate.compareTo(oneWeekDate)>=0 && officeVisitDate.compareTo(requestDate) < 0 && patientZip.equals(inputZip))
 				{
 					numberOfCasesWeekTwo++;
 				}
-				
+				System.out.println("number of 1st case = " + numberOfCasesWeekOne + "number of 2nd case = " + numberOfCasesWeekTwo);
 				}
 				
 				
@@ -118,7 +124,8 @@ public class RequestBioSurveillanceAnalysisAction {
 				cal.setTime(reqDate);
 				double secondWeekOfRequestDate = cal.get(Calendar.WEEK_OF_YEAR);
 				double firstWeekOfRequestDate = secondWeekOfRequestDate-1;
-			
+				System.out.println("week 1 : " + numberOfCasesWeekOne + "week 2 : " + numberOfCasesWeekTwo );
+				System.out.println("threshold 1 = " + calcThreshold(firstWeekOfRequestDate) + "threshold 2 = " + calcThreshold(secondWeekOfRequestDate));
 				if(numberOfCasesWeekOne>calcThreshold(firstWeekOfRequestDate) && numberOfCasesWeekTwo > calcThreshold(secondWeekOfRequestDate))
 				{
 				return true;
@@ -148,6 +155,7 @@ public class RequestBioSurveillanceAnalysisAction {
 	double calcThreshold(double weekNumber) {
         return 5.34 + 0.271 * weekNumber + 3.45 * Math.sin(2 * Math.PI * weekNumber / 52.0)
                 + 8.41 * Math.cos(2 * Math.PI * weekNumber / 52.0);
+		//return 1;
     } 
 
 }
