@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%
+System.out.println("in new");
+System.out.println(request.getParameter("date"));
 
+%>
 </body>
 </html>
