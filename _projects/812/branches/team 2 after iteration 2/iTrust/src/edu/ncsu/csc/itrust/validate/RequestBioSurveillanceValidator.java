@@ -25,7 +25,9 @@ public class RequestBioSurveillanceValidator extends BeanValidator<BioSurveillan
 		errorList.addIfNotNull(checkFormat("Date", bb.getDate(),ValidationFormat.DATE, false));
 		errorList.addIfNotNull(checkFormat("Zip Code", bb.getZipCode(),ValidationFormat.ZIPCODE, false));
 		errorList.addIfNotNull(checkFormat("Diagnosis Code",bb.getDiagnosisCode(),ValidationFormat.ICD9CM,false));
-		errorList.addIfNotNull(checkFormat("Threshold for Malaria", bb.getThreshold(),ValidationFormat.THRESHOLDFORMALARIA,true));
+		if(bb.getDiagnosisCode().contains("084.5")) {
+			errorList.addIfNotNull(checkFormat("Threshold for Malaria", bb.getThreshold(),ValidationFormat.THRESHOLDFORMALARIA,false));
+		}
 		if(errorList.hasErrors())
 			throw new FormValidationException(errorList);
 	}

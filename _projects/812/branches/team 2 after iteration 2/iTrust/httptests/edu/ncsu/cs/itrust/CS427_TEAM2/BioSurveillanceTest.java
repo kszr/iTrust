@@ -114,12 +114,12 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisDiagnosisCode", "084.5");
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisZipCode", "61820");
-		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "02/12/24");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "02/12/2004");
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisThreshold", "");
 		
 		wr = wr.getFormWithName("analysisRequestForm").submit();
 		
-		assertTrue(wr.getText().contains("Please input percentage threshold to analyze Malaria."));
+		assertTrue(wr.getText().contains("This form has not been validated correctly. The following field are not properly filled in: [Threshold for Malaria: Has to be a number]"));
 		
 		
 	}
