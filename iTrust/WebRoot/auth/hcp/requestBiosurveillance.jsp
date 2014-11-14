@@ -108,7 +108,7 @@
 
 			RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction();
 
-			if (rt.requestBioTrend(bb))
+			if (rt.requestBioTrendVerify(bb))
 			{
 				 String site = new String("/iTrust/auth/hcp/requestSurveillanceTrendResult.jsp?zipcode="+trendZipCode
 						 +"&date="+trendDate+"&diagcode="+trendDiagCode
