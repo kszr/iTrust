@@ -98,6 +98,8 @@
 			//variables for trend
 			String trendDiagCode = request
 					.getParameter("trendDiagnosisCode");
+					
+	
 
 			String trendZipCode = request.getParameter("trendZipCode");
 			String trendDate = request.getParameter("trendDate");
@@ -107,7 +109,14 @@
 			RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction();
 
 			if (rt.requestBioTrend(bb))
+			{
+				 String site = new String("/iTrust/auth/hcp/requestSurveillanceResult.jsp?zipcode="+trendZipCode
+						 +"?date="+trendDate+"?diagcode="+trendDiagCode
+						 );
+				   response.setStatus(response.SC_MOVED_TEMPORARILY);
+				   response.setHeader("Location", site); 
 				System.out.println("success request trend");
+			}
 			else
 				System.out.println("FAIL request trend");
 			//print out form validate error
