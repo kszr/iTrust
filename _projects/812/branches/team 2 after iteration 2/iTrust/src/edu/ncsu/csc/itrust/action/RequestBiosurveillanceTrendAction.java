@@ -9,6 +9,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import edu.ncsu.csc.itrust.beans.BioSurveillanceBean;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.dao.mysql.OfficeVisitDAO;
+import edu.ncsu.csc.itrust.dao.mysql.PatientDAO;
 import edu.ncsu.csc.itrust.exception.FormValidationException;
 import edu.ncsu.csc.itrust.exception.ITrustException;
 import edu.ncsu.csc.itrust.validate.RequestBioSurveillanceValidator;
@@ -17,9 +20,14 @@ import edu.ncsu.csc.itrust.validate.RequestBioSurveillanceValidator;
  */
 public class RequestBiosurveillanceTrendAction {
 
-	public RequestBiosurveillanceTrendAction() {
+	private OfficeVisitDAO ovDAO;
+	private PatientDAO patientDAO;
+	
+	public RequestBiosurveillanceTrendAction(DAOFactory factory) {
 
 		// TODO Auto-generated constructor stub
+		this.ovDAO = factory.getOfficeVisitDAO();
+		this.patientDAO = factory.getPatientDAO();
 	}
 
 	/**

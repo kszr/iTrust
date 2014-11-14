@@ -26,7 +26,6 @@ import edu.ncsu.csc.itrust.validate.RequestBioSurveillanceValidator;
 public class RequestBioSurveillanceAnalysisAction {
 
 	private OfficeVisitDAO ovDAO;
-
 	private PatientDAO patientDAO;
 
 	public RequestBioSurveillanceAnalysisAction(DAOFactory factory) {

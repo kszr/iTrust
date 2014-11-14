@@ -22,7 +22,7 @@ String zipcode = request.getParameter("zipcode");
 String diagcode = request.getParameter("diagcode");
 System.out.println(date+zipcode+diagcode);
 
-RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction();
+RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction(prodDAO);
 
 BioSurveillanceBean bb = new BioSurveillanceBean(
 		diagcode, zipcode,
