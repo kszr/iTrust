@@ -150,12 +150,9 @@ public class RequestBioSurveillanceAnalysisAction {
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekOnePrevious++;
 					if (beanYear > tempMaxYear) {
-
 						tempMaxYear = beanYear;
 					}
-
 					if (beanYear < tempMinYear) {
-
 						tempMinYear = beanYear;
 					}
 
@@ -164,15 +161,11 @@ public class RequestBioSurveillanceAnalysisAction {
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekTwoPrevious++;
 					if (beanYear > tempMaxYear) {
-
 						tempMaxYear = beanYear;
 					}
-
 					if (beanYear < tempMinYear) {
-
 						tempMinYear = beanYear;
 					}
-
 				}
 
 			}
@@ -201,7 +194,7 @@ public class RequestBioSurveillanceAnalysisAction {
 				System.out.println("week 1 case " + (officeVisitDate.compareTo(twoWeeksDate) + " "
 						+ officeVisitDate.compareTo(oneWeekDate) + " " +
 					 patientZip.equals(inputZip)));
-				if (officeVisitDate.compareTo(twoWeeksDate) < 0
+				if (officeVisitDate.compareTo(twoWeeksDate) > 0
 						&& officeVisitDate.compareTo(oneWeekDate) <= 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekOne++;
