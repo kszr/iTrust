@@ -116,9 +116,11 @@ public class RequestBioSurveillanceAnalysisAction {
 				Date officeVisitDate = beans.get(i).getVisitDate();
 				long patientID = beans.get(i).getPatientID();
 				// System.out.println("PatientID = " + patientID);
+				
+				
 				int beanYear = officeVisitDate.getYear();
 
-				if (beanYear == requestDate.getYear()) {
+				if (beanYear >= requestDate.getYear()) {
 
 					continue;
 				}
@@ -174,7 +176,7 @@ public class RequestBioSurveillanceAnalysisAction {
 			}
 //			System.out.println("week 1 prev : " + numberOfCasesWeekOnePrevious
 //					+ "week 2 prev " + numberOfCasesWeekTwoPrevious);
-//			System.out.println("min year : " + tempMinYear + "max year : " + tempMaxYear );
+			System.out.println("min year : " + tempMinYear + "max year : " + tempMaxYear );
 
 			numberOfYearsCasesOccur = tempMaxYear - tempMinYear + 1;
 			double avgWeekOne = numberOfCasesWeekOnePrevious
