@@ -112,6 +112,7 @@ public class RequestBiosurveillanceAnalysisTest extends TestCase{
 	public void testNoMalaria() throws Exception
 	{
 		gen.clearAllTables();
+		gen.standardData();
 		gen.addThreePatiensWithSameZipCode();
 		//gen.addOfficeVisitWithMalaria();
 		
