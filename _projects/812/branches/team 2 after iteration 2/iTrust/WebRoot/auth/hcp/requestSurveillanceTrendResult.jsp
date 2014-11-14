@@ -14,7 +14,13 @@ pageTitle = "iTrust - BioSurveillance Trend Result";
 
 <%
 System.out.println("in new");
-System.out.println(request.getParameter("date"));
+
+String date = request.getParameter("date");
+String zipcode = request.getParameter("zipcode");
+String diagcode = request.getParameter("diagcode");
+System.out.println(date+zipcode+diagcode);
+
+RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction();
 %>
 
 

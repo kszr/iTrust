@@ -23,16 +23,18 @@ public class RequestBiosurveillanceTrendAction {
 	 * @throws ITrustException
 	 */
 	//return true if success otherwise false
-	public boolean requestBioTrend(BioSurveillanceBean requestBio) throws FormValidationException, ITrustException
+	public boolean requestBioTrendVerify(BioSurveillanceBean requestBio) throws FormValidationException, ITrustException
 	{
 		new RequestBioSurveillanceValidator().validate(requestBio);
-		
+		/*
 		System.out.println(requestBio.getDiagnosisCode());
 		System.out.println(requestBio.getZipCode());
 		System.out.println(requestBio.getDate());
-	
+	*/
 		return true;
 	}
+	
+	
 
 
 }
