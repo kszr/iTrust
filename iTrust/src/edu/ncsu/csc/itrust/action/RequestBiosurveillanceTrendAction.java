@@ -64,6 +64,8 @@ public class RequestBiosurveillanceTrendAction {
 		WeekBefore.setTime(requestDate);
 		WeekBefore.add(Calendar.DATE, (-7*week));
 		
+		Date WeekBeforeDate = WeekBefore.getTime();
+		System.out.println("week before : " + WeekBeforeDate);
 		
 		
 		
