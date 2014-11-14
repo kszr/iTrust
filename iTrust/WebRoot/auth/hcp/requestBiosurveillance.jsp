@@ -39,15 +39,7 @@
 		String analysisThreshold = request
 				.getParameter("analysisThreshold");
 
-		if (analysisThreshold.isEmpty()
-				&& analysisDiagCode.contains("084.5")) {
-%>
-<div align=center>
-	<span class="iTrustError">Please input percentage threshold to
-		analyze Malaria.</span>
-</div>
-<%
-	} else {
+
 			try {
 				System.out.println("in analysis");
 
@@ -94,8 +86,8 @@
 	<span class="iTrustError"><%=StringEscapeUtils.escapeHtml(e.getMessage())%></span>
 </div>
 <%
-			}
-		}
+	}
+		
 
 	}
 	//IF redirected from trend form submit
