@@ -50,11 +50,13 @@ public class RequestBiosurveillanceAnalysisTest extends TestCase{
 		gen.addThreePatiensWithSameZipCode();
 		gen.addOfficeVisitWithMalaria();
 		
-		BioSurveillanceBean bioBean = new BioSurveillanceBean("084.5", "61820", "01/14/2000","10");
+		BioSurveillanceBean bioBean = new BioSurveillanceBean("084.5", "61820", "01/14/2000","100");
 		System.out.println("bioBean " + action.requestBioAnalysis(bioBean));
 		assertTrue(action.requestBioAnalysis(bioBean));
 		
 		
 	}
+	
+	
 
 }
