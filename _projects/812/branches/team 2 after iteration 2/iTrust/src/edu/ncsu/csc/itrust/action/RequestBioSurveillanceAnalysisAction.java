@@ -98,6 +98,9 @@ public class RequestBioSurveillanceAnalysisAction {
 
 			Date twoWeeksDate = twoWeeksBefore.getTime();
 			Date oneWeekDate = oneWeekBefore.getTime();
+			
+			Date CurtwoWeeksDate = twoWeeksBefore.getTime();
+			Date CuroneWeekDate = oneWeekBefore.getTime();
 
 			List<OfficeVisitBean> beans = ovDAO
 					.getAllOfficeVisitsForDiagnosis("084.50");
@@ -169,9 +172,9 @@ public class RequestBioSurveillanceAnalysisAction {
 				}
 
 			}
-			System.out.println("week 1 prev : " + numberOfCasesWeekOnePrevious
-					+ "week 2 prev " + numberOfCasesWeekTwoPrevious);
-			System.out.println("min year : " + tempMinYear + "max year : " + tempMaxYear );
+//			System.out.println("week 1 prev : " + numberOfCasesWeekOnePrevious
+//					+ "week 2 prev " + numberOfCasesWeekTwoPrevious);
+//			System.out.println("min year : " + tempMinYear + "max year : " + tempMaxYear );
 
 			numberOfYearsCasesOccur = tempMaxYear - tempMinYear + 1;
 			double avgWeekOne = numberOfCasesWeekOnePrevious
@@ -190,17 +193,17 @@ public class RequestBioSurveillanceAnalysisAction {
 				String inputZip = requestBio.getZipCode().substring(0,
 						Math.min(requestBio.getZipCode().length(), 3));
 				// calculate for case the date within the time period
-				System.out.println("office Date : " + officeVisitDate + "oneweekDate : " + oneWeekDate + "twoWeekDate : "+ twoWeeksDate);
-				System.out.println("week 1 case " + (officeVisitDate.compareTo(twoWeeksDate) + " "
-						+ officeVisitDate.compareTo(oneWeekDate) + " " +
-					 patientZip.equals(inputZip)));
-				if (officeVisitDate.compareTo(twoWeeksDate) > 0
-						&& officeVisitDate.compareTo(oneWeekDate) <= 0
+//				System.out.println("office Date : " + officeVisitDate + "oneweekDate : " + CuroneWeekDate + "twoWeekDate : "+ twoWeeksDate);
+//				System.out.println("week 1 case " + (officeVisitDate.compareTo(CurtwoWeeksDate) + " "
+//						+ officeVisitDate.compareTo(CuroneWeekDate) + " " +
+//					 patientZip.equals(inputZip)));
+				if (officeVisitDate.compareTo(CurtwoWeeksDate) > 0
+						&& officeVisitDate.compareTo(CuroneWeekDate) <= 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekOne++;
 				} 
 				
-				else if (officeVisitDate.compareTo(oneWeekDate) > 0
+				else if (officeVisitDate.compareTo(CuroneWeekDate) > 0
 						&& officeVisitDate.compareTo(requestDate) <= 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekTwo++;
@@ -227,11 +230,9 @@ public class RequestBioSurveillanceAnalysisAction {
 			double firstWeekOfRequestDate = secondWeekOfRequestDate - 1;
 			double threshold = Integer.parseInt(requestBio.getThreshold());
 			// System.out.println("Threshold : " + threshold);
-			// System.out.println("1st week compare : " +
-			// weekOneThresholdCompared + "2ndweek : " +
-			// weekTwoThresholdCompared);
-			if (weekOneThresholdCompared > threshold
-					&& weekTwoThresholdCompared > threshold) {
+			 //System.out.println("1st week compare : " + weekOneThresholdCompared + "2ndweek : " + weekTwoThresholdCompared);
+			if (weekOneThresholdCompared >= threshold
+					&& weekTwoThresholdCompared >= threshold) {
 				return true;
 			} else
 				return false;
