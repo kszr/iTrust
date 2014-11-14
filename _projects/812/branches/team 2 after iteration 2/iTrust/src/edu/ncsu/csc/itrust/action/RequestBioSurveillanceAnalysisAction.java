@@ -53,8 +53,8 @@ public class RequestBioSurveillanceAnalysisAction {
 
 		// malaria case
 		if (requestBio.getDiagnosisCode().contains("084")) {
-			System.out.println("malaria");
-			return true;
+
+			return determineMalaria(requestBio);
 		}
 		// influenza case
 		else if (requestBio.getDiagnosisCode().contains("487")) {
@@ -71,15 +71,21 @@ public class RequestBioSurveillanceAnalysisAction {
 
 	}
 
-	private boolean determineInfluenza(BioSurveillanceBean requestBio)
+	private boolean determineMalaria(BioSurveillanceBean requestBio)
 			throws DBException {
-		System.out.println("influenza");
+		System.out.println("malaria");
 		int numberOfCasesWeekOne = 0;
 		int numberOfCasesWeekTwo = 0;
+
+		int numberOfCasesWeekOnePrevious = 0;
+		int numberOfCasesWeekTwoPrevious = 0;
+		int numberOfYearsCasesOccur = 0;
 		Date requestDate;
+		double weekOneThresholdCompared =0;
+		double weekTwoThresholdCompared=0;
 		try {
-			requestDate = new SimpleDateFormat("MM/dd/yyyy")
-					.parse(requestBio.getDate());
+			requestDate = new SimpleDateFormat("MM/dd/yyyy").parse(requestBio
+					.getDate());
 
 			// find two weeks before the given date
 			Calendar twoWeeksBefore = new GregorianCalendar();
@@ -92,15 +98,139 @@ public class RequestBioSurveillanceAnalysisAction {
 
 			Date twoWeeksDate = twoWeeksBefore.getTime();
 			Date oneWeekDate = oneWeekBefore.getTime();
+
+			List<OfficeVisitBean> beans = ovDAO
+					.getAllOfficeVisitsForDiagnosis("084.50");
+
+			Date tempDate = requestDate;
+			int tempMaxYear = 0;
+			int tempMinYear = 10000;
+	
+
+			// loop for counting previous year
+			for (int i = 0; i < beans.size(); i++) {
+				Date officeVisitDate = beans.get(i).getVisitDate();
+				long patientID = beans.get(i).getPatientID();
+				int beanYear = officeVisitDate.getYear();
+
+				if (beanYear == requestDate.getYear())
+					continue;
+
+				if (beanYear > tempMaxYear) {
+					tempMaxYear = beanYear;
+				}
+				if (beanYear < tempMinYear) {
+					tempMinYear = beanYear;
+				}
+
+				PatientBean patient = patientDAO.getPatient(patientID);
+				String patientZip = patient.getZip().substring(0,
+						Math.min(patient.getZip().length(), 3));
+				String inputZip = requestBio.getZipCode().substring(0,
+						Math.min(requestBio.getZipCode().length(), 3));
+				// calculate for case the date within the time period
+
+				twoWeeksDate.setYear(beanYear);
+				oneWeekDate.setYear(beanYear);
+				tempDate.setYear(beanYear);
+
+				if (officeVisitDate.compareTo(twoWeeksDate) > 0
+						&& officeVisitDate.compareTo(oneWeekDate) <= 0
+						&& patientZip.equals(inputZip)) {
+					numberOfCasesWeekOnePrevious++;
+				} else if (officeVisitDate.compareTo(oneWeekDate) > 0
+						&& officeVisitDate.compareTo(tempDate) <= 0
+						&& patientZip.equals(inputZip)) {
+					numberOfCasesWeekTwoPrevious++;
+				}
+
+			}
+
+			numberOfYearsCasesOccur = tempMaxYear - tempMinYear + 1;
+			double avgWeekOne = numberOfCasesWeekOnePrevious
+					/ numberOfYearsCasesOccur;
+			double avgWeekTwo = numberOfCasesWeekTwoPrevious
+					/ numberOfYearsCasesOccur;
+
+			// loop for counting the current year
+			for (int i = 0; i < beans.size(); i++) {
+				Date officeVisitDate = beans.get(i).getVisitDate();
+				long patientID = beans.get(i).getPatientID();
+
+				PatientBean patient = patientDAO.getPatient(patientID);
+				String patientZip = patient.getZip().substring(0,
+						Math.min(patient.getZip().length(), 3));
+				String inputZip = requestBio.getZipCode().substring(0,
+						Math.min(requestBio.getZipCode().length(), 3));
+				// calculate for case the date within the time period
+
+				if (officeVisitDate.compareTo(twoWeeksDate) > 0
+						&& officeVisitDate.compareTo(oneWeekDate) <= 0
+						&& patientZip.equals(inputZip)) {
+					numberOfCasesWeekOne++;
+				} else if (officeVisitDate.compareTo(oneWeekDate) > 0
+						&& officeVisitDate.compareTo(requestDate) <= 0
+						&& patientZip.equals(inputZip)) {
+					numberOfCasesWeekTwo++;
+				}
+
+			}
 			
+			 weekOneThresholdCompared = (numberOfCasesWeekOne/avgWeekOne) * 100;
+			 weekTwoThresholdCompared = (numberOfCasesWeekTwo/avgWeekTwo) * 100;
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Date reqDate = new SimpleDateFormat("MM/dd/yyyy").parse(requestBio
+					.getDate());
+			Calendar cal = new GregorianCalendar();
+			cal.setTime(reqDate);
+			double secondWeekOfRequestDate = cal.get(Calendar.WEEK_OF_YEAR);
+			double firstWeekOfRequestDate = secondWeekOfRequestDate - 1;
+			double threshold = Integer.parseInt(requestBio.getThreshold());
+			
+			if (weekOneThresholdCompared > threshold
+					&& weekTwoThresholdCompared > threshold) {
+				return true;
+			} else
+				return false;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private boolean determineInfluenza(BioSurveillanceBean requestBio)
+			throws DBException {
+		System.out.println("influenza");
+		int numberOfCasesWeekOne = 0;
+		int numberOfCasesWeekTwo = 0;
+		Date requestDate;
+		try {
+			requestDate = new SimpleDateFormat("MM/dd/yyyy").parse(requestBio
+					.getDate());
+
+			// find two weeks before the given date
+			Calendar twoWeeksBefore = new GregorianCalendar();
+			twoWeeksBefore.setTime(requestDate);
+			twoWeeksBefore.add(Calendar.DATE, -14);
+
+			Calendar oneWeekBefore = new GregorianCalendar();
+			oneWeekBefore.setTime(requestDate);
+			oneWeekBefore.add(Calendar.DATE, -7);
+
+			Date twoWeeksDate = twoWeeksBefore.getTime();
+			Date oneWeekDate = oneWeekBefore.getTime();
 
 			List<OfficeVisitBean> beans = ovDAO
 					.getAllOfficeVisitsForDiagnosis("487.00");
 
-
-			
 			for (int i = 0; i < beans.size(); i++) {
-				
+
 				Date officeVisitDate = beans.get(i).getVisitDate();
 				long patientID = beans.get(i).getPatientID();
 
@@ -110,12 +240,12 @@ public class RequestBioSurveillanceAnalysisAction {
 				String inputZip = requestBio.getZipCode().substring(0,
 						Math.min(requestBio.getZipCode().length(), 3));
 
-				if (officeVisitDate.compareTo(twoWeeksDate) >= 0
-						&& officeVisitDate.compareTo(oneWeekDate) < 0
+				if (officeVisitDate.compareTo(twoWeeksDate) > 0
+						&& officeVisitDate.compareTo(oneWeekDate) <= 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekOne++;
-				} else if (officeVisitDate.compareTo(oneWeekDate) >= 0
-						&& officeVisitDate.compareTo(requestDate) < 0
+				} else if (officeVisitDate.compareTo(oneWeekDate) > 0
+						&& officeVisitDate.compareTo(requestDate) <= 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekTwo++;
 				}
@@ -127,8 +257,8 @@ public class RequestBioSurveillanceAnalysisAction {
 			e.printStackTrace();
 		}
 		try {
-			Date reqDate = new SimpleDateFormat("MM/dd/yyyy")
-					.parse(requestBio.getDate());
+			Date reqDate = new SimpleDateFormat("MM/dd/yyyy").parse(requestBio
+					.getDate());
 			Calendar cal = new GregorianCalendar();
 			cal.setTime(reqDate);
 			double secondWeekOfRequestDate = cal.get(Calendar.WEEK_OF_YEAR);
