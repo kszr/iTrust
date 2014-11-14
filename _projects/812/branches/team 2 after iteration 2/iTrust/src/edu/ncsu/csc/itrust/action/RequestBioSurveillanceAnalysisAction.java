@@ -101,6 +101,7 @@ public class RequestBioSurveillanceAnalysisAction {
 
 			List<OfficeVisitBean> beans = ovDAO
 					.getAllOfficeVisitsForDiagnosis("084.50");
+			//System.out.println("BEAN SIZE = " + beans.size());
 
 			Date tempDate = requestDate;
 			int tempMaxYear = 0;
@@ -111,10 +112,16 @@ public class RequestBioSurveillanceAnalysisAction {
 			for (int i = 0; i < beans.size(); i++) {
 				Date officeVisitDate = beans.get(i).getVisitDate();
 				long patientID = beans.get(i).getPatientID();
+				//System.out.println("PatientID = " + patientID);
 				int beanYear = officeVisitDate.getYear();
-
+				
 				if (beanYear == requestDate.getYear())
+				{
+					
+					System.out.println("equal case requestYear = " + requestDate.getYear());
 					continue;
+				}
+					
 
 				if (beanYear > tempMaxYear) {
 					tempMaxYear = beanYear;
@@ -133,7 +140,8 @@ public class RequestBioSurveillanceAnalysisAction {
 				twoWeeksDate.setYear(beanYear);
 				oneWeekDate.setYear(beanYear);
 				tempDate.setYear(beanYear);
-
+				
+				System.out.println(officeVisitDate + " twoweeksdate = " + twoWeeksDate + " oneweekDate = " + oneWeekDate);
 				if (officeVisitDate.compareTo(twoWeeksDate) > 0
 						&& officeVisitDate.compareTo(oneWeekDate) <= 0
 						&& patientZip.equals(inputZip)) {
@@ -145,6 +153,7 @@ public class RequestBioSurveillanceAnalysisAction {
 				}
 
 			}
+			System.out.println("week 1 prev : " + numberOfCasesWeekOnePrevious + "week 2 prev " + numberOfCasesWeekTwoPrevious);
 
 			numberOfYearsCasesOccur = tempMaxYear - tempMinYear + 1;
 			double avgWeekOne = numberOfCasesWeekOnePrevious
@@ -175,8 +184,9 @@ public class RequestBioSurveillanceAnalysisAction {
 				}
 
 			}
-			
-			 weekOneThresholdCompared = (numberOfCasesWeekOne/avgWeekOne) * 100;
+			System.out.println("number of cases 1 : " + numberOfCasesWeekOne + " number of case 2 : " + numberOfCasesWeekTwo);
+			System.out.println("avg 1st week : "+ avgWeekOne + "avg 2nd week :" + avgWeekTwo);
+			weekOneThresholdCompared = (numberOfCasesWeekOne/avgWeekOne) * 100;
 			 weekTwoThresholdCompared = (numberOfCasesWeekTwo/avgWeekTwo) * 100;
 
 		} catch (ParseException e) {
@@ -191,7 +201,8 @@ public class RequestBioSurveillanceAnalysisAction {
 			double secondWeekOfRequestDate = cal.get(Calendar.WEEK_OF_YEAR);
 			double firstWeekOfRequestDate = secondWeekOfRequestDate - 1;
 			double threshold = Integer.parseInt(requestBio.getThreshold());
-			
+			System.out.println("Threshold : " + threshold);
+			System.out.println("1st week compare : " + weekOneThresholdCompared + "2ndweek : " + weekTwoThresholdCompared);
 			if (weekOneThresholdCompared > threshold
 					&& weekTwoThresholdCompared > threshold) {
 				return true;

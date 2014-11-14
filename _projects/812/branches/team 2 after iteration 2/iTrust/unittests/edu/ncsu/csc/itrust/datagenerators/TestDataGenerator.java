@@ -61,6 +61,11 @@ public class TestDataGenerator {
 		new DBBuilder(factory).executeSQLFile(DIR + "/patientSameZipCode2.sql");
 		new DBBuilder(factory).executeSQLFile(DIR + "/patientSameZipCode3.sql");
 	}
+	
+	public void addOfficeVisitWithMalaria() throws SQLException,FileNotFoundException,IOException
+	{
+		new DBBuilder(factory).executeSQLFile(DIR + "/ovAdditionalMalaria.sql");
+	}
 
 	public void additionalOfficeVisits() throws SQLException, FileNotFoundException, IOException {
 		new DBBuilder(factory).executeSQLFile(DIR + "/ovAdditional.sql");

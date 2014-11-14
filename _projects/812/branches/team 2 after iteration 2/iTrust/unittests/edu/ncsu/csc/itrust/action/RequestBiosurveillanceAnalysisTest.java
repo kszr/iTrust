@@ -22,7 +22,7 @@ public class RequestBiosurveillanceAnalysisTest extends TestCase{
 		gen.standardData();
 		
 	}
-	
+	/*
 	public void testHaveInfluenza() throws Exception {
 		gen.addThreePatiensWithSameZipCode();
 
@@ -39,9 +39,22 @@ public class RequestBiosurveillanceAnalysisTest extends TestCase{
 		gen.addOfficeVisitsWithInfluenza();
 
 		BioSurveillanceBean bioBean = new BioSurveillanceBean("487.00", "61820", "01/14/2008");
-		System.out.println("bioBean " + action.requestBioAnalysis(bioBean));
+		
 		assertFalse(action.requestBioAnalysis(bioBean));
 
+	}
+	
+	*/
+	public void testHaveMalaria() throws Exception
+	{
+		gen.addThreePatiensWithSameZipCode();
+		gen.addOfficeVisitWithMalaria();
+		
+		BioSurveillanceBean bioBean = new BioSurveillanceBean("084.5", "61820", "01/14/2000","10");
+		System.out.println("bioBean " + action.requestBioAnalysis(bioBean));
+		assertTrue(action.requestBioAnalysis(bioBean));
+		
+		
 	}
 
 }
