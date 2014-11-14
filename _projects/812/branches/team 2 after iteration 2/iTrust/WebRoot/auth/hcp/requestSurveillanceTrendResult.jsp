@@ -1,16 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@taglib uri="/WEB-INF/tags.tld" prefix="itrust"%>
+<%@page errorPage="/auth/exceptionHandler.jsp"%>
+
+<%@page import="edu.ncsu.csc.itrust.action.EditMonitoringListAction"%>
+<%@page import="edu.ncsu.csc.itrust.beans.TelemedicineBean"%>
+
+<%@include file="/global.jsp" %>
+
+<%
+pageTitle = "iTrust - BioSurveillance Trend Result";
+%>
+
+<%@include file="/header.jsp" %>
+
 <%
 System.out.println("in new");
 System.out.println(request.getParameter("date"));
-
 %>
-</body>
-</html>
+
+
+	
+
+<br />
+<br />
+<br />
+
+<%@include file="/footer.jsp" %>
+
+
