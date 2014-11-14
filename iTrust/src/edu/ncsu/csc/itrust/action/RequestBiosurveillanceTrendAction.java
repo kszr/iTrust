@@ -1,5 +1,13 @@
 package edu.ncsu.csc.itrust.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import edu.ncsu.csc.itrust.beans.BioSurveillanceBean;
 import edu.ncsu.csc.itrust.exception.FormValidationException;
 import edu.ncsu.csc.itrust.exception.ITrustException;
@@ -31,9 +39,30 @@ public class RequestBiosurveillanceTrendAction {
 		System.out.println(requestBio.getZipCode());
 		System.out.println(requestBio.getDate());
 	*/
+
 		return true;
 	}
 	
+	public List<Integer> requestBioTrend(BioSurveillanceBean requestBio,int week) throws ParseException
+	{
+		//list of integer : region,state, nationwide
+		List<Integer> ret = new ArrayList<Integer>();
+		Date requestDate;
+		requestDate = new SimpleDateFormat("MM/dd/yyyy").parse(requestBio
+				.getDate());
+
+		// find date before the given date
+		Calendar WeekBefore = new GregorianCalendar();
+		WeekBefore.setTime(requestDate);
+		WeekBefore.add(Calendar.DATE, (-7*week));
+		
+		
+		
+		
+		
+		ret.add(2);
+		return ret;
+	}
 	
 
 
