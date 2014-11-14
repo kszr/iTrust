@@ -1,9 +1,11 @@
 <%@taglib uri="/WEB-INF/tags.tld" prefix="itrust"%>
 <%@page errorPage="/auth/exceptionHandler.jsp"%>
 
-<%@page import="edu.ncsu.csc.itrust.action.EditMonitoringListAction"%>
-<%@page import="edu.ncsu.csc.itrust.beans.TelemedicineBean"%>
-
+<%@page import="edu.ncsu.csc.itrust.beans.BioSurveillanceBean"%>
+<%@page
+	import="edu.ncsu.csc.itrust.action.RequestBiosurveillanceTrendAction"%>
+<%@page import="java.util.List"%>
+<%@page import = "java.util.ArrayList" %>
 <%@include file="/global.jsp" %>
 
 <%
@@ -21,6 +23,14 @@ String diagcode = request.getParameter("diagcode");
 System.out.println(date+zipcode+diagcode);
 
 RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction();
+
+BioSurveillanceBean bb = new BioSurveillanceBean(
+		diagcode, zipcode,
+		date);
+
+List<Integer> firstWeek = new ArrayList<Integer>();
+
+
 %>
 
 
