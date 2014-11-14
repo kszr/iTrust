@@ -149,8 +149,8 @@ public class RequestBioSurveillanceAnalysisAction {
 					tempDate.setYear(beanYear);
 				}
 
-				if (officeVisitDate.compareTo(twoWeeksDate) > 0
-						&& officeVisitDate.compareTo(oneWeekDate) <= 0
+				if (officeVisitDate.compareTo(twoWeeksDate) >= 0
+						&& officeVisitDate.compareTo(oneWeekDate) < 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekOnePrevious++;
 					if (beanYear > tempMaxYear) {
@@ -160,8 +160,8 @@ public class RequestBioSurveillanceAnalysisAction {
 						tempMinYear = beanYear;
 					}
 
-				} else if (officeVisitDate.compareTo(oneWeekDate) > 0
-						&& officeVisitDate.compareTo(tempDate) <= 0
+				} else if (officeVisitDate.compareTo(oneWeekDate) >= 0
+						&& officeVisitDate.compareTo(tempDate) < 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekTwoPrevious++;
 					if (beanYear > tempMaxYear) {
@@ -198,14 +198,14 @@ public class RequestBioSurveillanceAnalysisAction {
 //				System.out.println("week 1 case " + (officeVisitDate.compareTo(CurtwoWeeksDate) + " "
 //						+ officeVisitDate.compareTo(CuroneWeekDate) + " " +
 //					 patientZip.equals(inputZip)));
-				if (officeVisitDate.compareTo(CurtwoWeeksDate) > 0
-						&& officeVisitDate.compareTo(CuroneWeekDate) <= 0
+				if (officeVisitDate.compareTo(CurtwoWeeksDate) >= 0
+						&& officeVisitDate.compareTo(CuroneWeekDate) < 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekOne++;
 				} 
 				
-				else if (officeVisitDate.compareTo(CuroneWeekDate) > 0
-						&& officeVisitDate.compareTo(requestDate) <= 0
+				else if (officeVisitDate.compareTo(CuroneWeekDate) >= 0
+						&& officeVisitDate.compareTo(requestDate) < 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekTwo++;
 				}
@@ -280,12 +280,12 @@ public class RequestBioSurveillanceAnalysisAction {
 				String inputZip = requestBio.getZipCode().substring(0,
 						Math.min(requestBio.getZipCode().length(), 3));
 
-				if (officeVisitDate.compareTo(twoWeeksDate) > 0
-						&& officeVisitDate.compareTo(oneWeekDate) <= 0
+				if (officeVisitDate.compareTo(twoWeeksDate) >= 0
+						&& officeVisitDate.compareTo(oneWeekDate) < 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekOne++;
-				} else if (officeVisitDate.compareTo(oneWeekDate) > 0
-						&& officeVisitDate.compareTo(requestDate) <= 0
+				} else if (officeVisitDate.compareTo(oneWeekDate) >= 0
+						&& officeVisitDate.compareTo(requestDate) < 0
 						&& patientZip.equals(inputZip)) {
 					numberOfCasesWeekTwo++;
 				}
