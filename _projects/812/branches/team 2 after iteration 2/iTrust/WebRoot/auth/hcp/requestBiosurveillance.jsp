@@ -5,7 +5,8 @@
 
 <%@page import="java.util.List"%>
 <%@page import="edu.ncsu.csc.itrust.beans.BioSurveillanceBean"%>
-<%@page import="edu.ncsu.csc.itrust.action.RequestBiosurveillanceTrendAction"%>
+<%@page
+	import="edu.ncsu.csc.itrust.action.RequestBiosurveillanceTrendAction"%>
 
 
 <%@page import="edu.ncsu.csc.itrust.exception.FormValidationException"%>
@@ -22,101 +23,102 @@
 	//check whether reach the page after POST by checking GET URL parameter
 	//check for analysis Form (Top Form)
 	boolean analysisFormIsFilled = request
-	.getParameter("analysisFormIsFilled") != null
-	&& request.getParameter("analysisFormIsFilled").equals(
-	"true");
+			.getParameter("analysisFormIsFilled") != null
+			&& request.getParameter("analysisFormIsFilled").equals(
+					"true");
 
 	//check for trend Form (Bottom Form)
 	boolean trendFormIsFilled = request
-	.getParameter("trendFormIsFilled") != null
-	&& request.getParameter("trendFormIsFilled").equals("true");
+			.getParameter("trendFormIsFilled") != null
+			&& request.getParameter("trendFormIsFilled").equals("true");
 
 	//IF redirected from analysis form submit
 	if (analysisFormIsFilled) {
 		String analysisDiagCode = request
-		.getParameter("analysisDiagnosisCode");
+				.getParameter("analysisDiagnosisCode");
 		String analysisThreshold = request
-		.getParameter("analysisThreshold");
+				.getParameter("analysisThreshold");
 
 		if (analysisThreshold.isEmpty()
-		&& analysisDiagCode.contains("084.5")) {
+				&& analysisDiagCode.contains("084.5")) {
 %>
 <div align=center>
-<span class="iTrustError">Please input percentage threshold to
-	analyze Malaria.</span>
+	<span class="iTrustError">Please input percentage threshold to
+		analyze Malaria.</span>
 </div>
 <%
-	}
-		else{
-		try {
-	System.out.println("in analysis");
+	} else {
+			try {
+				System.out.println("in analysis");
 
-	//variables for analysis
+				//variables for analysis
 
+				String analysisZipCode = request
+						.getParameter("analysisZipCode");
+				String analysisDate = request
+						.getParameter("analysisDate");
 
-	String analysisZipCode = request
-	.getParameter("analysisZipCode");
-	String analysisDate = request.getParameter("analysisDate");
-		
+				System.out.println("Need threshold for malaria");
 
-	System.out.println("Need threshold for malaria");
+				BioSurveillanceBean bb = new BioSurveillanceBean(
+						analysisDiagCode, analysisZipCode,
+						analysisDate, analysisThreshold);
 
-	BioSurveillanceBean bb = new BioSurveillanceBean(
-	analysisDiagCode, analysisZipCode, analysisDate,
-	analysisThreshold);
+				RequestBioSurveillanceAnalysisAction ra = new RequestBioSurveillanceAnalysisAction(
+						prodDAO);
 
-	RequestBioSurveillanceAnalysisAction ra = new RequestBioSurveillanceAnalysisAction();
-
-	if (ra.requestBioAnalysis(bb)) {
-		//System.out.println("success request analysis");
+				if (ra.requestBioAnalysis(bb)) {
+					//System.out.println("success request analysis");
 %>
 <div align=center>
-	<span class="iTrustError"> The area you requested DOES contain the
-		epidemic you have chosen!!!</span>
+	<span class="iTrustError"> The area you requested DOES contain
+		the epidemic you have chosen!!!</span>
 </div>
 <%
-	}
+				}
 
-	else
-		System.out.println("FAIL request analysis");
-	%>
-	<div align=center>
-	<span class="iTrustError"> The area you requested DOES NOT contain the
-		epidemic you have chosen.</span>
+				else {
+					System.out.println("FAIL request analysis");
+%>
+<div align=center>
+	<span class="iTrustError"> The area you requested DOES NOT
+		contain the epidemic you have chosen.</span>
 </div>
-	<% 
-		}
-		//print out the form validator
-		catch (FormValidationException e) {
+<%
+				}
+			}
+			//print out the form validator
+			catch (FormValidationException e) {
 %>
 <div align=center>
 	<span class="iTrustError"><%=StringEscapeUtils.escapeHtml(e.getMessage())%></span>
 </div>
 <%
-	}}
+			}
+		}
 
 	}
 	//IF redirected from trend form submit
 	if (trendFormIsFilled) {
 		try {
-	System.out.println("in Analysis");
+			System.out.println("in Analysis");
 
-	//variables for trend
-	String trendDiagCode = request
-			.getParameter("trendDiagnosisCode");
+			//variables for trend
+			String trendDiagCode = request
+					.getParameter("trendDiagnosisCode");
 
-	String trendZipCode = request.getParameter("trendZipCode");
-	String trendDate = request.getParameter("trendDate");
-	BioSurveillanceBean bb = new BioSurveillanceBean(
-			trendDiagCode, trendZipCode, trendDate);
+			String trendZipCode = request.getParameter("trendZipCode");
+			String trendDate = request.getParameter("trendDate");
+			BioSurveillanceBean bb = new BioSurveillanceBean(
+					trendDiagCode, trendZipCode, trendDate);
 
-	RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction();
+			RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction();
 
-	if (rt.requestBioTrend(bb))
-		System.out.println("success request trend");
-	else
-		System.out.println("FAIL request trend");
-	//print out form validate error
+			if (rt.requestBioTrend(bb))
+				System.out.println("success request trend");
+			else
+				System.out.println("FAIL request trend");
+			//print out form validate error
 		} catch (FormValidationException e) {
 %>
 <div align=center>
