@@ -15,7 +15,7 @@ pageTitle = "iTrust - BioSurveillance Trend Result";
 <%@include file="/header.jsp" %>
 
 <%
-System.out.println("in new");
+
 
 String date = request.getParameter("date");
 String zipcode = request.getParameter("zipcode");
@@ -81,7 +81,16 @@ firstWeek = rt.requestBioTrend(bb,8);
     }
   </script>
 
-    <h1>Malaria Trend</h1>
+    <h1><% if(diagcode.contains("487"))
+    {
+    	out.print("Influenza Trend");
+    }
+    else if (diagcode.contains("084"))
+    {
+    	out.print("Malaria Trend");
+    }
+    	
+    	%></h1>
     <div id="columnchart_material" style="width: 900px; height: 500px;"></div>
 
 

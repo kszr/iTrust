@@ -285,4 +285,44 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		
 		assertTrue(wr.getText().contains("There is no Epidemic Detection Algorithm for this Diagnosis Code."));
 	}
+	public void testIfRedirectToResultPageMalaria() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "084");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Malaria Trend"));
+	}
+	public void testIfRedirectToResultPageInfluenza() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "487");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Influenza Trend"));
+	}
  }
