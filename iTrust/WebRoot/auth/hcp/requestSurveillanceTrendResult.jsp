@@ -28,7 +28,22 @@ BioSurveillanceBean bb = new BioSurveillanceBean(
 		diagcode, zipcode,
 		date);
 
+List<Integer> eighthWeek = new ArrayList<Integer>();
+List<Integer> seventhWeek = new ArrayList<Integer>();
+List<Integer> sixthWeek = new ArrayList<Integer>();
+List<Integer> fifthWeek = new ArrayList<Integer>();
+List<Integer> fouthWeek = new ArrayList<Integer>();
+List<Integer> thirdWeek = new ArrayList<Integer>();
+List<Integer> secondWeek = new ArrayList<Integer>();
 List<Integer> firstWeek = new ArrayList<Integer>();
+
+eighthWeek = rt.requestBioTrend(bb,1);
+seventhWeek = rt.requestBioTrend(bb,2);
+sixthWeek = rt.requestBioTrend(bb,3);
+fifthWeek = rt.requestBioTrend(bb,4);
+fouthWeek = rt.requestBioTrend(bb,5);
+thirdWeek = rt.requestBioTrend(bb,6);
+secondWeek = rt.requestBioTrend(bb,7);
 firstWeek = rt.requestBioTrend(bb,8);
 
 
@@ -43,14 +58,14 @@ firstWeek = rt.requestBioTrend(bb,8);
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ['Weeks', 'Region', 'State', 'Nationwide'],
-        ['1st', <% out.print("100"); %>, 400, 200],
-        ['2nd', 1170, 460, 250],
-        ['3rd', 660, 1120, 300],
-        ['4th', 1030, 540, 350],
-        ['5th', 1000, 400, 200],
-        ['6th', 1170, 460, 250],
-        ['7th', 660, 1120, 300],
-        ['8th', 1030, 540, 350]
+        ['1st', <% out.print(firstWeek.get(0)); %>, <% out.print(firstWeek.get(1)); %>, <% out.print(firstWeek.get(2)); %>],
+        ['2nd', <% out.print(secondWeek.get(0)); %>, <% out.print(secondWeek.get(1)); %>, <% out.print(secondWeek.get(2)); %>],
+        ['3rd', <% out.print(thirdWeek.get(0)); %>, <% out.print(thirdWeek.get(1)); %>, <% out.print(thirdWeek.get(2)); %>],
+        ['4th', <% out.print(fouthWeek.get(0)); %>, <% out.print(fouthWeek.get(1)); %>, <% out.print(fouthWeek.get(2)); %>],
+        ['5th', <% out.print(fifthWeek.get(0)); %>, <% out.print(fifthWeek.get(1)); %>, <% out.print(fifthWeek.get(2)); %>],
+        ['6th', <% out.print(sixthWeek.get(0)); %>, <% out.print(sixthWeek.get(1)); %>, <% out.print(sixthWeek.get(2)); %>],
+        ['7th', <% out.print(seventhWeek.get(0)); %>, <% out.print(seventhWeek.get(1)); %>, <% out.print(seventhWeek.get(2)); %>],
+        ['8th', <% out.print(eighthWeek.get(0)); %>, <% out.print(eighthWeek.get(1)); %>, <% out.print(eighthWeek.get(2)); %>]
       ]);
 
       var options = {
