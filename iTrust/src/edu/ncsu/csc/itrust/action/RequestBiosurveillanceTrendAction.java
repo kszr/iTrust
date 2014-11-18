@@ -71,11 +71,11 @@ public class RequestBiosurveillanceTrendAction {
 		WeekBefore.add(Calendar.DATE, (-7 * (weekBefore)));
 
 		Date startDate = WeekBefore.getTime();
-		System.out.println("startDate : " + startDate);
+	
 
 		WeekBefore.add(Calendar.DATE, 6);
 		Date endDate = WeekBefore.getTime();
-		System.out.println("endDate" + endDate);
+		
 		List<OfficeVisitBean> beans = new ArrayList<OfficeVisitBean>();
 		if (requestBio.getDiagnosisCode().contains("084")) {
 			beans = ovDAO.getAllOfficeVisitsForDiagnosis("084.5");
@@ -88,9 +88,7 @@ public class RequestBiosurveillanceTrendAction {
 
 		String regionZipCode = requestBio.getZipCode().substring(0, 3);
 		String stateZipCode = requestBio.getZipCode().substring(0, 2);
-		System.out.println("regionZipCode = " + regionZipCode);
-		System.out.println("stateZipCode = " + stateZipCode);
-
+		
 		for (int i = 0; i < beans.size(); i++) {
 			Date officeVisitDate = beans.get(i).getVisitDate();
 			long patientID = beans.get(i).getPatientID();
@@ -99,8 +97,7 @@ public class RequestBiosurveillanceTrendAction {
 					Math.min(patient.getZip().length(), 3));
 			String patientStateZip = patient.getZip().substring(0,
 					Math.min(patient.getZip().length(), 2));
-			System.out.println("patientRegionZip = " + patientRegionZip  );
-			System.out.println("patientRegionState = " + patientStateZip  );
+			
 			// check date in range
 			if (officeVisitDate.compareTo(startDate) >= 0
 					&& officeVisitDate.compareTo(endDate) <= 0) {
