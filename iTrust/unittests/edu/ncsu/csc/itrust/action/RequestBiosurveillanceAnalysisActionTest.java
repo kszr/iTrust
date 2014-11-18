@@ -8,7 +8,7 @@ import edu.ncsu.csc.itrust.datagenerators.TestDataGenerator;
 import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 import junit.framework.TestCase;
 
-public class RequestBiosurveillanceAnalysisTest extends TestCase{
+public class RequestBiosurveillanceAnalysisActionTest extends TestCase{
 	
 
 	private TestDataGenerator gen = new TestDataGenerator();
