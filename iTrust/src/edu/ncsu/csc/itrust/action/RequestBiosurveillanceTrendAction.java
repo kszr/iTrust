@@ -106,7 +106,7 @@ public class RequestBiosurveillanceTrendAction {
 					&& officeVisitDate.compareTo(endDate) <= 0) {
 				if (regionZipCode.equals(patientRegionZip)) {
 					regionalCase++;
-				} else if (regionZipCode.equals(patientStateZip)) {
+				} if (stateZipCode.equals(patientStateZip)) {
 					stateCase++;
 				}
 
