@@ -99,9 +99,11 @@ public class RequestBiosurveillanceTrendAction {
 					Math.min(patient.getZip().length(), 3));
 			String patientStateZip = patient.getZip().substring(0,
 					Math.min(patient.getZip().length(), 2));
+			System.out.println("patientRegionZip = " + patientRegionZip  );
+			System.out.println("patientRegionState = " + patientStateZip  );
 			// check date in range
 			if (officeVisitDate.compareTo(startDate) >= 0
-					&& officeVisitDate.compareTo(endDate) < 0) {
+					&& officeVisitDate.compareTo(endDate) <= 0) {
 				if (regionZipCode.equals(patientRegionZip)) {
 					regionalCase++;
 				} else if (regionZipCode.equals(patientStateZip)) {
