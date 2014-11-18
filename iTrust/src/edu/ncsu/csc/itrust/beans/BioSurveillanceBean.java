@@ -58,6 +58,27 @@ public class BioSurveillanceBean {
 	public void setDiagnosisCode(String diagnosisCode) {
 		this.diagnosisCode = diagnosisCode;
 	}
+	
+	public boolean isMalariaDiagCode(String diagnosisCode) {
+		String[] diagCodeInteger = diagnosisCode.split("\\.");
+		if(diagCodeInteger[0].equals("84") || diagCodeInteger[0].equals("084")) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	public boolean isInfluenzaDiagCode(String diagnosisCode) {
+		String[] diagCodeInteger = diagnosisCode.split("\\.");
+		if(diagCodeInteger[0].equals("487")) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	/**
 	 * 
 	 * @return the zipCode

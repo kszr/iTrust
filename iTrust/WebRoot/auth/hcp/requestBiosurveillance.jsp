@@ -104,7 +104,7 @@
 			RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction(prodDAO);
 
 			if (rt.requestBioTrendVerify(bb)) {
-				if (bb.getDiagnosisCode().contains("84") || bb.getDiagnosisCode().contains("487")) {
+				if (bb.isMalariaDiagCode(bb.getDiagnosisCode()) || bb.isInfluenzaDiagCode(bb.getDiagnosisCode())) {
 					String site = new String(
 							"/iTrust/auth/hcp/requestSurveillanceTrendResult.jsp?zipcode="
 									+ trendZipCode + "&date="
