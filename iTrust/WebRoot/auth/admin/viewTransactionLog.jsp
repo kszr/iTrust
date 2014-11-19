@@ -5,6 +5,7 @@
 <%@page import="edu.ncsu.csc.itrust.exception.FormValidationException"%>
 <%@page import="edu.ncsu.csc.itrust.action.AddERespAction"%>
 <%@page import="edu.ncsu.csc.itrust.enums.Role"%>
+<%@page import="edu.ncsu.csc.itrust.enums.TransactionType"%>
 
 <%@include file="/global.jsp" %>
 
@@ -19,32 +20,24 @@ pageTitle = "iTrust - View Transaction Log";
 <input type="hidden" name="formIsFilled" value="true"><br />
 <p>Logged in as 
 <select name="logged_in_role">
-<option value="HCP">Health Care Personnel (HCP)</option>
-<option value="patient">Patient</option>
-<option value="administrator">Administrator</option>
-<option value="LHCP">Licensed Health Care Professional (LHCP)</option>
-<option value="DLHCP">Designated Licensed Health Care Professional (DLHCP)</option>
-<option value="ER">Emergency Responder (ER)</option>
-<option value="UAP">Unlicensed Authorized Personnel (UAP)</option>
-<option value="software_tester">Software Tester</option>
-<option value="personal_representative">Personal Representative</option>
-<option value="PHA">Public Health Agent (PHA)</option>
-<option value="LT">Lab Technician (LT)</option>
+<% 
+for(int i =0 ; i < Role.values().length; i++)
+{
+out.print("<option value= " + Role.values()[i] +"> " + Role.values()[i].getUserRolesString() +"</option>"); 
+}
+
+%>
 </select></p>
 
 <p>Secondary user
-<select name="logged_in_role">
-<option value="HCP">Health Care Personnel (HCP)</option>
-<option value="patient">Patient</option>
-<option value="administrator">Administrator</option>
-<option value="LHCP">Licensed Health Care Professional (LHCP)</option>
-<option value="DLHCP">Designated Licensed Health Care Professional (DLHCP)</option>
-<option value="ER">Emergency Responder (ER)</option>
-<option value="UAP">Unlicensed Authorized Personnel (UAP)</option>
-<option value="software_tester">Software Tester</option>
-<option value="personal_representative">Personal Representative</option>
-<option value="PHA">Public Health Agent (PHA)</option>
-<option value="LT">Lab Technician (LT)</option>
+<select name="secondary_user">
+<% 
+for(int i =0 ; i < Role.values().length; i++)
+{
+out.print("<option value= " + Role.values()[i] +"> " + Role.values()[i].getUserRolesString() +"</option>"); 
+}
+
+%>
 </select></p>
 <p>
 Start Date
@@ -62,17 +55,16 @@ End Date
 		</p>
 		
 <p>Transaction Type <select name="logged_in_role">
-<option value="HCP">Health Care Personnel (HCP)</option>
-<option value="patient">Patient</option>
-<option value="administrator">Administrator</option>
-<option value="LHCP">Licensed Health Care Professional (LHCP)</option>
-<option value="DLHCP">Designated Licensed Health Care Professional (DLHCP)</option>
-<option value="ER">Emergency Responder (ER)</option>
-<option value="UAP">Unlicensed Authorized Personnel (UAP)</option>
-<option value="software_tester">Software Tester</option>
-<option value="personal_representative">Personal Representative</option>
-<option value="PHA">Public Health Agent (PHA)</option>
-<option value="LT">Lab Technician (LT)</option>
+<% 
+out.print("<option value=  \"all\">  Show All Transaction Type </option>"); 
+
+for(int i =0 ; i < TransactionType.values().length; i++)
+{
+out.print("<option value= " + TransactionType.values()[i] +"> " + TransactionType.values()[i] +"</option>"); 
+}
+
+%>
+
 </select></p><br>
 <p><input type="submit"  value="View">
 <input type="submit"  value="Summarize">
