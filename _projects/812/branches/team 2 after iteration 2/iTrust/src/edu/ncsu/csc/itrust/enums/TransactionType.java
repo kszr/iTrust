@@ -149,13 +149,13 @@ public enum TransactionType {
     /**HEALTH_REPRESENTATIVE_UNDECLARE*/
     HEALTH_REPRESENTATIVE_UNDECLARE(1301, "Undeclare personal health representative", "undeclared a personal health representative", true),
     /**REQUEST_BIOSURVEILLANCE_ANALYSIS_MALARIA */
-    REQUEST_BIOSURVEILLANCE_ANALYSIS_MALARIA(1400,"Request Malaria analysis","Request biosurveillance for Malaria analysis",false),
+    REQUEST_BIOSURVEILLANCE_ANALYSIS_MALARIA_VIEW(1400,"Request Malaria analysis","Request biosurveillance for Malaria analysis",false),
     /**REQUEST_BIOSURVEILLANCE_ANALYSIS_INFLUENZA */
-    REQUEST_BIOSURVEILLANCE_ANALYSIS_INFLUENZA(1401,"Request Influenza analysis","Request biosurveillance for Influenza analysis",false),
+    REQUEST_BIOSURVEILLANCE_ANALYSIS_INFLUENZA_VIEW(1401,"Request Influenza analysis","Request biosurveillance for Influenza analysis",false),
     /**REQUEST_BIOSURVEILLANCE_TREND_MALARIA */
-    REQUEST_BIOSURVEILLANCE_TREND_MALARIA(1410,"Request Malaria trend","Request biosurveillance for Malaria trend",false),
+    REQUEST_BIOSURVEILLANCE_TREND_MALARIA_VIEW(1410,"Request Malaria trend","Request biosurveillance for Malaria trend",false),
     /**REQUEST_BIOSURVEILLANCE_TREND_INFLUENZA */
-    REQUEST_BIOSURVEILLANCE_TREND_INFLUENZA(1411,"Request Influenza analysis","Request biosurveillance for Influenza analysis",false),
+    REQUEST_BIOSURVEILLANCE_TREND_INFLUENZA_VIEW(1411,"Request Influenza trend","Request biosurveillance for Influenza analysis",false),
     /**MEDICAL_PROCEDURE_CODE_ADD*/
     MEDICAL_PROCEDURE_CODE_ADD(1500, "Add Medical procedure code", "added a medical procedure code", false),
     /**MEDICAL_PROCEDURE_CODE_VIEW*/

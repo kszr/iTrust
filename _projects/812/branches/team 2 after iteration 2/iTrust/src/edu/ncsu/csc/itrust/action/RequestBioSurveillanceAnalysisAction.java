@@ -13,6 +13,7 @@ import edu.ncsu.csc.itrust.beans.PatientBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.dao.mysql.OfficeVisitDAO;
 import edu.ncsu.csc.itrust.dao.mysql.PatientDAO;
+import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
 import edu.ncsu.csc.itrust.exception.FormValidationException;
 import edu.ncsu.csc.itrust.exception.ITrustException;
@@ -52,8 +53,8 @@ public class RequestBioSurveillanceAnalysisAction {
 
 		// malaria case
 		if (requestBio.getDiagnosisCode().contains("084")) {
-
-			return determineMalaria(requestBio);
+			boolean determineMalariaTemp = determineMalaria(requestBio);
+			return determineMalariaTemp;
 		}
 		// influenza case
 		else if (requestBio.getDiagnosisCode().contains("487")) {
