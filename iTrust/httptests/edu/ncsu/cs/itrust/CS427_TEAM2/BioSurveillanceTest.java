@@ -114,12 +114,12 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisDiagnosisCode", "084.5");
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisZipCode", "61820");
-		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "02/12/24");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "02/12/2004");
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisThreshold", "");
 		
 		wr = wr.getFormWithName("analysisRequestForm").submit();
 		
-		assertTrue(wr.getText().contains("Please input percentage threshold to analyze Malaria."));
+		assertTrue(wr.getText().contains("This form has not been validated correctly. The following field are not properly filled in: [Threshold for Malaria: Has to be a number]"));
 		
 		
 	}
@@ -257,12 +257,72 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
 		
 		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "a");
-		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "618");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
 		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
 
 		
 		wr = wr.getFormWithName("trendRequestForm").submit();
 		
 		assertTrue(wr.getText().contains("This form has not been validated correctly."));
+	}
+	public void testEnterTrendWithNoAlgorithm() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "840");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("There is no Epidemic Detection Algorithm for this Diagnosis Code."));
+	}
+	public void testIfRedirectToResultPageMalaria() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "084");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Malaria Trend"));
+	}
+	public void testIfRedirectToResultPageInfluenza() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "487");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Influenza Trend"));
 	}
  }
