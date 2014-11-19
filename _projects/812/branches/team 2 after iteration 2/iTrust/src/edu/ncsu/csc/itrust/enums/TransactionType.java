@@ -155,7 +155,7 @@ public enum TransactionType {
     /**REQUEST_BIOSURVEILLANCE_TREND_MALARIA */
     REQUEST_BIOSURVEILLANCE_TREND_MALARIA_VIEW(1410,"Request Malaria trend","Request biosurveillance for Malaria trend",false),
     /**REQUEST_BIOSURVEILLANCE_TREND_INFLUENZA */
-    REQUEST_BIOSURVEILLANCE_TREND_INFLUENZA_VIEW(1411,"Request Influenza trend","Request biosurveillance for Influenza analysis",false),
+    REQUEST_BIOSURVEILLANCE_TREND_INFLUENZA_VIEW(1411,"Request Influenza trend","Request biosurveillance for Influenza trend",false),
     /**MEDICAL_PROCEDURE_CODE_ADD*/
     MEDICAL_PROCEDURE_CODE_ADD(1500, "Add Medical procedure code", "added a medical procedure code", false),
     /**MEDICAL_PROCEDURE_CODE_VIEW*/
