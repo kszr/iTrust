@@ -21,16 +21,30 @@ pageTitle = "iTrust - View Transaction Log";
 <select name="logged_in_role">
 <option value="HCP">Health Care Personnel (HCP)</option>
 <option value="patient">Patient</option>
-<option value="fiat">Fiat</option>
-<option value="audi">Audi</option>
+<option value="administrator">Administrator</option>
+<option value="LHCP">Licensed Health Care Professional (LHCP)</option>
+<option value="DLHCP">Designated Licensed Health Care Professional (DLHCP)</option>
+<option value="ER">Emergency Responder (ER)</option>
+<option value="UAP">Unlicensed Authorized Personnel (UAP)</option>
+<option value="software_tester">Software Tester</option>
+<option value="personal_representative">Personal Representative</option>
+<option value="PHA">Public Health Agent (PHA)</option>
+<option value="LT">Lab Technician (LT)</option>
 </select></p>
 
 <p>Secondary user
 <select name="logged_in_role">
-<option value="volvo">Volvo</option>
-<option value="saab">Saab</option>
-<option value="fiat">Fiat</option>
-<option value="audi">Audi</option>
+<option value="HCP">Health Care Personnel (HCP)</option>
+<option value="patient">Patient</option>
+<option value="administrator">Administrator</option>
+<option value="LHCP">Licensed Health Care Professional (LHCP)</option>
+<option value="DLHCP">Designated Licensed Health Care Professional (DLHCP)</option>
+<option value="ER">Emergency Responder (ER)</option>
+<option value="UAP">Unlicensed Authorized Personnel (UAP)</option>
+<option value="software_tester">Software Tester</option>
+<option value="personal_representative">Personal Representative</option>
+<option value="PHA">Public Health Agent (PHA)</option>
+<option value="LT">Lab Technician (LT)</option>
 </select></p>
 <p>
 Start Date
@@ -46,11 +60,19 @@ End Date
 	<input type=button value="Select Date"
 		onclick="displayDatePicker('startDate');">
 		</p>
-		<p>Transcation Type <select name="logged_in_role">
-<option value="volvo">Volvo</option>
-<option value="saab">Saab</option>
-<option value="fiat">Fiat</option>
-<option value="audi">Audi</option>
+		
+<p>Transaction Type <select name="logged_in_role">
+<option value="HCP">Health Care Personnel (HCP)</option>
+<option value="patient">Patient</option>
+<option value="administrator">Administrator</option>
+<option value="LHCP">Licensed Health Care Professional (LHCP)</option>
+<option value="DLHCP">Designated Licensed Health Care Professional (DLHCP)</option>
+<option value="ER">Emergency Responder (ER)</option>
+<option value="UAP">Unlicensed Authorized Personnel (UAP)</option>
+<option value="software_tester">Software Tester</option>
+<option value="personal_representative">Personal Representative</option>
+<option value="PHA">Public Health Agent (PHA)</option>
+<option value="LT">Lab Technician (LT)</option>
 </select></p><br>
 <p><input type="submit"  value="View">
 <input type="submit"  value="Summarize">
