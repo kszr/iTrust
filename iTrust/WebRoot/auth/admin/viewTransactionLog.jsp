@@ -42,16 +42,16 @@ out.print("<option value= " + Role.values()[i] +"> " + Role.values()[i].getUserR
 <p>
 Start Date
 	<input name="startDate"
-		value="" >
+		value="" placeholder="mm/dd/yyyy">
 	<input type=button value="Select Date"
 		onclick="displayDatePicker('startDate');">
 		</p>
 		<p>
 End Date
-	<input name="startDate"
-		value="" >
-	<input type=button value="Select Date"
-		onclick="displayDatePicker('startDate');">
+	<input name="endDate"
+		value="" placeholder="mm/dd/yyyy" >
+	<input type=button value="Select Date" 
+		onclick="displayDatePicker('endDate');">
 		</p>
 		
 <p>Transaction Type <select name="logged_in_role">
