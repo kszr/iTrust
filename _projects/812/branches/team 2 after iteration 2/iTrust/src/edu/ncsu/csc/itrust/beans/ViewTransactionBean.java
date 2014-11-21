@@ -8,12 +8,15 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class ViewTransactionBean {
 
+	private String role;
 	private String loggedInRole;
 	private String secondaryRole;
 	private String transactionType;
+	private long transactionID;
 	private String startDate;
 	private String endDate;
 	private Timestamp timestamp;
+	private String additionalInfo;
 	
 
 	public ViewTransactionBean(String loggedInRole, String secondaryRole,
@@ -26,21 +29,59 @@ public class ViewTransactionBean {
 		this.endDate = endDate;
 	}
 	
+	public ViewTransactionBean(String role, long transactionID,
+			String transactionType, Timestamp timestamp, String additionalInfo) {
+		super();
+		this.role = role;
+		this.transactionID = transactionID;
+		this.transactionType = transactionType;
+		this.timestamp = timestamp;
+		this.additionalInfo = additionalInfo;
+	}
+
 	public ViewTransactionBean(String loggedInRole, String secondaryRole,
-			String transactionType, Timestamp timestamp) {
+			String transactionType, Timestamp timestamp, String additionalInfo) {
 		super();
 		this.loggedInRole = loggedInRole;
 		this.secondaryRole = secondaryRole;
 		this.transactionType = transactionType;
 		this.timestamp = timestamp;
+		this.additionalInfo = additionalInfo;
+	}
+	
+	public ViewTransactionBean() {
 	}
 
+	public long getTransactionID() {
+		return transactionID;
+	}
+
+	public void setTransactionID(long transactionID) {
+		this.transactionID = transactionID;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	public String getAdditionalInfo() {
+		return additionalInfo;
+	}
+
+	public void setAdditionalInfo(String additionalInfo) {
+		this.additionalInfo = additionalInfo;
+	}
+	
 	public Timestamp getTimestamp() {
-		return timestamp;
+		return (Timestamp) timestamp.clone();
 	}
 
 	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
+		this.timestamp = (Timestamp) timestamp.clone();
 	}
 	
 	public String getLoggedInRole() {
@@ -68,10 +109,7 @@ public class ViewTransactionBean {
 	}
 
 	public String getStartDate() {
-		String[] temp = startDate.split("/");
-		String DataBaseDate = temp[2] + "/" + temp[0] + "/" + temp[1];
-		
-		return DataBaseDate;
+		return startDate;
 	}
 
 	public void setStartDate(String startDate) {
@@ -79,19 +117,11 @@ public class ViewTransactionBean {
 	}
 
 	public String getEndDate() {
-		String[] temp = endDate.split("/");
-		String DataBaseDate = temp[2] + "/" + temp[0] + "/" + temp[1];
-		
-		return DataBaseDate;
+		return endDate;
 	}
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
-	}
-
-	public int getCodeFromTransactionTypeName(String TransactionName) {
-		
-		return 0;
 	}
 
 }
