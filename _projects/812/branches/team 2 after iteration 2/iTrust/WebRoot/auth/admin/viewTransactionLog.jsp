@@ -74,6 +74,11 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 	}
 	
 }
+else if (request.getParameter("formIsFilled") != null && request.getParameter("formIsFilled").equals("true") 
+&& request.getParameter("option").equals("Summarize"))
+{
+	System.out.println("summarize");
+}
 
 %>
 
