@@ -26,8 +26,7 @@ pageTitle = "iTrust - View Transaction Log";
 //System.out.println(request.getParameter("formIsFilled"));
 TransactionBean tb = new TransactionBean();
 
-if(request.getParameter("formIsFilled") != null && request.getParameter("formIsFilled").equals("true") 
-&& request.getParameter("option").equals("View"))
+if(request.getParameter("formIsFilled") != null && request.getParameter("formIsFilled").equals("true") )
 {
 
 	String date = request.getParameter("startDate");
@@ -53,12 +52,25 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 			String logUser = request.getParameter("logged_in_role");
 			String secondUser = request.getParameter("secondary_user");
 			String type = request.getParameter("type");
-			String site = new String(
+			String site = new String();
+			if(request.getParameter("option").equals("View"))
+			{
+			site = 
 					"/iTrust/auth/admin/viewTransactionLogTable.jsp?loggeduser="
 							+ logUser + "&secondaryuser="
 							+ secondUser + "&startdate="
 							+ date +"&enddate="
-							+ endDate +  "&type=" + type);
+							+ endDate +  "&type=" + type;
+			}
+			else if (request.getParameter("option").equals("Summarize"))
+			{
+				site = 
+						"/iTrust/auth/admin/viewTransactionLogChart.jsp?loggeduser="
+								+ logUser + "&secondaryuser="
+								+ secondUser + "&startdate="
+								+ date +"&enddate="
+								+ endDate +  "&type=" + type;
+			}
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", site);
 			}
@@ -73,11 +85,6 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 		<%
 	}
 	
-}
-else if (request.getParameter("formIsFilled") != null && request.getParameter("formIsFilled").equals("true") 
-&& request.getParameter("option").equals("Summarize"))
-{
-	System.out.println("summarize");
 }
 
 %>
