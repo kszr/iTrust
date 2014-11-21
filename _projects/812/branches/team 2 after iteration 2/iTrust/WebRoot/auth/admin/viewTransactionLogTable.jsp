@@ -31,10 +31,10 @@ String loggedUser = request.getParameter("loggeduser");
 String secondaryUser = request.getParameter("secondaryuser");
 String type = request.getParameter("type");
 
-ViewTransactionBean bean = new ViewTransactionBean(loggedUser,secondaryUser,startDate,endDate,type);
+ViewTransactionBean bean = new ViewTransactionBean(loggedUser,secondaryUser,type,startDate,endDate);
 
-ViewTransactionAction action = new ViewTransactionAction();
-//ViewTransactionAction action = new ViewTransactionAction(prodDAO);
+//ViewTransactionAction action = new ViewTransactionAction();
+ViewTransactionAction action = new ViewTransactionAction(prodDAO);
 List<TransactionBean> transactionList = new ArrayList<TransactionBean>();
 transactionList = action.getTransactionView(bean);
 
