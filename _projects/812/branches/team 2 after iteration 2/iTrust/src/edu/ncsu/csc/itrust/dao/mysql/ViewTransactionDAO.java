@@ -56,49 +56,50 @@ public class ViewTransactionDAO {
 		try {
 			conn = factory.getConnection();
 			System.out.println("hey");
-			ps = conn.prepareStatement(//"SELECT * FROM transactionlog ORDER BY timeLogged DESC");
-//					"CREATE TABLE IF NOT EXISTS BLAH1 AS ("
+			
+			if(input.getLoggedInRole().equals("all")){
+				ps = conn.prepareStatement(
+					"SELECT users.role, transactionlog.transactionID, transactionlog.transactionCode, transactionlog.timeLogged, transactionlog.addedInfo "
+					+ "FROM transactionlog "
+					+ "INNER JOIN users "
+					+ "ON transactionlog.loggedInMID=users.MID "
+					+ "ORDER BY timeLogged DESC;");
+			}
+			else {
+				ps = conn.prepareStatement(
 					"SELECT users.role, transactionlog.transactionID, transactionlog.transactionCode, transactionlog.timeLogged, transactionlog.addedInfo "
 					+ "FROM transactionlog "
 					+ "INNER JOIN users "
 					+ "ON transactionlog.loggedInMID=users.MID "
 					+ "AND users.Role=\'" + input.getLoggedInRole().toLowerCase() + "\' "
 					+ "ORDER BY timeLogged DESC;");
-					
+			}
+
 			ResultSet rs = ps.executeQuery();
 			List<ViewTransactionBean> Primaryloadlist = loader.loadViewList(rs);
-//					+ "Select * From BLAH1; "
-//					+ "DROP TEMPORARY TABLE BLAH1 ");
-					
-//					+ "CREATE TEMPORARY TABLE IF NOT EXISTS BLAH2 AS ("
-//					+ "SELECT transactionlog.* "
-//					+ "FROM transactionlog "
-//					+ "INNER JOIN users "
-//					+ "ON transactionlog.secondaryMID=users.MID "
-//					+ "AND users.Role=\'" + input.getSecondaryRole().toLowerCase() + "\'); "
-//					
-//					+ "SELECT BLAH1.* "
-//					+ "FROM BLAH1, BLAH2 "
-//					+ "WHERE BLAH1.transactionID=BLAH2.transactionID "
-//					+ "AND DATE(BLAH1.timeLogged) >= \'" + input.getStartDate() + "\' "
-//					+ "AND DATE(BLAH1.timeLogged) <= \'" + input.getEndDate() + "\' "
-//					+ "AND BLAH1.transactionCode = \'" 
-//					+ TransactionType.getCodeFromTransactionTypeName(input.getTransactionType()) + "\' "
-//					+ "ORDER BY timeLogged DESC, transactionID DESC; "
-//					
-//					+ "DROP TEMPORARY TABLE BLAH1, BLAH2;");
 			
 			System.out.println("ps: " + ps.toString());
+					
+			System.out.println("went to the end 1" + input.getLoggedInRole());
 			
-			
-			System.out.println("went to the end 1");
-			ps1 = conn.prepareStatement(
+			if(input.getSecondaryRole().equals("all")){
+				ps1 = conn.prepareStatement(
 					"SELECT users.role, transactionlog.transactionID, transactionlog.transactionCode, transactionlog.timeLogged, transactionlog.addedInfo "
 					+ "FROM transactionlog "
-					+ "INNER JOIN users "
+					+ "LEFT JOIN users "
 					+ "ON transactionlog.secondaryMID=users.MID "
-					+ "AND users.Role=\'" + input.getSecondaryRole().toLowerCase() + "\' "
 					+ "ORDER BY timeLogged DESC;");	
+			}
+			else{
+				ps1 = conn.prepareStatement(
+					"SELECT users.role, transactionlog.transactionID, transactionlog.transactionCode, transactionlog.timeLogged, transactionlog.addedInfo "
+					+ "FROM transactionlog "
+					+ "LEFT JOIN users "
+					+ "ON transactionlog.secondaryMID=users.MID "
+					+ "WHERE users.Role=\'" + input.getSecondaryRole().toLowerCase() + "\' "
+					+ "ORDER BY timeLogged DESC;");					
+			}
+
 			
 			ResultSet rs1 = ps1.executeQuery();
 			
@@ -123,44 +124,58 @@ public class ViewTransactionDAO {
 			
 			List<ViewTransactionBean> newList = new ArrayList<ViewTransactionBean>();
 
-			 for(int i = 0; i < Primaryloadlist.size(); i++)
-			 {
-				 for(int j = 0; j <Secondaryloadlist.size(); j++)
-				 {
-					  if(Primaryloadlist.get(i).getTransactionID() == Secondaryloadlist.get(j).getTransactionID()
-							  && withinDate(Primaryloadlist.get(i), input)
-							  && input.getTransactionType().equals(Primaryloadlist.get(i).getTransactionType()))
-					  {
-						  newList.add(Primaryloadlist.get(i));
-					  }
-				 }
-			 }
+			if(input.getTransactionType().equals("all")) {
+				for(int i = 0; i < Primaryloadlist.size(); i++)
+				{
+					for(int j = 0; j <Secondaryloadlist.size(); j++)
+					{
+						if(Primaryloadlist.get(i).getTransactionID() == Secondaryloadlist.get(j).getTransactionID()
+								  && withinDate(Primaryloadlist.get(i), input))
+						{
+							  newList.add(Primaryloadlist.get(i));
+						}
+					}
+				}
+			}
+			else {
+				for(int i = 0; i < Primaryloadlist.size(); i++)
+				{
+					for(int j = 0; j <Secondaryloadlist.size(); j++)
+					{
+						if(Primaryloadlist.get(i).getTransactionID() == Secondaryloadlist.get(j).getTransactionID()
+								  && withinDate(Primaryloadlist.get(i), input)
+								  && input.getTransactionType().equals(Primaryloadlist.get(i).getTransactionType()))
+						{
+							  newList.add(Primaryloadlist.get(i));
+						}
+					}
+				}
+			}
+			 
+			for(int i = 0; i < newList.size(); i++)
+			{
+				for(int j = 0; j < Primaryloadlist.size(); j++)
+				{
+					if(newList.get(i).getTransactionID() == Primaryloadlist.get(j).getTransactionID())
+					{
+						newList.get(i).setLoggedInRole(Primaryloadlist.get(j).getRole());
+					}
+				}
+			}
+			 
+			for(int i = 0; i < newList.size(); i++)
+			{
+				for(int j = 0; j < Secondaryloadlist.size(); j++)
+				{
+					if(newList.get(i).getTransactionID() == Secondaryloadlist.get(j).getTransactionID())
+					{
+						newList.get(i).setSecondaryRole(Secondaryloadlist.get(j).getRole());
+					}
+				}
+			}
 			 
 			 
-			 for(int i = 0; i < newList.size(); i++)
-			 {
-				 for(int j = 0; j < Primaryloadlist.size(); j++)
-				 {
-					 if(newList.get(i).getTransactionID() == Primaryloadlist.get(j).getTransactionID())
-					 {
-						 newList.get(i).setLoggedInRole(Primaryloadlist.get(j).getRole());
-					 }
-				 }
-			 }
-			 
-			 for(int i = 0; i < newList.size(); i++)
-			 {
-				 for(int j = 0; j < Secondaryloadlist.size(); j++)
-				 {
-					 if(newList.get(i).getTransactionID() == Secondaryloadlist.get(j).getTransactionID())
-					 {
-						 newList.get(i).setSecondaryRole(Secondaryloadlist.get(j).getRole());
-					 }
-				 }
-			 }
-			 
-			 
-			 System.out.println("added" + newList);
+			System.out.println("added" + newList);
 			for(int i=0; i < newList.size(); i++)
 			{
 				System.out.println(newList.get(i).getLoggedInRole() + " " + newList.get(i).getSecondaryRole() + " " +  newList.get(i).getTransactionID());
