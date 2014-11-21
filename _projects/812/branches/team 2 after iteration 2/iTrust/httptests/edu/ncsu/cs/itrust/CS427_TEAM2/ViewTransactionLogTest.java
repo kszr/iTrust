@@ -121,4 +121,5 @@ public class ViewTransactionLogTest extends iTrustHTTPTest {
 		assertTrue(wr.getText().contains("End Date must be before Start Date"));
 
 	}
+	
 }
