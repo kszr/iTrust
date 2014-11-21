@@ -504,18 +504,4 @@ public enum TransactionType {
 		}
 		throw new IllegalArgumentException("No transaction type exists for code " + code);
 	}
-	
-	/**
-	 * parse
-	 * @param String
-	 * @return int
-	 */
-	public static int getCodeFromTransactionTypeName(String TransactionName) {
-		int returnCode = 0;
-		for (TransactionType type : TransactionType.values()) {
-			if (type.toString().equals(TransactionName))
-				returnCode = type.code;
-		}
-		return returnCode;
-	}
 }
