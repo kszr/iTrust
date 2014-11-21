@@ -26,7 +26,8 @@ pageTitle = "iTrust - View Transaction Log";
 //System.out.println(request.getParameter("formIsFilled"));
 TransactionBean tb = new TransactionBean();
 
-if(request.getParameter("formIsFilled") != null && request.getParameter("formIsFilled").equals("true"))
+if(request.getParameter("formIsFilled") != null && request.getParameter("formIsFilled").equals("true") 
+&& request.getParameter("option").equals("View"))
 {
 
 	String date = request.getParameter("startDate");
@@ -38,6 +39,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 
 			Date startDate = new SimpleDateFormat("MM/dd/yyyy").parse(date);
 			Date finishDate = new SimpleDateFormat("MM/dd/yyyy").parse(endDate);
+
 			if(finishDate.before(startDate))
 			{
 				%>
@@ -47,6 +49,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 				<% 
 			}
 			
+			else{
 			String logUser = request.getParameter("logged_in_role");
 			String secondUser = request.getParameter("secondary_user");
 			String type = request.getParameter("type");
@@ -58,7 +61,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 							+ endDate +  "&type=" + type);
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", site);
-
+			}
 			
 	}
 	catch(Exception e)
@@ -75,7 +78,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 %>
 
 
-<form action="viewTransactionLog.jsp" method="post">
+<form action="viewTransactionLog.jsp" name="inputForm" method="post">
 <input type="hidden" name="formIsFilled" value="true"><br />
 <p>Logged in as 
 <select name="logged_in_role">
@@ -104,14 +107,14 @@ out.print("<option value= " + Role.values()[i] +"> " + Role.values()[i].getUserR
 </select></p>
 <p>
 Start Date
-	<input name="startDate"
+	<input required name="startDate"
 		value="" placeholder="mm/dd/yyyy">
 	<input type=button value="Select Date"
 		onclick="displayDatePicker('startDate');">
 		</p>
 		<p>
 End Date
-	<input name="endDate"
+	<input required name="endDate"
 		value="" placeholder="mm/dd/yyyy" >
 	<input type=button value="Select Date" 
 		onclick="displayDatePicker('endDate');">
@@ -129,8 +132,8 @@ out.print("<option value= " + TransactionType.values()[i] +"> " + TransactionTyp
 %>
 
 </select></p><br>
-<p><input type="submit"  value="View">
-<input type="submit"  value="Summarize">
+<p><input type="submit" name="option"  value="View">
+<input type="submit" name="option"  value="Summarize">
 </p>
 
 </form>
