@@ -94,9 +94,9 @@ public class ViewTransactionDAO {
 				ps1 = conn.prepareStatement(
 					"SELECT users.role, transactionlog.transactionID, transactionlog.transactionCode, transactionlog.timeLogged, transactionlog.addedInfo "
 					+ "FROM transactionlog "
-					+ "LEFT JOIN users "
+					+ "INNER JOIN users "
 					+ "ON transactionlog.secondaryMID=users.MID "
-					+ "WHERE users.Role=\'" + input.getSecondaryRole().toLowerCase() + "\' "
+					+ "AND users.Role=\'" + input.getSecondaryRole().toLowerCase() + "\' "
 					+ "ORDER BY timeLogged DESC;");					
 			}
 
