@@ -8,14 +8,14 @@ import edu.ncsu.csc.itrust.beans.TransactionBean;
 import edu.ncsu.csc.itrust.beans.ViewTransactionBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.dao.mysql.ViewTransactionDAO;
+import edu.ncsu.csc.itrust.exception.DBException;
 
 
 
 public class ViewTransactionAction {
 	private ViewTransactionDAO viewTransactionDao;
-
 	
-	public void VeiwTransactionAction(DAOFactory factory)
+	public ViewTransactionAction(DAOFactory factory)
 	{
 		this.viewTransactionDao = factory.getViewTransactionDAO();
 	}
@@ -23,6 +23,19 @@ public class ViewTransactionAction {
 	public List<TransactionBean>  getTransactionView(ViewTransactionBean viewTransactionBean)
 	{
 		List<TransactionBean> ret = new ArrayList<TransactionBean>();
+		
+		try {
+//			System.out.println("logguser: " + viewTransactionBean.getLoggedInRole());
+//			System.out.println("second: " + viewTransactionBean.getSecondaryRole());
+//			System.out.println("startdate: " + viewTransactionBean.getStartDate());
+//			System.out.println("enddate: " + viewTransactionBean.getEndDate());
+//			System.out.println("Transactiontype: " + viewTransactionBean.getTransactionType());
+			ret = viewTransactionDao.getSelectedTransactions(viewTransactionBean);
+			System.out.println("hey");
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return ret;
 		
