@@ -20,9 +20,9 @@ public class ViewTransactionAction {
 		this.viewTransactionDao = factory.getViewTransactionDAO();
 	}
 	
-	public List<TransactionBean>  getTransactionView(ViewTransactionBean viewTransactionBean)
+	public List<ViewTransactionBean>  getTransactionView(ViewTransactionBean viewTransactionBean)
 	{
-		List<TransactionBean> ret = new ArrayList<TransactionBean>();
+		List<ViewTransactionBean> ret = new ArrayList<ViewTransactionBean>();
 		
 		try {
 //			System.out.println("logguser: " + viewTransactionBean.getLoggedInRole());
