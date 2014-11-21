@@ -61,8 +61,8 @@ function drawChart() {
   ]);
 
   var options = {
-    title: 'Number of Transaction vs Logged In Role',
-    hAxis: {title: 'Logged in Role', titleTextStyle: {color: 'red'}
+    title: 'Number of Transaction vs Logged-In Role',
+    hAxis: {title: 'Logged-In Role', titleTextStyle: {color: 'red'}
     }
   };
   
@@ -82,11 +82,45 @@ function drawChart() {
 
   var options = {
 	 title: 'Number of Transaction vs Secondary Role',
-	hAxis: {title: 'Logged in Role', titleTextStyle: {color: 'red'}
+	hAxis: {title: 'Secondary Role', titleTextStyle: {color: 'red'}
                                                     }
                                                   };
   
   var chart = new google.visualization.ColumnChart(document.getElementById('secondary_chart'));
+
+  chart.draw(data, options);
+  
+  //third chart
+  var data = google.visualization.arrayToDataTable([
+                                                    ['Month', 'Number of Transaction'],
+                                                    ['10-2014',  1000],
+                                                    ['11-2014',  1000]
+                                                  ]);
+
+  var options = {
+	 title: 'Number of Transaction vs Months',
+	hAxis: {title: 'Months', titleTextStyle: {color: 'red'}
+                                                    }
+                                                  };
+  
+  var chart = new google.visualization.ColumnChart(document.getElementById('month_chart'));
+
+  chart.draw(data, options);
+  
+  //fouth chart
+  var data = google.visualization.arrayToDataTable([
+                                                    ['Month', 'Number of Transaction'],
+                                                    ['10-2014',  1000],
+                                                    ['11-2014',  1000]
+                                                  ]);
+
+  var options = {
+	 title: 'Number of Transaction vs Transaction Type',
+	hAxis: {title: 'Months', titleTextStyle: {color: 'red'}
+                                                    }
+                                                  };
+  
+  var chart = new google.visualization.ColumnChart(document.getElementById('type_chart'));
 
   chart.draw(data, options);
   
@@ -99,6 +133,6 @@ function drawChart() {
  
  <div id="logged_in_chart" style="width: 900px; height: 500px;"></div>
  <div id="secondary_chart" style="width: 900px; height: 500px;"></div>
-
-
+ <div id="month_chart" style="width: 900px; height: 500px;"></div>
+ <div id="type_chart" style="width: 900px; height: 500px;"></div>
 <%@include file="/footer.jsp" %>
