@@ -64,12 +64,12 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 			}
 			else if (request.getParameter("option").equals("Summarize"))
 			{
-				site = 
+				site = new String(
 						"/iTrust/auth/admin/viewTransactionLogChart.jsp?loggeduser="
 								+ logUser + "&secondaryuser="
 								+ secondUser + "&startdate="
 								+ date +"&enddate="
-								+ endDate +  "&type=" + type;
+								+ endDate +  "&type=" + type);
 			}
 			response.setStatus(response.SC_MOVED_TEMPORARILY);
 			response.setHeader("Location", site);
