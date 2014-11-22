@@ -47,6 +47,21 @@ public class ViewTransactionBeanTest extends TestCase {
 		assertTrue(bean.getTransactionType().equals("PRESCRIPTION_REPORT_VIEW"));
 		assertTrue(bean.getTimestamp().equals(time));
 		assertTrue(bean.getAdditionalInfo().equals("testcase additional info"));
+		
+		ID = 9999;
+		time.setYear(2014);
+		
+		bean.setRole("patient");
+		bean.setTransactionID(ID);
+		bean.setTransactionType("DEATH_TRENDS_VIEW");
+		bean.setTimestamp(time);
+		bean.setAdditionalInfo("new set info test");
+		
+		assertTrue(bean.getRole().equals("patient"));
+		assertTrue(bean.getTransactionID() == ID);
+		assertTrue(bean.getTransactionType().equals("DEATH_TRENDS_VIEW"));
+		assertTrue(bean.getTimestamp().equals(time));
+		assertTrue(bean.getAdditionalInfo().equals("new set info test"));
 
 	}
 	
