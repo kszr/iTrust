@@ -55,7 +55,7 @@ public class ViewTransactionDAO {
 		
 		try {
 			conn = factory.getConnection();
-			System.out.println("hey");
+			System.out.println("hey " + input.getLoggedInRole().toLowerCase());
 			
 			if(input.getLoggedInRole().equals("all")){
 				ps = conn.prepareStatement(
