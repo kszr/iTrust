@@ -8,7 +8,7 @@ import com.meterware.httpunit.WebResponse;
 import edu.ncsu.csc.itrust.datagenerators.TestDataGenerator;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
-public class ViewTransactionLogTest extends iTrustHTTPTest {
+public class ViewTransactionLogTestForTester extends iTrustHTTPTest {
 	
 	/**ADDRESS*/
 	public static final String ADDRESS = "http://localhost:8080/iTrust/auth/admin/viewTransactionLog.jsp";
@@ -23,14 +23,14 @@ public class ViewTransactionLogTest extends iTrustHTTPTest {
 	}
 
 	/*
-	 * Test whether the request viewTransactionType is only accessible to admin user 
+	 * Test whether the request viewTransactionType is only accessible to tester
 	 */
-	public void testEnterPageLoggedInAsADMIN() throws Exception{
-		WebConversation wc = login("9000000001","pw");
+	public void testEnterPageLoggedInAsTESTER() throws Exception{
+		WebConversation wc = login("9999999999","pw");
 		WebResponse wr = wc.getCurrentPage();
-		assertLogged(TransactionType.HOME_VIEW,9000000001L,0L,"");
+
 		
-		assertEquals("iTrust - Admin Home", wr.getTitle());
+		assertEquals("iTrust - Tester Home", wr.getTitle());
 		
 		wr = wr.getLinkWith("View Transaction Log").click();
 		assertEquals("iTrust - View Transaction Log", wr.getTitle());
