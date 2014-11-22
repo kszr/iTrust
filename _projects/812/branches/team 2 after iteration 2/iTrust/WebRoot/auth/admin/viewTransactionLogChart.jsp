@@ -11,16 +11,18 @@
 <%@page import="edu.ncsu.csc.itrust.BeanBuilder"%>
 <%@page import="edu.ncsu.csc.itrust.exception.FormValidationException"%>
 <%@page import="edu.ncsu.csc.itrust.action.ViewTransactionAction"%>
-<%@page import="java.io.*, java.util.Date,java.util.Calendar, java.util.Enumeration,java.sql.Timestamp" %> 
+<%@page
+	import="java.io.*, java.util.Date,java.util.Calendar, java.util.Enumeration,java.sql.Timestamp,java.util.HashMap"%>
 
 
 
 
-<%@page import="java.util.List"%>
+
+<%@page import="java.util.List,java.util.Iterator,java.util.Map"%>
 
 
 
-<%@include file="/global.jsp" %>
+<%@include file="/global.jsp"%>
 
 <%
 pageTitle = "iTrust - View Transaction Log Table";
@@ -38,26 +40,67 @@ ViewTransactionBean bean = new ViewTransactionBean(loggedUser,secondaryUser,type
 
 
 
+
 ViewTransactionAction action = new ViewTransactionAction(prodDAO);
-//List<ViewTransactionBean> transactionList = new ArrayList<ViewTransactionBean>();
-//transactionList = action.getTransactionView(bean);
-//System.out.println(transactionList.size());
+List<ViewTransactionBean> transactionList = new ArrayList<ViewTransactionBean>();
+transactionList = action.getTransactionView(bean);
+System.out.println(transactionList.size());
+
+//check for distinct 
+HashMap first_graph_map = new HashMap();
+first_graph_map = action.getDistinctLoggedUser(transactionList);
+
+
+HashMap second_graph_map = new HashMap();
+second_graph_map = action.getDistinctSecondaryUser(transactionList);
+System.out.println(second_graph_map.size());
+
+Map third_graph_map = new HashMap();
+third_graph_map = action.getDateCount(transactionList);
+System.out.println(third_graph_map.size());
+
+HashMap fourth_graph_map = new HashMap();
+fourth_graph_map = action.getTransactionTypeCount(transactionList);
+System.out.println(fourth_graph_map.size());
 
 
 
 %>
-<%@include file="/header.jsp" %>
+<%@include file="/header.jsp"%>
 
- <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
 function drawChart() {
 
   var data = google.visualization.arrayToDataTable([
     ['Role', 'Number of Transaction'],
-    ['Admin',  1000],
-    ['HCP',  1000]
+  <% 
+  
+  Iterator it = first_graph_map.entrySet().iterator();
+  while (it.hasNext()) {
+
+      Map.Entry pairs = (Map.Entry)it.next();
+	  if(it.hasNext()==true){
+      out.print("['" + pairs.getKey() + "', " + pairs.getValue()+"],");
+
+    
+	  }
+	  else
+	  {
+		
+      out.print("['" + pairs.getKey() + "', " + pairs.getValue()+"]");
+
+	  }
+      
+     
+      it.remove(); // avoids a ConcurrentModificationException
+  }
+  
+
+  %>
+
   ]);
 
   var options = {
@@ -76,8 +119,28 @@ function drawChart() {
   
   var data = google.visualization.arrayToDataTable([
                                                     ['Role', 'Number of Transaction'],
-                                                    ['Admin',  1000],
-                                                    ['HCP',  1000]
+<%                                                   it = second_graph_map.entrySet().iterator();
+                                                    while (it.hasNext()) {
+
+                                                        Map.Entry pairs = (Map.Entry)it.next();
+                                                  	  if(it.hasNext()==true){
+                                                        out.print("['" + pairs.getKey() + "', " + pairs.getValue()+"],");
+
+                                                      
+                                                  	  }
+                                                  	  else
+                                                  	  {
+                                                  		
+                                                        out.print("['" + pairs.getKey() + "', " + pairs.getValue()+"]");
+
+                                                  	  }
+                                                        
+                                                       
+                                                        it.remove(); // avoids a ConcurrentModificationException
+                                                    }
+                                                    
+
+                                                    %>
                                                   ]);
 
   var options = {
@@ -93,8 +156,29 @@ function drawChart() {
   //third chart
   var data = google.visualization.arrayToDataTable([
                                                     ['Month', 'Number of Transaction'],
-                                                    ['10-2014',  1000],
-                                                    ['11-2014',  1000]
+<%                                                   it = third_graph_map.entrySet().iterator();
+                                                    while (it.hasNext()) {
+
+                                                        Map.Entry pairs = (Map.Entry)it.next();
+                                                  	  if(it.hasNext()==true){
+                                                        out.print("['" + pairs.getKey() + "', " + pairs.getValue()+"],");
+
+                                                      
+                                                  	  }
+                                                  	  else
+                                                  	  {
+                                                  		
+                                                        out.print("['" + pairs.getKey() + "', " + pairs.getValue()+"]");
+
+                                                  	  }
+                                                        
+                                                       
+                                                        it.remove(); // avoids a ConcurrentModificationException
+                                                    }
+                                                    
+
+                                                    %>
+         
                                                   ]);
 
   var options = {
@@ -110,13 +194,35 @@ function drawChart() {
   //fouth chart
   var data = google.visualization.arrayToDataTable([
                                                     ['Month', 'Number of Transaction'],
-                                                    ['10-2014',  1000],
-                                                    ['11-2014',  1000]
+                                                    <% 
+                                                    
+                                                    it = fourth_graph_map.entrySet().iterator();
+                                                    while (it.hasNext()) {
+
+                                                        Map.Entry pairs = (Map.Entry)it.next();
+                                                  	  if(it.hasNext()==true){
+                                                        out.print("['" + pairs.getKey() + "', " + pairs.getValue()+"],");
+
+                                                      
+                                                  	  }
+                                                  	  else
+                                                  	  {
+                                                  		
+                                                        out.print("['" + pairs.getKey() + "', " + pairs.getValue()+"]");
+
+                                                  	  }
+                                                        
+                                                       
+                                                        it.remove(); // avoids a ConcurrentModificationException
+                                                    }
+                                                    
+
+                                                    %>
                                                   ]);
 
   var options = {
 	 title: 'Number of Transaction vs Transaction Type',
-	hAxis: {title: 'Months', titleTextStyle: {color: 'red'}
+	hAxis: {title: 'Transaction Type', titleTextStyle: {color: 'red'}
                                                     }
                                                   };
   
@@ -130,9 +236,9 @@ function drawChart() {
 <h2 align="center">Summary</h2>
 
 
- 
- <div id="logged_in_chart" style="width: 900px; height: 500px;"></div>
- <div id="secondary_chart" style="width: 900px; height: 500px;"></div>
- <div id="month_chart" style="width: 900px; height: 500px;"></div>
- <div id="type_chart" style="width: 900px; height: 500px;"></div>
-<%@include file="/footer.jsp" %>
+
+<div id="logged_in_chart" style="width: 900px; height: 500px;"></div>
+<div id="secondary_chart" style="width: 900px; height: 500px;"></div>
+<div id="month_chart" style="width: 900px; height: 500px;"></div>
+<div id="type_chart" style="width: 900px; height: 500px;"></div>
+<%@include file="/footer.jsp"%>
