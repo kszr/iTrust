@@ -84,7 +84,7 @@ public class RequestBiosurveillanceTrendAction {
 		}
 		Integer regionalCase = 0;
 		Integer stateCase = 0;
-		Integer nationwideCase = beans.size();
+		Integer nationwideCase = 0;
 
 		String regionZipCode = requestBio.getZipCode().substring(0, 3);
 		String stateZipCode = requestBio.getZipCode().substring(0, 2);
@@ -106,7 +106,7 @@ public class RequestBiosurveillanceTrendAction {
 				} if (stateZipCode.equals(patientStateZip)) {
 					stateCase++;
 				}
-
+				nationwideCase++;
 			}
 		}
 
