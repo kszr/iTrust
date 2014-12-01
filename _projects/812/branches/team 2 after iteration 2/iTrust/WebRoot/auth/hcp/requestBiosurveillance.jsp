@@ -2,7 +2,7 @@
 <%@taglib uri="/WEB-INF/tags.tld" prefix="itrust"%>
 <%@page errorPage="/auth/exceptionHandler.jsp"%>
 
-<%@page import="java.util.List"%>
+<%@page import="java.util.List,java.util.Date,java.text.SimpleDateFormat"%>
 <%@page import="edu.ncsu.csc.itrust.beans.BioSurveillanceBean"%>
 <%@page import="edu.ncsu.csc.itrust.action.RequestBiosurveillanceTrendAction"%>
 
@@ -38,7 +38,7 @@
 				.getParameter("analysisThreshold");
 
 			try {
-				System.out.println("in analysis");
+				
 
 				//variables for analysis
 
@@ -46,8 +46,34 @@
 						.getParameter("analysisZipCode");
 				String analysisDate = request
 						.getParameter("analysisDate");
-
-				System.out.println("Need threshold for malaria");
+				//error checking for date
+				Date parseDate = new Date();
+				
+				String[] brokenInput = analysisDate.split("/");
+				Integer monthInt = Integer.parseInt(brokenInput[0]);
+				Integer daysInt = Integer.parseInt(brokenInput[1]);
+				Integer yearInt = Integer.parseInt(brokenInput[2]);		
+				
+				if(monthInt > 12 || monthInt < 1 )
+				{
+					%>
+					<div align=center>
+						<span class="iTrustError">Invalid month. Month must be < 12 or >0 </span>
+					</div>
+					<%
+				}
+				
+				else if(daysInt > 31 || daysInt < 1 )
+				{
+					%>
+					<div align=center>
+						<span class="iTrustError">Invalid date. </span>
+					</div>
+					<%
+				}
+				
+						
+				else{
 
 				BioSurveillanceBean bb = new BioSurveillanceBean(
 						analysisDiagCode, analysisZipCode,
@@ -79,7 +105,7 @@
 							contain the epidemic you have chosen.</span>
 					</div>
 					<%
-				}
+				}}
 			}
 			//print out the form validator
 			catch (FormValidationException e) {
@@ -103,6 +129,33 @@
 			
 			String trendZipCode = request.getParameter("trendZipCode");
 			String trendDate = request.getParameter("trendDate");
+			
+			//error checking for date
+			Date parseDate = new Date();
+			
+			String[] brokenInput = trendDate.split("/");
+			Integer monthInt = Integer.parseInt(brokenInput[0]);
+			Integer daysInt = Integer.parseInt(brokenInput[1]);
+			Integer yearInt = Integer.parseInt(brokenInput[2]);		
+			
+			if(monthInt > 12 || monthInt < 1 )
+			{
+				%>
+				<div align=center>
+					<span class="iTrustError">Invalid month. Month must be < 12 or >0 </span>
+				</div>
+				<%
+			}
+			
+			else if(daysInt > 31 || daysInt < 1 )
+			{
+				%>
+				<div align=center>
+					<span class="iTrustError">Invalid date. </span>
+				</div>
+				<%
+			}
+			else{
 			BioSurveillanceBean bb = new BioSurveillanceBean(
 					trendDiagCode, trendZipCode, trendDate);
 
@@ -135,7 +188,7 @@
 			} else {
 
 				System.out.println("FAIL request trend");
-			}
+			}}
 			//print out form validate error
 		} catch (FormValidationException e) {
 			%>
