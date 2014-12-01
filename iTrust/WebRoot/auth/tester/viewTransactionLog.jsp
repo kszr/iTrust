@@ -31,7 +31,38 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 
 	String date = request.getParameter("startDate");
 	String endDate = request.getParameter("endDate");
+	//error checking for date
 
+	try{
+	String[] brokenInput = date.split("/");
+	Integer monthInt = Integer.parseInt(brokenInput[0]);
+	Integer daysInt = Integer.parseInt(brokenInput[1]);
+	Integer yearInt = Integer.parseInt(brokenInput[2]);		
+	
+	String[] brokenInput_endDate = endDate.split("/");
+	Integer monthInt_endDate = Integer.parseInt(brokenInput_endDate[0]);
+	Integer daysInt_endDate = Integer.parseInt(brokenInput_endDate[1]);
+	Integer yearInt_endDate = Integer.parseInt(brokenInput_endDate[2]);	
+	
+	if(monthInt > 12 || monthInt < 1 ||monthInt_endDate > 12 || monthInt_endDate < 1 )
+	{
+		%>
+		<div align=center>
+			<span class="iTrustError">Invalid month. Month must be < 12 or >0 </span>
+		</div>
+		<%
+	}
+	
+	else if(daysInt > 31 || daysInt < 1 ||daysInt_endDate > 31 || daysInt_endDate < 1)
+	{
+		%>
+		<div align=center>
+			<span class="iTrustError">Invalid date. </span>
+		</div>
+		<%
+	}
+	
+	else{
 
 	Date parseDate = new Date();
 	try{
@@ -56,7 +87,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 			if(request.getParameter("option").equals("View"))
 			{
 			site = 
-					"/iTrust/auth/tester/viewTransactionLogTable.jsp?loggeduser="
+					"/iTrust/auth/admin/viewTransactionLogTable.jsp?loggeduser="
 							+ logUser + "&secondaryuser="
 							+ secondUser + "&startdate="
 							+ date +"&enddate="
@@ -65,7 +96,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 			else if (request.getParameter("option").equals("Summarize"))
 			{
 				site = new String(
-						"/iTrust/auth/tester/viewTransactionLogChart.jsp?loggeduser="
+						"/iTrust/auth/admin/viewTransactionLogChart.jsp?loggeduser="
 								+ logUser + "&secondaryuser="
 								+ secondUser + "&startdate="
 								+ date +"&enddate="
@@ -81,6 +112,14 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 		%>
 		<div align=center>
 			<span class="iTrustError">Please input date in the right format (MM/DD/YYYY)</span>
+		</div>
+		<%
+	}}}
+	catch(Exception e)
+	{
+		%>
+		<div align=center>
+			<span class="iTrustError">Please input date in the right format (MM/DD/YYYY) </span>
 		</div>
 		<%
 	}
