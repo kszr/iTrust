@@ -46,22 +46,39 @@ List<ViewTransactionBean> transactionList = new ArrayList<ViewTransactionBean>()
 transactionList = action.getTransactionView(bean);
 System.out.println(transactionList.size());
 
+Boolean nullCheckFirst = false;
+Boolean nullCheckSecond = false;
+Boolean nullCheckThird = false;
+Boolean nullCheckFourth = false;
 //check for distinct 
 HashMap first_graph_map = new HashMap();
 first_graph_map = action.getDistinctLoggedUser(transactionList);
+if(first_graph_map.size() == 0)
+{
+	nullCheckFirst = true;
+}
 
 
 HashMap second_graph_map = new HashMap();
 second_graph_map = action.getDistinctSecondaryUser(transactionList);
-System.out.println(second_graph_map.size());
+if(second_graph_map.size() == 0)
+{
+	nullCheckSecond = true;
+}
 
 Map third_graph_map = new HashMap();
 third_graph_map = action.getDateCount(transactionList);
-System.out.println(third_graph_map.size());
+if(third_graph_map.size() == 0)
+{
+	nullCheckThird = true;
+}
 
 HashMap fourth_graph_map = new HashMap();
 fourth_graph_map = action.getTransactionTypeCount(transactionList);
-System.out.println(fourth_graph_map.size());
+if(fourth_graph_map.size() == 0)
+{
+	nullCheckFourth = true;
+}
 
 
 
@@ -112,9 +129,11 @@ function drawChart() {
   
 
   var chart = new google.visualization.ColumnChart(document.getElementById('logged_in_chart'));
-
+<%
+if(!nullCheckFirst){
+%>
   chart.draw(data, options);
-  
+  <% }%>
   //second chart
   
   var data = google.visualization.arrayToDataTable([
@@ -151,7 +170,11 @@ function drawChart() {
   
   var chart = new google.visualization.ColumnChart(document.getElementById('secondary_chart'));
 
-  chart.draw(data, options);
+  <%
+  if(!nullCheckSecond){
+  %>
+    chart.draw(data, options);
+    <% }%>
   
   //third chart
   var data = google.visualization.arrayToDataTable([
@@ -189,7 +212,11 @@ function drawChart() {
   
   var chart = new google.visualization.ColumnChart(document.getElementById('month_chart'));
 
-  chart.draw(data, options);
+  <%
+  if(!nullCheckThird){
+  %>
+    chart.draw(data, options);
+    <% }%>
   
   //fouth chart
   var data = google.visualization.arrayToDataTable([
@@ -228,17 +255,41 @@ function drawChart() {
   
   var chart = new google.visualization.ColumnChart(document.getElementById('type_chart'));
 
-  chart.draw(data, options);
+  <%
+  if(!nullCheckFourth){
+  %>
+    chart.draw(data, options);
+    <% }%>
   
 
 }
     </script>
 <h2 align="center">Summary</h2>
+<%
+if(nullCheckFirst){
 
+	out.print("<div>No transcation found for Number of Transaction vs Logged-In Role chart</div>");
+   }
+if(nullCheckSecond)
+{
+	out.print("<div>No transcation found for Number of Transaction vs Secondary Role chart</div>");
+}
+if (nullCheckThird)
+{
+	out.print("<div>No transcation found for Number of Transaction vs Months chart</div>");
+}
+ if(nullCheckFourth)
+{
+	out.print("<div>No transcation found for Number of Transaction vs Transaction Type chart</div>");
+}
+else {
+%>
 
 
 <div id="logged_in_chart" style="width: 900px; height: 500px;"></div>
+
 <div id="secondary_chart" style="width: 900px; height: 500px;"></div>
 <div id="month_chart" style="width: 900px; height: 500px;"></div>
 <div id="type_chart" style="width: 900px; height: 500px;"></div>
+<%} %>
 <%@include file="/footer.jsp"%>
