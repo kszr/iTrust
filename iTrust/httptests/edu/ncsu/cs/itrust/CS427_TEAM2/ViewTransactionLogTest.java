@@ -34,8 +34,6 @@ public class ViewTransactionLogTest extends iTrustHTTPTest {
 		
 		wr = wr.getLinkWith("View Transaction Log").click();
 		assertEquals("iTrust - View Transaction Log", wr.getTitle());
-
-		
 	}
 	
 	/*

@@ -87,7 +87,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 			if(request.getParameter("option").equals("View"))
 			{
 			site = 
-					"/iTrust/auth/admin/viewTransactionLogTable.jsp?loggeduser="
+					"/iTrust/auth/tester/viewTransactionLogTable.jsp?loggeduser="
 							+ logUser + "&secondaryuser="
 							+ secondUser + "&startdate="
 							+ date +"&enddate="
@@ -96,7 +96,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 			else if (request.getParameter("option").equals("Summarize"))
 			{
 				site = new String(
-						"/iTrust/auth/admin/viewTransactionLogChart.jsp?loggeduser="
+						"/iTrust/auth/tester/viewTransactionLogChart.jsp?loggeduser="
 								+ logUser + "&secondaryuser="
 								+ secondUser + "&startdate="
 								+ date +"&enddate="
