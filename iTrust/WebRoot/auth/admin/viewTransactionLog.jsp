@@ -33,7 +33,7 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 	String endDate = request.getParameter("endDate");
 	//error checking for date
 
-	
+	try{
 	String[] brokenInput = date.split("/");
 	Integer monthInt = Integer.parseInt(brokenInput[0]);
 	Integer daysInt = Integer.parseInt(brokenInput[1]);
@@ -114,7 +114,15 @@ if(request.getParameter("formIsFilled") != null && request.getParameter("formIsF
 			<span class="iTrustError">Please input date in the right format (MM/DD/YYYY)</span>
 		</div>
 		<%
-	}}
+	}}}
+	catch(Exception e)
+	{
+		%>
+		<div align=center>
+			<span class="iTrustError">Please input date in the right format (MM/DD/YYYY) </span>
+		</div>
+		<%
+	}
 	
 }
 
