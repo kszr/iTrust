@@ -59,7 +59,8 @@ public class BioSurveillanceBean {
 		this.diagnosisCode = diagnosisCode;
 	}
 	
-	public boolean isMalariaDiagCode(String diagnosisCode) {
+	public boolean isMalariaDiagCode() {
+		String diagnosisCode = this.diagnosisCode;
 		String[] diagCodeInteger = diagnosisCode.split("\\.");
 		if(diagCodeInteger[0].equals("84") || diagCodeInteger[0].equals("084")) {
 			return true;
@@ -69,7 +70,8 @@ public class BioSurveillanceBean {
 		}
 	}
 	
-	public boolean isInfluenzaDiagCode(String diagnosisCode) {
+	public boolean isInfluenzaDiagCode() {
+		String diagnosisCode = this.diagnosisCode;
 		String[] diagCodeInteger = diagnosisCode.split("\\.");
 		if(diagCodeInteger[0].equals("487")) {
 			return true;

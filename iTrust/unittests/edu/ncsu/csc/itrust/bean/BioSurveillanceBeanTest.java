@@ -38,6 +38,7 @@ public class BioSurveillanceBeanTest extends TestCase {
 		assertTrue(bean.getDiagnosisCode().equals("084"));
 		assertTrue(bean.getZipCode().equals("61801"));
 		assertTrue(bean.getDate().equals("10/10/2005"));
+		assertTrue(bean.isMalariaDiagCode());
 
 		bean.setDiagnosisCode("123");
 		bean.setZipCode("11111");
@@ -47,6 +48,25 @@ public class BioSurveillanceBeanTest extends TestCase {
 		assertTrue(bean.getZipCode().equals("11111"));
 		assertTrue(bean.getDate().equals("02/18/1992"));
 	}
+	
+	public void testInfluenzaBeanWithoutThreshold()
+	{
+		BioSurveillanceBean bean = new BioSurveillanceBean("487", "61801", "10/10/2005");
+		
+		assertTrue(bean.getDiagnosisCode().equals("487"));
+		assertTrue(bean.getZipCode().equals("61801"));
+		assertTrue(bean.getDate().equals("10/10/2005"));
+		assertTrue(bean.isInfluenzaDiagCode());
+
+		bean.setDiagnosisCode("123");
+		bean.setZipCode("11111");
+		bean.setDate("02/18/1992");
+		
+		assertTrue(bean.getDiagnosisCode().equals("123"));
+		assertTrue(bean.getZipCode().equals("11111"));
+		assertTrue(bean.getDate().equals("02/18/1992"));
+	}
+	
 }
 
 

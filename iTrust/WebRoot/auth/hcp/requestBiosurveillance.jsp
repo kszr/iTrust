@@ -160,15 +160,15 @@
 					trendDiagCode, trendZipCode, trendDate);
 
 			RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction(prodDAO);
-			if(bb.isMalariaDiagCode(bb.getDiagnosisCode())){
+			if(bb.isMalariaDiagCode()){
 				loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_TREND_MALARIA_VIEW, loggedInMID.longValue(), 0, "View Malaria Trend: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode());
 			}
-			else if(bb.isInfluenzaDiagCode(bb.getDiagnosisCode())){
+			else if(bb.isInfluenzaDiagCode()){
 				loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_ANALYSIS_INFLUENZA_VIEW, loggedInMID.longValue(), 0, "View Influenza Trend: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode());
 			}
 			
 			if (rt.requestBioTrendVerify(bb)) {
-				if (bb.isMalariaDiagCode(bb.getDiagnosisCode()) || bb.isInfluenzaDiagCode(bb.getDiagnosisCode())) {
+				if (bb.isMalariaDiagCode() || bb.isInfluenzaDiagCode()) {
 					String site = new String(
 							"/iTrust/auth/hcp/requestSurveillanceTrendResult.jsp?zipcode="
 									+ trendZipCode + "&date="

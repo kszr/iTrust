@@ -39,6 +39,6 @@ public class RequestBiosurveillanceTrendActionTest extends TestCase{
 		
 		eigthWeek = action.requestBioTrend(bioBean, 1);
 		
-		assertTrue(eigthWeek.get(0).equals(1) && eigthWeek.get(1).equals(1) && eigthWeek.get(2).equals(2));
+		assertTrue(eigthWeek.get(0).equals(1) && eigthWeek.get(1).equals(1) && eigthWeek.get(2).equals(1));
 	}
 }
