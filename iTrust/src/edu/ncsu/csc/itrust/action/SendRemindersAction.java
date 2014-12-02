@@ -66,7 +66,7 @@ public class SendRemindersAction {
 		/* [S1] A row for showing the reminder message's subject, the name of the recipient, and 
 		 * the timestamp is then visible in the system's reminder message outbox. A bolded row 
 		 * for showing the message subject, the name of the sender, and the timestamp is then 
-		 * visible in the patient’s message inbox, and a fake email (see the notes in the end 
+		 * visible in the patientï¿½s message inbox, and a fake email (see the notes in the end 
 		 * of this page) is sent to the patient that indicates that he/she has a new message 
 		 * from the "System Reminder". For a reminder message for an upcoming appointment, the 
 		 * message sender shall be "System Reminder". The message subject shall be "Reminder: 
@@ -92,23 +92,21 @@ public class SendRemindersAction {
 			message.setTo(appt.getPatient());
 			
 			messVal.validate(message);
-			//emailVal.validate(message);
 			messageDAO.addMessage(message);
+			
+			Email email = new Email();
+			email.setSubject("A new message from System Reminder");
+			email.setFrom("noreply@itrust.com");
+			
+			PatientBean receiver = patientDAO.getPatient(appt.getPatient());
+			email.setToList(Arrays.asList(receiver.getEmail()));
+			
+			email.setBody("You have received a new message from System Reminder in iTrust. To view it, go to \"http://localhost:8080/iTrust/auth/patient/messageInbox.jsp\" and log in to iTrust using your username and password.");
+			
+			emailer.sendEmail(email);
 		}
 		
-		
-		//loggingAction.logEvent(TransactionType.PATIENT_ACTIVATE, loggedInMID.longValue(), Long.valueOf((String)session.getAttribute("pid")).longValue(), "");
-		
-		/*Email email = new Email();
-		email.setSubject("A new message from System Reminder");
-		email.setFrom("noreply@itrust.com");
-		
-		PatientBean receiver = patientDAO.getPatient(mBean.getTo());
-		email.setToList(Arrays.asList(receiver.getEmail()));
-		
-		//email.setBody(String.format("You have received a new message from %s in iTrust. To view it, go to \"http://localhost:8080/iTrust/auth/patient/messageInbox.jsp\" and log in to iTrust using your username and password.", senderName));
-		
-		emailer.sendEmail(email);*/
+		loggingAction.logEvent(TransactionType.SENT_REMINDERS, loggedInMID, 0L, "");
 	}
 	
 	public long daysUntil(Date date) {
