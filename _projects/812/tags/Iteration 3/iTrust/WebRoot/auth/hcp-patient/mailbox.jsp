@@ -88,22 +88,7 @@
 		}
 
 		if (request.getParameter("cancel") != null) {
-			String nf = ",,,,,";
-			boolean error = false;
-			nf = action.validateAndCreateFilter(nf);
-			if (nf.startsWith("Error")) {
-				error = true;
-				headerMessage = nf;
-			}
-
-			if (!error) {
-				if(isHCP) {
-					fps_action.editMessageFilter(nf, loggedInMID.longValue());
-				} else {
-					fpa_action.editMessageFilter(nf, loggedInMID.longValue());
-				}
-				response.sendRedirect("messageInbox.jsp?filter=false");
-			}
+			response.sendRedirect("messageInbox.jsp?filter=true");
 		}
 		else if (request.getParameter("test") != null
 				|| request.getParameter("save") != null) {
