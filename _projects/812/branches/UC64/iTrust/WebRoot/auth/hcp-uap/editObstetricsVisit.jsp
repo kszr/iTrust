@@ -60,17 +60,17 @@ pageTitle = "iTrust - Document "+visitName;
         	confirm = ovaction.updateInformation(form, false);
         	ovIDString = ""+ovaction.getOvID();
         	if (createVisit) {        		
-       			//ovaction.logOfficeVisitEvent(TransactionType.OFFICE_VISIT_CREATE);
+       			ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_CREATE);
         		createVisit = false;
         	} else {
-                //ovaction.logOfficeVisitEvent(TransactionType.OFFICE_VISIT_EDIT);
+                ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_EDIT);
         	}
         } catch (FormValidationException e) {
             e.printHTML(pageContext.getOut());
             confirm = "Input not valid";
         }
     } else if (!createVisit) {
-        //ovaction.logOfficeVisitEvent(TransactionType.OFFICE_VISIT_VIEW);
+        ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_VIEW);
     }
     
     String disableSubformsString = createVisit ? "disabled=\"true\"" : "";

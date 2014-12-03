@@ -105,6 +105,12 @@ public enum TransactionType {
 	PATIENT_HEALTH_INFORMATION_EDIT(1001, "Enter/edit personal health information", "edited your basic health information", true),
 	/**BASIC_HEALTH_CHARTS_VIEW*/
 	BASIC_HEALTH_CHARTS_VIEW(1002, "View Basic Health Charts", "viewed you basic health information charts", true),
+	/**OBSTETRICS_VISIT_CREATE*/
+	OBSTETRICS_VISIT_CREATE(6400, "Create Obstetrics Visits", "created an obstetrics visit", true),
+	/**OBSTETRICS_VISIT_VIEW*/
+	OBSTETRICS_VISIT_VIEW(6401, "View Obstetrics Visits", "viewed your obstetrics visit", true),
+	/**OBSTETRICS_VISIT_EDIT*/
+	OBSTETRICS_VISIT_EDIT(6402, "Edit Obstetrics Visits", "edited your obstetrics visit", true),
 	/**OFFICE_VISIT_CREATE*/
 	OFFICE_VISIT_CREATE(1100, "Create Office Visits", "created an office visit", true),
 	/**OFFICE_VISIT_VIEW*/
