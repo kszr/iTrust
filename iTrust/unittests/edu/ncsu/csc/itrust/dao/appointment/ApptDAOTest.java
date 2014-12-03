@@ -162,13 +162,13 @@ public class ApptDAOTest extends TestCase {
 		assertEquals("Ultrasound", type.getName());
 	}
 	
-	public void testFutureAppointments() {
+	public void testFutureAppointments() throws Exception {
 		List<ApptBean> futureAppts = apptDAO.getFutureAppts(6);
 		assertEquals(0, futureAppts.size());
-		
-		apptDAO.scheduleAppt(a3);
+
 		apptDAO.scheduleAppt(a4);
-		
+		apptDAO.scheduleAppt(a5);
+
 		futureAppts = apptDAO.getFutureAppts(6);
 		assertEquals(1, futureAppts.size());
 	}

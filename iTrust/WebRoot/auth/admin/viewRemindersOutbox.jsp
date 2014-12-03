@@ -27,7 +27,7 @@ pageTitle = "iTrust - Sent Reminder";
 			response.sendRedirect("remindersOutbox.jsp");
 		}
 		List<MessageBean> messages = null; 
-		if (session.getAttribute("messages") != null) {
+		if (session.getAttribute("reminders") != null) {
 			messages = (List<MessageBean>) session.getAttribute("reminders");
 			if(msgIndex > messages.size() || msgIndex < 0) {
 				msgIndex = 0;
