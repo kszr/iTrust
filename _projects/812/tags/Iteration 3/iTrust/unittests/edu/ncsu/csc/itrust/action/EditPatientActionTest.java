@@ -204,4 +204,20 @@ public class EditPatientActionTest extends TestCase {
 		action.editMessageFilter(filter, 1L);
 		assertEquals("Bob,Cat,Bat,,,", factory.getPatientDAO().getMessageFilter(1L));
 	}
+	
+	/**
+	 * Tests the getMessageFilter() method in PatientDAO.
+	 * @throws Exception
+	 */
+	public void testSetMessageFilter() throws Exception {
+		gen.patient1();
+		action = new EditPatientAction(factory, 1L, "1");
+		PatientBean j = factory.getPatientDAO().getPatient(1L);
+		assertEquals(",,,,,", j.getMessageFilter());
+		String filter = "Bob,Cat,Bat,,,";
+		factory.getPatientDAO().setMessageFilter(filter, 1L);
+		assertEquals("Bob,Cat,Bat,,,", factory.getPatientDAO().getMessageFilter(1L));
+		j = factory.getPatientDAO().getPatient(1L);
+		assertEquals("Bob,Cat,Bat,,,", j.getMessageFilter());
+	}
 }
