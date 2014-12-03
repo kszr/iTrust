@@ -76,6 +76,7 @@ public class PatientLoader implements BeanLoader<PatientBean> {
 		p.setLanguage(rs.getString("Language"));
 		p.setSpiritualPractices(rs.getString("SpiritualPractices"));
 		p.setAlternateName(rs.getString("AlternateName"));
+		p.setMessageFilter(rs.getString("Filter"));
 		Date dateOfDeactivation = rs.getDate("DateOfDeactivation");
 		if (dateOfDeactivation != null){
 			p.setDateOfDeactivationStr(DATE_FORMAT.format(dateOfDeactivation));
@@ -171,6 +172,7 @@ public class PatientLoader implements BeanLoader<PatientBean> {
 		ps.setString(i++, p.getReligion());
 		ps.setString(i++, p.getLanguage());
 		ps.setString(i++, p.getSpiritualPractices());
+		ps.setString(i++, p.getMessageFilter());
 		ps.setString(i++, p.getAlternateName());
 		date = null;
 		try {

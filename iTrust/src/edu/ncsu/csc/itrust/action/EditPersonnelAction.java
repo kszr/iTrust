@@ -1,6 +1,7 @@
 package edu.ncsu.csc.itrust.action;
 
 import edu.ncsu.csc.itrust.action.base.PersonnelBaseAction;
+import edu.ncsu.csc.itrust.beans.PatientBean;
 import edu.ncsu.csc.itrust.beans.PersonnelBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.dao.mysql.AuthDAO;
@@ -67,6 +68,8 @@ public class EditPersonnelAction extends PersonnelBaseAction {
 	 * @param nf
 	 */
 	public void editMessageFilter(String nf, long mid) throws ITrustException {
-		personnelDAO.setMessageFilter(nf, mid);
+		PersonnelBean p=personnelDAO.getPersonnel(mid);
+		p.setMessageFilter(nf);
+		personnelDAO.editPersonnel(p);
 	}
 } 

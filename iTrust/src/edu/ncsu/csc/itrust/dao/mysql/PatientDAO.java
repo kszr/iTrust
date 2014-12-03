@@ -207,13 +207,12 @@ public class PatientDAO {
 					+ "ICState=?,iCZip=?,iCPhone=?,iCID=?,DateOfBirth=?,"
 					+ "DateOfDeath=?,CauseOfDeath=?,MotherMID=?,FatherMID=?,"
 					+ "BloodType=?,Ethnicity=?,Gender=?,TopicalNotes=?, CreditCardType=?, CreditCardNumber=?, "
-					+ "DirectionsToHome=?, Religion=?, Language=?, SpiritualPractices=?, "
+					+ "DirectionsToHome=?, Religion=?, Language=?, SpiritualPractices=?, Filter=?, "
 					+ "AlternateName=?, DateOfDeactivation=? WHERE MID=?");
 
 			patientLoader.loadParameters(ps, p);
-			ps.setLong(37, p.getMID());
+			ps.setLong(38, p.getMID());
 			ps.executeUpdate();
-			
 			addHistory(p.getMID(), hcpid);
 			ps.close();
 			
@@ -236,7 +235,6 @@ public class PatientDAO {
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
-			
 			throw new DBException(e);
 		} finally {
 			DBUtil.closeConnection(conn, ps);
@@ -1097,7 +1095,6 @@ public class PatientDAO {
 				throw new ITrustException("User does not exist");
 			}
 		} catch (SQLException e) {
-			
 			throw new DBException(e);
 		} finally {
 			DBUtil.closeConnection(conn, pstmt);
