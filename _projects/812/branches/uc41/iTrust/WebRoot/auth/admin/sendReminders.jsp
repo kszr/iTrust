@@ -21,6 +21,7 @@
 	
 	if (daysInAdvance != null && daysInAdvance != "") {
 		action.sendReminders(Integer.parseInt(daysInAdvance));
+		loggingAction.logEvent(TransactionType.SENT_REMINDERS, loggedInMID, 0L, "");
 %>
 	<br />
 	<div align=center>

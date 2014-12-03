@@ -9,7 +9,7 @@
 <%@include file="/global.jsp" %>
 
 <%
-pageTitle = "iTrust - View My Sent Reminders";
+pageTitle = "iTrust - Sent Reminders";
 
 
 %>
@@ -17,7 +17,7 @@ pageTitle = "iTrust - View My Sent Reminders";
 <%@include file="/header.jsp" %>
 
 <div align=center>
-	<h2>My Sent Messages</h2>
+	<h2>Sent Reminders</h2>
 	<a href="/iTrust/auth/admin/sendReminders.jsp">Send Reminders</a><br /><br />
 <%
 loggingAction.logEvent(TransactionType.OUTBOX_VIEW, loggedInMID.longValue(), loggedInMID.longValue(), "");
@@ -43,7 +43,7 @@ loggingAction.logEvent(TransactionType.OUTBOX_VIEW, loggedInMID.longValue(), log
 	}
 	session.setAttribute("reminders", messages);
 	if (messages.size() > 0) { %>
-	<form method="post" action="remindersOutbox.jsp">	
+	<!-- <form method="post" action="remindersOutbox.jsp">	
 	<table>
 	<tr>
 		<td>
@@ -65,7 +65,7 @@ loggingAction.logEvent(TransactionType.OUTBOX_VIEW, loggedInMID.longValue(), log
 		</td>
 	</tr>
 	</table>
-	</form>
+	</form> -->
 	<br />
 	<table class="fancyTable">
 		<tr>

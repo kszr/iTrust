@@ -1,6 +1,8 @@
 package edu.ncsu.csc.itrust.action;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -83,7 +85,8 @@ public class SendRemindersAction {
 			
 			String hcpName = this.personnelDAO.getName(appt.getHcp());
 			String subject = String.format("Reminder: upcoming appointment in %d day(s)", this.daysUntil(appt.getDate()));
-			String body = String.format("You have an appointment on %s with Dr. %s.", appt.getDate().toString(), hcpName);
+			DateFormat dateFormatter = new SimpleDateFormat("HH:mm, MM-dd-yyyy");
+			String body = String.format("You have an appointment on %s with Dr. %s.", dateFormatter.format(appt.getDate()), hcpName);
 			System.out.println(body);
 			message.setBody(body);
 			message.setSubject(subject);
@@ -105,8 +108,6 @@ public class SendRemindersAction {
 			
 			emailer.sendEmail(email);
 		}
-		
-		loggingAction.logEvent(TransactionType.SENT_REMINDERS, loggedInMID, 0L, "");
 	}
 	
 	public long daysUntil(Date date) {
