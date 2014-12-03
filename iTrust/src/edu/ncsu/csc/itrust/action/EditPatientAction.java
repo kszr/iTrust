@@ -167,7 +167,8 @@ public class EditPatientAction extends PatientBaseAction {
 	 * @param nf
 	 */
 	public void editMessageFilter(String nf, long mid) throws ITrustException {
-		// Only to make sure the program doesn't crash at this point.
-		patientDAO.setMessageFilter(nf, mid);
+		PatientBean p=patientDAO.getPatient(mid);
+		p.setMessageFilter(nf);
+		patientDAO.editPatient(p, loggedInMID);
 	}
 }
