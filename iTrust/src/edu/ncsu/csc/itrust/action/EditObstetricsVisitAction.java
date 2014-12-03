@@ -152,7 +152,17 @@ public class EditObstetricsVisitAction extends EditOfficeVisitBaseAction {
 			return e.getMessage();
 		}
 	}
-
+	
+	/**
+	 * Helper that logs an obstetrics visit event.  The associated patient id, HCP 
+	 * id, and office visit id are automatically included.
+	 * @param trans Transaction type for the log.
+	 * @throws DBException
+	 */
+	public void logObstetricsVisitEvent(TransactionType trans) throws DBException {
+		loggingAction.logEvent(trans, loggedInMID, getPid(), "Obstetrics visit ID: " + getOvID());
+	}
+	
 	/**
 	 * Updates the office visit.
 	 * 
