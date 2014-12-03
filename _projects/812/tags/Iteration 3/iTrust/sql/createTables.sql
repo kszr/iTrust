@@ -103,7 +103,7 @@ CREATE TABLE historypatients(
 	email varchar(55)  default '', 
 	address1 varchar(20)  default '', 
 	address2 varchar(20)  default '', 
-	city varchar(15)  default '', 
+	city varchar(15)  default '',
 	state enum('AK','AL','AR','AZ','CA','CO','CT','DE','DC','FL','GA','HI','IA','ID','IL','IN','KS','KY','LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM','NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA','WI','WV','WY')  default 'AK', 
 	zip varchar(10)  default '', 
 	phone varchar(12) default '',
@@ -134,6 +134,7 @@ CREATE TABLE historypatients(
 	SpiritualPractices varchar(512) default '',
 	AlternateName varchar(32) default '',
 	DateOfDeactivation DATE default NULL,
+	Filter varchar(55) default ',,,,,',
 	PRIMARY KEY (ID)
 ) ENGINE=MyISAM;
 
