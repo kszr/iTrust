@@ -57,8 +57,8 @@ public class ViewTransactionActionTest extends TestCase{
 		
 		Map map = new HashMap();
 		map = action.getDateCount(transactionList);
-		
-		assertEquals(4, map.size());
+
+		assertEquals(1, map.size());
 		
 		
 	}
