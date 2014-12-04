@@ -101,7 +101,7 @@ public enum ValidationFormat {
 	FUNDAL_HEIGHT_OF_UTERUS("^([0-9]{1,3}\\.[0-9])$", "Up to 4 digit number and 1 decimal place"),
 	FETAL_HEART_RATE("^[0-9]+$", "has to be a number"),
 	WEEKS_PREGNANT("^[0-9]+$", "has to be a number"),
-	DAYS_PREGNANT("^[0-9]+$", "has to be a number");
+	DAYS_PREGNANT("^[0-6]$", "has to be a number between 0 and 6");
 
 	private Pattern regex;
 	private String description;
