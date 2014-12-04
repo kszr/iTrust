@@ -26,7 +26,6 @@ public class ViewMyMessagesActionTest extends TestCase {
 	private DAOFactory evilFactory;
 	private long mId = 2L;
 	private long hcpId = 9000000000L;
-	private long systemReminderId = 0L;
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -70,14 +69,6 @@ public class ViewMyMessagesActionTest extends TestCase {
 	 */
 	public void testGetPersonnelName() throws ITrustException {
 		assertEquals("Kelly Doctor", action.getPersonnelName(this.hcpId));
-	}
-	
-	/**
-	 * testGetSystemReminderName
-	 * @throws ITrustException
-	 */
-	public void testGetSystemReminderName() throws ITrustException {
-		assertEquals("System Reminder", action.getName(this.systemReminderId));
 	}
 	
 	/**

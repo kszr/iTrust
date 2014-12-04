@@ -48,10 +48,10 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 
 		
 	}
+	
 	/*
 	 * Test whether entering wrong zip code gives error (for Malaria)
 	 */
-	
 	public void testEnterMalriaAnalysisWrongZipCode() throws Exception
 	{
 		WebConversation wc = login("9000000000","pw");
@@ -76,7 +76,6 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 	/*
 	 * Test whether entering wrong date gives error (for Malaria)
 	 */
-	
 	public void testEnterMalriaAnalysisWrongDate() throws Exception
 	{
 		WebConversation wc = login("9000000000","pw");
@@ -99,6 +98,54 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 	}
 	
 	/*
+	 * Test whether entering invalid month gives error (for Malaria)
+	 */
+	public void testEnterMalriaAnalysisInvalidMonth() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDiagnosisCode", "084.5");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisZipCode", "61820");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "15/12/2014");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisThreshold", "120");
+		
+		wr = wr.getFormWithName("analysisRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Invalid month. Month must be < 12 or >0"));
+	}
+	
+	/*
+	 * Test whether entering invalid day gives error (for Malaria)
+	 */
+	public void testEnterMalriaAnalysisInvalidDay() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDiagnosisCode", "084.5");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisZipCode", "61820");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "12/52/2014");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisThreshold", "120");
+		
+		wr = wr.getFormWithName("analysisRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Invalid date."));
+	}
+	
+	/*
 	 * Test whether without entering threshold gives error (for Malaria)
 	 */
 	public void testEnterMalriaAnalysisNULLThreshold() throws Exception
@@ -114,19 +161,19 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisDiagnosisCode", "084.5");
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisZipCode", "61820");
-		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "02/12/24");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "02/12/2004");
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisThreshold", "");
 		
 		wr = wr.getFormWithName("analysisRequestForm").submit();
 		
-		assertTrue(wr.getText().contains("Please input percentage threshold to analyze Malaria."));
+		assertTrue(wr.getText().contains("This form has not been validated correctly. The following field are not properly filled in: [Threshold for Malaria: Has to be a number]"));
 		
 		
 	}
+	
 	/*
 	 * Test whether entering wrong threshold gives error (for Malaria)
 	 */
-	
 	public void testEnterMalriaAnalysisWrongThreshold() throws Exception
 	{
 		WebConversation wc = login("9000000000","pw");
@@ -140,17 +187,17 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisDiagnosisCode", "084.5");
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisZipCode", "61820");
-		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "02/12/24");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "02/12/2014");
 		wr.getFormWithName("analysisRequestForm").setParameter("analysisThreshold", "a");
 		
 		wr = wr.getFormWithName("analysisRequestForm").submit();
 		
 		assertTrue(wr.getText().contains("This form has not been validated correctly."));
 	}
+	
 	/*
 	 * Test whether entering wrong zip code gives error (for Influenza)
 	 */
-	
 	public void testEnterInflueAnalysisWrongZipCode() throws Exception
 	{
 		WebConversation wc = login("9000000000","pw");
@@ -172,6 +219,7 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		assertTrue(wr.getText().contains("This form has not been validated correctly. The following field are not properly filled in: [Zip Code: xxxxx or xxxxx-xxxx]"));
 
 	}
+	
 	/*
 	 * Test whether entering wrong date gives error (for Influenza)
 	 */
@@ -197,6 +245,55 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 	}
 	
 	/*
+	 * Test whether entering invalid month gives error (for Influenza)
+	 */
+	public void testEnterInfluenzaAnalysisInvalidMonth() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDiagnosisCode", "487.00");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisZipCode", "61820");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "15/12/2014");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisThreshold", "120");
+		
+		wr = wr.getFormWithName("analysisRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Invalid month. Month must be < 12 or >0"));
+	}
+	
+	/*
+	 * Test whether entering invalid day gives error (for Influenza)
+	 */
+	public void testEnterInfluenzaAnalysisInvalidDay() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDiagnosisCode", "487.00");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisZipCode", "61820");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisDate", "12/52/2014");
+		wr.getFormWithName("analysisRequestForm").setParameter("analysisThreshold", "120");
+		
+		wr = wr.getFormWithName("analysisRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Invalid date."));
+	}
+	
+	
+	/*
 	 * Test whether entering wrong date give error (for trend)
 	 */
 	public void testEnterTrendWrongDate() throws Exception
@@ -219,6 +316,57 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		
 		assertTrue(wr.getText().contains("This form has not been validated correctly. The following field are not properly filled in: [Date: MM/DD/YYYY]"));
 	}
+	
+	
+	/*
+	 * Test whether entering invalid month gives error
+	 */
+	public void testEnterTrendInvalidMonth() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "487.00");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "15/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Invalid month. Month must be < 12 or >0"));
+	}
+	
+	/*
+	 * Test whether entering invalid day gives error
+	 */
+	public void testEnterTrendInvalidDay() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "487.00");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/52/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Invalid date."));
+	}
+	
+	
 	/*
 	 * Test whether entering wrong zip code give error (for trend)
 	 */
@@ -257,12 +405,72 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
 		
 		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "a");
-		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "618");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
 		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
 
 		
 		wr = wr.getFormWithName("trendRequestForm").submit();
 		
 		assertTrue(wr.getText().contains("This form has not been validated correctly."));
+	}
+	public void testEnterTrendWithNoAlgorithm() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "840");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("There is no Epidemic Detection Algorithm for this Diagnosis Code."));
+	}
+	public void testIfRedirectToResultPageMalaria() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "084");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Malaria Trend"));
+	}
+	public void testIfRedirectToResultPageInfluenza() throws Exception
+	{
+		WebConversation wc = login("9000000000","pw");
+		WebResponse wr = wc.getCurrentPage();
+		assertLogged(TransactionType.HOME_VIEW,9000000000L,0L,"");
+		
+		assertEquals("iTrust - HCP Home", wr.getTitle());
+		
+		wr = wr.getLinkWith("Request BioSurveillance").click();
+		assertEquals("iTrust - Request BioSurveillance", wr.getTitle());
+		
+		wr.getFormWithName("trendRequestForm").setParameter("trendDiagnosisCode", "487");
+		wr.getFormWithName("trendRequestForm").setParameter("trendZipCode", "61820");
+		wr.getFormWithName("trendRequestForm").setParameter("trendDate", "02/12/2014");
+
+		
+		wr = wr.getFormWithName("trendRequestForm").submit();
+		
+		assertTrue(wr.getText().contains("Influenza Trend"));
 	}
  }
