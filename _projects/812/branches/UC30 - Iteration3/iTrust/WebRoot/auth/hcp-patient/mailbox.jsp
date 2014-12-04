@@ -87,8 +87,9 @@
 			fields[i] = "";
 		}
 
-		if (request.getParameter("cancel") != null)
-			response.sendRedirect("messageInbox.jsp");
+		if (request.getParameter("cancel") != null) {
+			response.sendRedirect("messageInbox.jsp?filter=true");
+		}
 		else if (request.getParameter("test") != null
 				|| request.getParameter("save") != null) {
 			boolean error = false;
