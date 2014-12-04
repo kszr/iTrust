@@ -3,7 +3,7 @@ package edu.ncsu.csc.itrust.action;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.ncsu.csc.itrust.action.base.EditOfficeVisitBaseAction;
+import edu.ncsu.csc.itrust.action.base.EditObstetricsVisitBaseAction;
 import edu.ncsu.csc.itrust.beans.Email;
 import edu.ncsu.csc.itrust.beans.HospitalBean;
 import edu.ncsu.csc.itrust.beans.ObstetricsVisitBean;
@@ -21,7 +21,7 @@ import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
 import edu.ncsu.csc.itrust.exception.FormValidationException;
 import edu.ncsu.csc.itrust.exception.ITrustException;
-import edu.ncsu.csc.itrust.validate.EditOfficeVisitValidator;
+import edu.ncsu.csc.itrust.validate.EditObstetricsVisitValidator;
 
 /**
  * Edits the office visits of a patient Used by editOfficeVisit.jsp.  This 
@@ -32,9 +32,9 @@ import edu.ncsu.csc.itrust.validate.EditOfficeVisitValidator;
  *  
  * 
  */
-public class EditObstetricsVisitAction extends EditOfficeVisitBaseAction {
+public class EditObstetricsVisitAction extends EditObstetricsVisitBaseAction {
 	
-	private EditOfficeVisitValidator validator = new EditOfficeVisitValidator();
+	private EditObstetricsVisitValidator validator = new EditObstetricsVisitValidator();
 	private PersonnelDAO personnelDAO;
 	private HospitalsDAO hospitalDAO;
 	private ObstetricsVisitDAO ovDAO;
@@ -117,21 +117,6 @@ public class EditObstetricsVisitAction extends EditOfficeVisitBaseAction {
 	}
 	
 	/**
-	 * Combines two lists of hospitals
-	 * 
-	 * @param hcpsHospitals hospitals the HCP is assigned to
-	 * @param allHospitals all hospitals
-	 * @return the combined list
-	 */
-	private List<HospitalBean> combineLists(List<HospitalBean> hcpsHospitals, List<HospitalBean> allHospitals) {
-		for (HospitalBean hos : allHospitals) {
-			if (!hcpsHospitals.contains(hos))
-				hcpsHospitals.add(hos);
-		}
-		return hcpsHospitals;
-	}
-
-	/**
 	 * Updates the office visit with information from the form passed in.  If 
 	 * the office visit has not yet been saved, calling this method will save 
 	 * it as well as make the sub actions able to be saved.
@@ -171,7 +156,7 @@ public class EditObstetricsVisitAction extends EditOfficeVisitBaseAction {
 	 * @throws FormValidationException
 	 */
 	private void updateOv(EditObstetricsVisitForm form, boolean isERIncident) throws DBException, FormValidationException, ITrustException {
-		//validator.validate(form);
+		validator.validate(form);
 		ObstetricsVisitBean ov = getBean();
 		ov.setVisitDateStr(form.getVisitDate());
 		ov.setHcpID(Long.valueOf(form.getHcpID()));
