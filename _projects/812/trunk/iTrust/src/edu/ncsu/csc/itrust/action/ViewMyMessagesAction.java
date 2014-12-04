@@ -129,16 +129,15 @@ public class ViewMyMessagesAction {
 	 * @throws SQLException
 	 */
 	public List<MessageBean> getAllMySentMessagesNameDescending() throws DBException, SQLException {
-		
 		return messageDAO.getMessagesFromNameDescending(loggedInMID);
 	}
 	
 	public List<MessageBean> getAllMyMessagesTimeDescending() throws DBException, SQLException {
-		return messageDAO.getMessagesFromTimeDescending(loggedInMID);
+		return messageDAO.getMessagesTimeDescending(loggedInMID);
 	}
 	
 	public List<MessageBean> getAllMySentMessagesTimeDescending() throws DBException, SQLException {
-		return messageDAO.getMessagesTimeDescending(loggedInMID);
+		return messageDAO.getMessagesFromTimeDescending(loggedInMID);
 	}
 	
 	

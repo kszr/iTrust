@@ -306,4 +306,33 @@ public class ViewMyMessagesActionTest extends TestCase {
 			assertNull(resultList);
 		}
 	}
+
+	/**
+	 * testGetAllMyMessagesTimeDescending
+	 * @throws DBException
+	 * @throws SQLException
+	 */
+	public void testGetAllMyMessagesTimeDescending() throws DBException, SQLException {		
+		
+		List<MessageBean> mbList = action2.getAllMyMessagesTimeDescending();
+		
+		assertEquals(14, mbList.size());
+		
+		assertTrue(mbList.get(1).getSentDate().before(mbList.get(0).getSentDate()));
+	}
+
+	/**
+	 * testGetAllMyMessagesFromTimeDescending
+	 * @throws DBException
+	 * @throws SQLException
+	 */
+	public void testGetAllMyMessagesFromTimeDescending() throws DBException, SQLException {		
+		
+		List<MessageBean> mbList = action2.getAllMySentMessagesTimeDescending();
+		
+		assertEquals(2, mbList.size());
+		
+		assertTrue(mbList.get(1).getSentDate().before(mbList.get(0).getSentDate()));
+	}
+	
 }

@@ -25,7 +25,8 @@ fathermid,
 bloodtype,
 ethnicity,
 gender, 
-topicalnotes)
+topicalnotes,
+filter)
 VALUES
 (1000,
 'Person', 
@@ -53,7 +54,8 @@ VALUES
 'AB+',
 'African American',
 'Female',
-'')
+'',
+',,,,,')
  ON DUPLICATE KEY UPDATE MID = MID;
 
 INSERT INTO users(MID, password, role, sQuestion, sAnswer) 
