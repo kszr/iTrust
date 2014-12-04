@@ -386,7 +386,7 @@ public class MessageDAO {
 		PreparedStatement ps = null;
 		try{
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("SELECT * FROM message WHERE to_id = ? ORDER BY sent_date DESC");
+			ps = conn.prepareStatement("SELECT * FROM message WHERE from_id = ? ORDER BY sent_date DESC");
 			ps.setLong(1, mid);
 			ResultSet rs = ps.executeQuery();
 
@@ -398,9 +398,9 @@ public class MessageDAO {
 		} catch(SQLException e) {
 
 			throw new DBException(e);
-		}finally{
+		} finally{
 			DBUtil.closeConnection(conn, ps);
-		}	
+		}
 	}
 
 	public List<MessageBean> getMessagesTimeDescending(long mid) throws SQLException, DBException {

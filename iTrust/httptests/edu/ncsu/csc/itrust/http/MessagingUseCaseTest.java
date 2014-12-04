@@ -139,7 +139,7 @@ public class MessagingUseCaseTest extends iTrustHTTPTest {
 		assertTrue(wr.getTableWithID("mailbox").getRows()[1].getText().contains(stamp));
 	}
 	
-	/*
+	
 	public void testHCPSortInboxBySender() throws Exception {
 		// Create DB for this test case
 		String DIR = "sql/data";
@@ -366,7 +366,7 @@ public class MessagingUseCaseTest extends iTrustHTTPTest {
 		assertTrue(wr.getTables()[2].getRows()[1].getText().contains("Influenza Vaccine"));
 		assertTrue(wr.getTables()[2].getRows()[1].getText().contains("2010-03-25 16:15"));
 	}
-*/
+
 	public void testPatientSendMessageMultiRecipients() throws Exception {
 		gen.messagingCcs();
 		

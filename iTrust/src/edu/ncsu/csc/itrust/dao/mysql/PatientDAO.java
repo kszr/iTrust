@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
 import edu.ncsu.csc.itrust.DBUtil;
 import edu.ncsu.csc.itrust.beans.DiagnosisBean;
 import edu.ncsu.csc.itrust.beans.PatientBean;
@@ -206,13 +207,12 @@ public class PatientDAO {
 					+ "ICState=?,iCZip=?,iCPhone=?,iCID=?,DateOfBirth=?,"
 					+ "DateOfDeath=?,CauseOfDeath=?,MotherMID=?,FatherMID=?,"
 					+ "BloodType=?,Ethnicity=?,Gender=?,TopicalNotes=?, CreditCardType=?, CreditCardNumber=?, "
-					+ "DirectionsToHome=?, Religion=?, Language=?, SpiritualPractices=?, "
+					+ "DirectionsToHome=?, Religion=?, Language=?, SpiritualPractices=?, Filter=?, "
 					+ "AlternateName=?, DateOfDeactivation=? WHERE MID=?");
 
 			patientLoader.loadParameters(ps, p);
-			ps.setLong(37, p.getMID());
+			ps.setLong(38, p.getMID());
 			ps.executeUpdate();
-			
 			addHistory(p.getMID(), hcpid);
 			ps.close();
 			
@@ -1071,5 +1071,59 @@ public class PatientDAO {
 		}
 	}
 
-	
+	/**
+	 * Returns a patient's saved filter.
+	 * @param mid
+	 * @return String filter - a patient's saved filter.
+	 * @throws DBException
+	 */
+	public String getMessageFilter(long mid) throws DBException, ITrustException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = factory.getConnection();
+			pstmt = conn.prepareStatement("SELECT Filter FROM patients WHERE MID=?");
+			pstmt.setLong(1, mid);
+			ResultSet results;
+
+			results = pstmt.executeQuery();
+			if (results.next()) {
+				final String result = results.getString("Filter");
+				results.close();
+				pstmt.close();
+				return result;
+			} else {
+				throw new ITrustException("User does not exist");
+			}
+		} catch (SQLException e) {
+			throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, pstmt);
+		}
+	}
+
+	/**
+	 * Updates the message filter for a personnel member with MID=mid
+	 * @param filter
+	 * @param mid
+	 * @throws DBException
+	 */
+	public void setMessageFilter(String filter, long mid) throws DBException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = factory.getConnection();
+			pstmt = conn.prepareStatement("UPDATE patients SET Filter=? where MID=?");
+			pstmt.setString(1, filter);
+			pstmt.setLong(2, mid);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, pstmt);
+		}
+	}
 }
