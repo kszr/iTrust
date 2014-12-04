@@ -352,6 +352,22 @@ public class DAOFactory {
 	}
 	
 	/**
+	 * 
+	 * @return this DAOFactory's PregnancyDAO
+	 */
+	public PregnancyDAO getPregnancyDAO() {
+		return new PregnancyDAO(this);
+	}
+	
+	/**
+	 * 
+	 * @return this DAOFactory's OIRDAO
+	 */
+	public OIRDAO getOIRDAO() {
+		return new OIRDAO(this);
+	}
+	
+	/**
 	 * Gets the DAO for interaction with database table requiredprocedures.
 	 * 
 	 * @return this DAOFactory's RequiredProceduresDAO
