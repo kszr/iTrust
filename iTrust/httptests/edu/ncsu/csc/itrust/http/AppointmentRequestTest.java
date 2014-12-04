@@ -227,4 +227,60 @@ public class AppointmentRequestTest extends iTrustHTTPTest {
 		assertTrue(wrP.getText().contains("Your appointment request has been saved and is pending."));
 		
 	}
+	
+	public void testHCPAppointmentRequestEbolaRisk() throws Exception {
+		WebConversation wcP = login("26", "pw"); //log in as Fry
+		WebResponse wrP = wcP.getCurrentPage();
+		assertEquals("iTrust - Patient Home", wrP.getTitle());
+		
+		wrP = wrP.getLinkWith("Appointment Requests").click();
+		assertEquals("iTrust - Appointment Requests", wrP.getTitle());
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		cal.add(Calendar.DAY_OF_YEAR, 1);
+		
+		WebForm wfP = wrP.getForms()[0];
+		wfP.getScriptableObject().setParameterValue("apptType", "General Checkup");
+		wfP.getScriptableObject().setParameterValue("startDate", format.format(cal.getTime()));
+		wfP.getScriptableObject().setParameterValue("time1", "09");
+		wfP.getScriptableObject().setParameterValue("time2", "45");
+		wfP.getScriptableObject().setParameterValue("time3", "AM");
+		wfP.getScriptableObject().setParameterValue("lhcp", "9000000010");
+		wfP.setCheckbox("ebolarisk", true);
+		wrP = wfP.submit();
+		assertEquals("iTrust - Appointment Requests", wrP.getTitle());
+		assertTrue(wrP.getText().contains("Your appointment request has been saved and is pending."));
+		assertLogged(TransactionType.PATIENT_EBOLA_RISK, 26L, 9000000010L, "");
+		assertLogged(TransactionType.APPOINTMENT_REQUEST_SUBMITTED, 26L, 9000000010L, "");
+		wrP = wrP.getLinkWith("Logout").click(); //log out as Fry
+	}
+	
+	public void testHCPAppointmentRequestNoEbolaRisk() throws Exception {
+		WebConversation wcP = login("26", "pw"); //log in as Fry
+		WebResponse wrP = wcP.getCurrentPage();
+		assertEquals("iTrust - Patient Home", wrP.getTitle());
+		
+		wrP = wrP.getLinkWith("Appointment Requests").click();
+		assertEquals("iTrust - Appointment Requests", wrP.getTitle());
+		
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		cal.add(Calendar.DAY_OF_YEAR, 1);
+		
+		WebForm wfP = wrP.getForms()[0];
+		wfP.getScriptableObject().setParameterValue("apptType", "General Checkup");
+		wfP.getScriptableObject().setParameterValue("startDate", format.format(cal.getTime()));
+		wfP.getScriptableObject().setParameterValue("time1", "09");
+		wfP.getScriptableObject().setParameterValue("time2", "45");
+		wfP.getScriptableObject().setParameterValue("time3", "AM");
+		wfP.getScriptableObject().setParameterValue("lhcp", "9000000010");
+		wfP.setCheckbox("ebolarisk", false);
+		wrP = wfP.submit();
+		assertEquals("iTrust - Appointment Requests", wrP.getTitle());
+		assertTrue(wrP.getText().contains("Your appointment request has been saved and is pending."));
+		assertNotLogged(TransactionType.PATIENT_EBOLA_RISK, 26L, 9000000010L, "");
+		assertLogged(TransactionType.APPOINTMENT_REQUEST_SUBMITTED, 26L, 9000000010L, "");
+		wrP = wrP.getLinkWith("Logout").click(); //log out as Fry
+	}
 }

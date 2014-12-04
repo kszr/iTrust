@@ -43,7 +43,12 @@
 		hcpid = Long.parseLong(request.getParameter("lhcp"));
 		appt.setHcp(hcpid);
 		comment = request.getParameter("comment");
-		appt.setComment(comment);
+		if (request.getParameter("ebolarisk") != null) {
+			appt.setComment(comment + "<div style=\"margin: 8px; padding: 8px; background-color: red; color: white; font-weight: strong;\">!!! This patient is at risk for ebola. !!!</div>");
+			loggingAction.logEvent(TransactionType.PATIENT_EBOLA_RISK, loggedInMID, hcpid, "");
+		} else {
+			appt.setComment(comment);
+		}
 		SimpleDateFormat frmt = new SimpleDateFormat(
 				"MM/dd/yyyy hh:mm a");
 		date = request.getParameter("startDate");
@@ -175,6 +180,8 @@
 	</select>
 	<p>Comment:</p>
 	<textarea name="comment" cols="100" rows="10"><%=StringEscapeUtils.escapeHtml("" + (comment))%></textarea>
+	<p>Have you been to &lt;INSERT LIST OF COUNTRIES HERE&gt; within the last &lt;INSERT TIMESPAN HERE&gt;?</p>
+	<input type="checkbox" name="ebolarisk" value="yes">Yes, I have been to &lt;INSERT LIST OF COUNTRIES HERE&gt; within the last &lt;INSERT TIMESPAN HERE&gt;.
 	<br /> <br /> <input type="submit" name="request" value="Request" />
 </form>
 <%
