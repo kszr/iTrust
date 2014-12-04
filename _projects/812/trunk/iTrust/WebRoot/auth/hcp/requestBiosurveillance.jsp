@@ -141,6 +141,7 @@
 			Date parseDate = new Date();
 			
 			String[] brokenInput = trendDate.split("/");
+		
 			Integer monthInt = Integer.parseInt(brokenInput[0]);
 			Integer daysInt = Integer.parseInt(brokenInput[1]);
 			Integer yearInt = Integer.parseInt(brokenInput[2]);		
@@ -171,7 +172,7 @@
 				loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_TREND_MALARIA_VIEW, loggedInMID.longValue(), 0, "View Malaria Trend: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode());
 			}
 			else if(bb.isInfluenzaDiagCode()){
-				loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_ANALYSIS_INFLUENZA_VIEW, loggedInMID.longValue(), 0, "View Influenza Trend: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode());
+				loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_TREND_INFLUENZA_VIEW, loggedInMID.longValue(), 0, "View Influenza Trend: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode());
 			}
 			
 			if (rt.requestBioTrendVerify(bb)) {
@@ -205,6 +206,7 @@
 			<%
 		}
 	}
+	
 %>
 
 <div align="center">
