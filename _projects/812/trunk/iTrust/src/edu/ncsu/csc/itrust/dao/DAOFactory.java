@@ -214,6 +214,14 @@ public class DAOFactory {
 	public TransactionDAO getTransactionDAO() {
 		return new TransactionDAO(this);
 	}
+	
+	/**
+	 * 
+	 * @return this DAOFactory's ViewTransactionDAO
+	 */
+	public ViewTransactionDAO getViewTransactionDAO() {
+		return new ViewTransactionDAO(this);
+	}
 
 	/**
 	 * 
