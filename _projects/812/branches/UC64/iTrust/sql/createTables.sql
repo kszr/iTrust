@@ -662,11 +662,13 @@ CREATE TABLE IF NOT EXISTS priorpregnancies(
 
 /* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
 CREATE TABLE IF NOT EXISTS obstetricsofficevists(
-	visitDate DATE NOT NULL,
-	numberOfWeeksPregnant INT NOT NULL,
-	BloodPressureSystolic INT NOT NULL,
-	BloodPressureDiastolic INT NOT NULL,
-	FHR INT NOT NULL DEFAULT 0,
-	FHU DOUBLE NOT NULL
+	ID INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	PatientID BIGINT(20) UNSIGNED,
+	HCPID BIGINT(20) UNSIGNED,
+	VisitDate DATE NOT NULL,
+	WeeksPregnant INT NOT NULL,
+	DaysPregnant INT NOT NULL,
+	FetalHeartRate INT NOT NULL,
+	FundalHeightOfUterus DOUBLE NOT NULL
 )ENGINE=innoDB;
 

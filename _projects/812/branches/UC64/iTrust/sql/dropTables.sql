@@ -76,3 +76,7 @@ DROP TABLE IF EXISTS recordsrelease;
 DROP TABLE IF EXISTS requiredprocedures;
 
 DROP TABLE IF EXISTS billing;
+
+DROP TABLE IF EXISTS obstetricsofficevists;
+DROP TABLE IF EXISTS obstetricsinitializationrecords;
+DROP TABLE IF EXISTS priorpregnancies;
