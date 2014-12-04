@@ -81,14 +81,15 @@
 
 				RequestBioSurveillanceAnalysisAction ra = new RequestBioSurveillanceAnalysisAction(
 						prodDAO);
-				if(bb.getDiagnosisCode().equals("084.5")){
-					loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_ANALYSIS_MALARIA_VIEW, loggedInMID.longValue(), 0, "View Malaria Analysis: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode() + ", Threshold " + bb.getThreshold());
-				}
-				else if(bb.getDiagnosisCode().equals("487.00")){
-					loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_ANALYSIS_INFLUENZA_VIEW, loggedInMID.longValue(), 0, "View Influenza Analysis: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode());
-				}
+				
 				if (ra.requestBioAnalysis(bb)) {
 					//System.out.println("success request analysis");
+					if(bb.getDiagnosisCode().equals("084.5")){
+						loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_ANALYSIS_MALARIA_VIEW, loggedInMID.longValue(), 0, "View Malaria Analysis: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode() + ", Threshold " + bb.getThreshold());
+					}
+					else if(bb.getDiagnosisCode().equals("487.00")){
+						loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_ANALYSIS_INFLUENZA_VIEW, loggedInMID.longValue(), 0, "View Influenza Analysis: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode());
+					}
 					%>
 					<div align=center>
 						<span class="iTrustError"> The area you requested DOES contain
@@ -98,7 +99,13 @@
 				}
 
 				else {
-					System.out.println("FAIL request analysis");
+					
+					if(bb.getDiagnosisCode().equals("084.5")){
+						loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_ANALYSIS_MALARIA_VIEW, loggedInMID.longValue(), 0, "View Malaria Analysis: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode() + ", Threshold " + bb.getThreshold());
+					}
+					else if(bb.getDiagnosisCode().equals("487.00")){
+						loggingAction.logEvent(TransactionType.REQUEST_BIOSURVEILLANCE_ANALYSIS_INFLUENZA_VIEW, loggedInMID.longValue(), 0, "View Influenza Analysis: Date " + bb.getDate() + ", ZipCode " + bb.getZipCode());
+					}
 					%>
 					<div align=center>
 						<span class="iTrustError"> The area you requested DOES NOT
