@@ -215,6 +215,10 @@ public class DAOFactory {
 		return new TransactionDAO(this);
 	}
 
+	public ViewTransactionDAO getViewTransactionDAO()
+	{
+		return new ViewTransactionDAO(this);
+	}
 	/**
 	 * 
 	 * @return this DAOFactory's VisitRemindersDAO

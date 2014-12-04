@@ -200,7 +200,7 @@ public class ViewMyMessagesAction {
 				DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 				Date s = format.parse(f[4]);
 				if(s.after(m.getSentDate()))
-					continue;
+						continue;
 				
 			}
 			/**
@@ -238,13 +238,10 @@ public class ViewMyMessagesAction {
 	 * @throws ITrustException
 	 */
 	public String getName(long mid) throws ITrustException {
-		if (mid == 0) {
-			return "System Reminder";
-		} else if(mid < 7000000000L) {
+		if(mid < 7000000000L)
 			return patientDAO.getName(mid);
-		} else {
+		else
 			return personnelDAO.getName(mid);
-		}
 	}
 	
 	/**
@@ -311,21 +308,12 @@ public class ViewMyMessagesAction {
 	}
 	
 	/**
-	 * Does a thing with the filter.
-	 * 
-	 * Talking to myself:
-	 * A filter should not crash under any circumstances on 
-	 * "sender", "subject", "hasWords", or "notWords".
-	 * This means that it is only possible for it to fail
-	 * if the "startDate" and "endDate" formats are wrong
-	 * or if startDate > endDate or something like that. Yes.
-	 *
-	 * @TODO Implement actual error checking or whatever. At this point 
-	 *		 I'm returning whatever gets passed in.
+	 * Does a thing with the filter
 	 * @param newfilter
 	 * @return validated filter
 	 */
 	public String validateAndCreateFilter(String newfilter) {
-		return newfilter;
+		
+		return "Error";
 	}
 }
