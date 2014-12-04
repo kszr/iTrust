@@ -416,7 +416,9 @@ public enum TransactionType {
 	/**VIEW_REVIEWS*/
 	VIEW_REVIEWS(6101, "Patient viewed reviews for an HCP.", "viewed reviews", false),
 	/**SUBMIT_REVIEW*/
-	SUBMIT_REVIEW(6102, "Patient submitted a review for an HCP.", "submitted review", true);
+	SUBMIT_REVIEW(6102, "Patient submitted a review for an HCP.", "submitted review", true),
+	/**SENT_REMINDERS*/
+	SENT_REMINDERS(8203, "Admin sent appointment reminders to patients", "sent reminders", false);
 	/**
 	 * This string is used in the SQL statement associated with pulling events for
 	 * display in a patient's Access Log

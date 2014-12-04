@@ -19,6 +19,8 @@ public class ApptDAOTest extends TestCase {
 	private ApptBean a1; 
 	private ApptBean a2;
 	private ApptBean a3;
+	private ApptBean a4;
+	private ApptBean a5;
 	
 	long patientMID = 42L;
 	long doctorMID = 9000000000L;
@@ -48,6 +50,18 @@ public class ApptDAOTest extends TestCase {
 		a3.setApptType("Ultrasound");
 		a3.setHcp(doctorMID);
 		a3.setPatient(patientMID);
+		
+		a4 = new ApptBean();
+		a4.setDate(new Timestamp(new Date().getTime()+1000*60*60*24*5));	// 5 days later
+		a4.setApptType("Ultrasound");
+		a4.setHcp(doctorMID);
+		a4.setPatient(patientMID);
+		
+		a5 = new ApptBean();
+		a5.setDate(new Timestamp(new Date().getTime()+1000*60*60*24*7));	// 7 days later
+		a5.setApptType("Ultrasound");
+		a5.setHcp(doctorMID);
+		a5.setPatient(patientMID);
 	}
 
 	public void testAppointment() throws Exception {
@@ -146,6 +160,17 @@ public class ApptDAOTest extends TestCase {
 		
 		assertEquals(30, type.getDuration());
 		assertEquals("Ultrasound", type.getName());
+	}
+	
+	public void testFutureAppointments() throws Exception {
+		List<ApptBean> futureAppts = apptDAO.getFutureAppts(6);
+		assertEquals(0, futureAppts.size());
+
+		apptDAO.scheduleAppt(a4);
+		apptDAO.scheduleAppt(a5);
+
+		futureAppts = apptDAO.getFutureAppts(6);
+		assertEquals(1, futureAppts.size());
 	}
 	
 }
