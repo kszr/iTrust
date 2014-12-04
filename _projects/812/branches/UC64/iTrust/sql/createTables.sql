@@ -47,6 +47,7 @@ CREATE TABLE personnel(
 	phone varchar(12) NOT NULL default '',
 	specialty varchar(40) default NULL,
 	email varchar(55)  default '',
+	Filter varchar(55) default ',,,,,',
 	PRIMARY KEY  (MID)
 ) auto_increment=9000000000 ENGINE=MyISAM;
 
@@ -88,6 +89,7 @@ CREATE TABLE patients(
 	SpiritualPractices varchar(512) default '',
 	AlternateName varchar(32) default '',
 	DateOfDeactivation DATE default NULL,
+	Filter varchar(55) default ',,,,,',
 	PRIMARY KEY (MID)
 ) ENGINE=MyISAM;
 
@@ -641,32 +643,30 @@ CREATE TABLE IF NOT EXISTS zipcodes (
 
 /* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
 CREATE TABLE IF NOT EXISTS obstetricsinitializationrecords(
-PatientID BIGINT unsigned NOT NULL COMMENT 'MID of the patient',
-HCPID BIGINT unsigned NOT NULL,
-creationDate DATE NOT NULL,
-LMP DATE NOT NULL
+	recordID BIGINT unsigned AUTO_INCREMENT primary key,
+	patientID BIGINT unsigned NOT NULL COMMENT 'MID of the patient',
+	creationDate DATE NOT NULL,
+	lastMensturalPeriod DATE NOT NULL
 )ENGINE=innoDB;
-
 
 /* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
 CREATE TABLE IF NOT EXISTS priorpregnancies(
-PatientID BIGINT unsigned NOT NULL COMMENT 'MID of the patient',
-yearOfConception INT NOT NULL,
-numberOfWeeksPregnant INT NOT NULL,
-hoursInLabor DOUBLE,
-deliveryType varchar(50) NOT NULL
+	pregnancyID BIGINT unsigned AUTO_INCREMENT primary key,
+	patientID BIGINT unsigned NOT NULL COMMENT 'MID of the patient',
+	yearOfContraception INT NOT NULL,
+	numberOfWeeksPregnant INT NOT NULL,
+	numberOfDaysPregnant INT NOT NULL,
+	hoursInLabor DOUBLE,
+	deliveryType varchar(50) NOT NULL
 )ENGINE=innoDB;
-
-
 
 /* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
-CREATE TABLE IF NOT EXISTS obstetricsvisits(
-ID INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-PatientID BIGINT(20) UNSIGNED,
-HCPID BIGINT(20) UNSIGNED,
-VisitDate DATE NOT NULL,
-WeeksPregnant INT NOT NULL,
-DaysPregnant INT NOT NULL,
-FetalHeartRate INT NOT NULL,
-FundalHeightOfUterus DOUBLE NOT NULL
+CREATE TABLE IF NOT EXISTS obstetricsofficevists(
+	visitDate DATE NOT NULL,
+	numberOfWeeksPregnant INT NOT NULL,
+	BloodPressureSystolic INT NOT NULL,
+	BloodPressureDiastolic INT NOT NULL,
+	FHR INT NOT NULL DEFAULT 0,
+	FHU DOUBLE NOT NULL
 )ENGINE=innoDB;
+

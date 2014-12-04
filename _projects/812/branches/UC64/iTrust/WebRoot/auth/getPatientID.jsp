@@ -28,6 +28,7 @@ pageTitle = "iTrust - Please Select a Patient";
 %>
 
 <%@include file="/util/getUserFrame.jsp"%>
+<%-- All of this looks like it is unused.
 <div id="oldSearch">	
 <form id="mainForm" action="getPatientID.jsp" method="post">
 	<table>
@@ -74,7 +75,7 @@ pageTitle = "iTrust - Please Select a Patient";
 	<%
 		if( (!"".equals(firstName)) || (!"".equals(lastName))){
 			SearchUsersAction searchAction = new SearchUsersAction(prodDAO,loggedInMID.longValue());
-			List<PatientBean> patients;
+			List<PatientBean> patients; 
 			System.out.println("searching for patient");
 			out.println("Searching for users named " + StringEscapeUtils.escapeHtml("" + firstName) + " " + StringEscapeUtils.escapeHtml("" + lastName) + "<br />");
 			patients = searchAction.searchForPatientsWithName(firstName,lastName);
@@ -95,7 +96,7 @@ pageTitle = "iTrust - Please Select a Patient";
 			<input type="hidden" name="UID_PATIENTID" value="<%= StringEscapeUtils.escapeHtml("" + ( p.getMID() )) %>" />
 				<tr <%=(index%2 == 1)?"class=\"alt\"":"" %>>
 					<td>
-						<input type='submit' width='100%' value="<%=StringEscapeUtils.escapeHtml("" + p.getMID())%>" />
+						<input type='submit' width='100%' value="<%=StringEscapeUtils.escapeHtml("" + p.getMID())%>" id ="patient<%=StringEscapeUtils.escapeHtml("" + p.getMID())%>" />
 					</td>
 					<td>
 						<%=StringEscapeUtils.escapeHtml("" + p.getFirstName())%>
@@ -113,7 +114,7 @@ pageTitle = "iTrust - Please Select a Patient";
 	</table>
 	</div>
 </div>			
-	
+--%>
 	
 	
 <script type="text/javascript">
@@ -128,7 +129,7 @@ pageTitle = "iTrust - Please Select a Patient";
 				q : q,
 				forward : "<%= StringEscapeUtils.escapeHtml(request.getParameter("forward")) %>",
 				isAudit : <%= isAudit %>,
-				isObstetrics: <%= isObstetrics %>,
+				isObstetrics : <%= isObstetrics %>,
 				allowDeactivated : $("#allowDeactivated").attr("checked")
 			},
 			success : function(e){
@@ -152,18 +153,11 @@ pageTitle = "iTrust - Please Select a Patient";
 		});
 	});
 	$("#oldSearch").hide(); 
-	 
+	
  });
 </script>
 <h2> Select a Patient</h2>
 <b>Search by name or MID:</b><br/>
-<%
-if(isObstetrics){
-%>
-<i></i>(Obstetrics will search for female patients only)</i><br/>
-<%
-}
-%>
 
 <%
 if(isAudit){

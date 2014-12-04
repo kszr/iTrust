@@ -70,3 +70,7 @@ DELETE FROM requiredprocedures;
 DELETE FROM recordsrelease;
 ALTER TABLE recordsrelease AUTO_INCREMENT = 0;
 
+/* New tables for UC63 and UC64 (Team 1: Vincent & Walker) */
+DELETE FROM obstetricsinitializationrecords;
+DELETE FROM priorpregnancies;
+DELETE FROM obstetricsofficevists;

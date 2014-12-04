@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 7 [1.7.0_71]"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="unittests"/>
 	<classpathentry kind="src" path="httptests"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="lib" path="testing-libs/cglib-nodep-2.2.jar"/>
 	<classpathentry kind="lib" path="testing-libs/easymock.jar"/>
 	<classpathentry kind="lib" path="testing-libs/easymockclassextension.jar"/>
@@ -23,6 +24,5 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="testing-libs/httpunit-jk.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 7 [1.7.0_71]"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
