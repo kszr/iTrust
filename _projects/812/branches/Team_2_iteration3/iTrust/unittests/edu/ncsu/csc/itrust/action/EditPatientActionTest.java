@@ -2,6 +2,7 @@ package edu.ncsu.csc.itrust.action;
 
 import junit.framework.TestCase;
 import edu.ncsu.csc.itrust.beans.PatientBean;
+import edu.ncsu.csc.itrust.beans.PersonnelBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.dao.mysql.AuthDAO;
 import edu.ncsu.csc.itrust.dao.mysql.PatientDAO;
@@ -171,5 +172,52 @@ public class EditPatientActionTest extends TestCase {
 		
 		//Check that patient 2 is not a dependent
 		assertFalse(authDAO.isDependent(2L));
+	}
+	
+	/**
+	 * Tests whether the message filter successfully saved.
+	 * 
+	 * For some reason this fails... Keep working on it for Iteration 3
+	 * @throws Exception
+	 */
+	public void testEditMessageFilter() throws Exception {
+		gen.patient1();
+		action = new EditPatientAction(factory, 1L, "1");
+		PatientBean j = factory.getPatientDAO().getPatient(1L);
+		assertEquals(",,,,,", j.getMessageFilter());
+		String filter = "Bob,Cat,Bat,,,";
+		action.editMessageFilter(filter, 1L);
+		j = factory.getPatientDAO().getPatient(1L);
+		assertEquals("Bob,Cat,Bat,,,", j.getMessageFilter());
+	}
+	
+	/**
+	 * Tests the getMessageFilter() method in PatientDAO.
+	 * @throws Exception
+	 */
+	public void testGetMessageFilter() throws Exception {
+		gen.patient1();
+		action = new EditPatientAction(factory, 1L, "1");
+		PatientBean j = factory.getPatientDAO().getPatient(1L);
+		assertEquals(",,,,,", j.getMessageFilter());
+		String filter = "Bob,Cat,Bat,,,";
+		action.editMessageFilter(filter, 1L);
+		assertEquals("Bob,Cat,Bat,,,", factory.getPatientDAO().getMessageFilter(1L));
+	}
+	
+	/**
+	 * Tests the getMessageFilter() method in PatientDAO.
+	 * @throws Exception
+	 */
+	public void testSetMessageFilter() throws Exception {
+		gen.patient1();
+		action = new EditPatientAction(factory, 1L, "1");
+		PatientBean j = factory.getPatientDAO().getPatient(1L);
+		assertEquals(",,,,,", j.getMessageFilter());
+		String filter = "Bob,Cat,Bat,,,";
+		factory.getPatientDAO().setMessageFilter(filter, 1L);
+		assertEquals("Bob,Cat,Bat,,,", factory.getPatientDAO().getMessageFilter(1L));
+		j = factory.getPatientDAO().getPatient(1L);
+		assertEquals("Bob,Cat,Bat,,,", j.getMessageFilter());
 	}
 }

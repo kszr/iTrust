@@ -198,10 +198,10 @@ public class PersonnelDAO {
 		try {
 			conn = factory.getConnection();
 			pstmt = conn.prepareStatement("UPDATE personnel SET AMID=?,firstName=?,lastName=?,"
-					+ "phone=?, address1=?,address2=?,city=?, state=?, zip=?, specialty=?, email=?"
+					+ "phone=?, address1=?,address2=?,city=?, state=?, zip=?, specialty=?, Filter=?, email=?"
 					+ " WHERE MID=?");
 			personnelLoader.loadParameters(pstmt, pBean);
-			pstmt.setLong(12, pBean.getMID());
+			pstmt.setLong(13, pBean.getMID());
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {
@@ -542,6 +542,63 @@ public class PersonnelDAO {
 			throw new DBException(e);
 		} finally {
 			DBUtil.closeConnection(conn, ps);
+		}
+	}
+	
+	/**
+	 * Returns a personnel member's saved filter.
+	 * @param mid
+	 * @return String filter - a user's saved filter.
+	 * @throws DBException
+	 */
+	public String getMessageFilter(long mid) throws DBException, ITrustException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = factory.getConnection();
+			pstmt = conn.prepareStatement("SELECT Filter FROM personnel WHERE MID=?");
+			pstmt.setLong(1, mid);
+			ResultSet results;
+
+			results = pstmt.executeQuery();
+			if (results.next()) {
+				final String result = results.getString("Filter");
+				results.close();
+				pstmt.close();
+				return result;
+			} else {
+				throw new ITrustException("User does not exist");
+			}
+		} catch (SQLException e) {
+			
+			throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, pstmt);
+		}
+	}
+	
+	/**
+	 * Updates the message filter for a personnel member with MID=mid
+	 * @param filter
+	 * @param mid
+	 * @throws DBException
+	 */
+	public void setMessageFilter(String filter, long mid) throws DBException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = factory.getConnection();
+			pstmt = conn.prepareStatement("UPDATE personnel SET Filter=? where MID=?");
+			pstmt.setString(1, filter);
+			pstmt.setLong(2, mid);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, pstmt);
 		}
 	}
 }

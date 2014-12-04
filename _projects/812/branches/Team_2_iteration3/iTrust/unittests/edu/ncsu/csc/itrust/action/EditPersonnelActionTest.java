@@ -1,6 +1,7 @@
 package edu.ncsu.csc.itrust.action;
 
 import junit.framework.TestCase;
+import edu.ncsu.csc.itrust.beans.PatientBean;
 import edu.ncsu.csc.itrust.beans.PersonnelBean;
 import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.datagenerators.TestDataGenerator;
@@ -79,5 +80,51 @@ public class EditPersonnelActionTest extends TestCase {
 		assertEquals("second line", j.getStreetAddress2());
 	}
 	
+	/**
+	 * Tests whether the message filter successfully saved.
+	 * 
+	 * For some reason this fails... Keep working on it for Iteration 3
+	 * @throws Exception
+	 */
+	public void testEditMessageFilter() throws Exception {
+		gen.uap1();
+		personnelEditor = new EditPersonnelAction(factory, 8000000009L, "8000000009");
+		PersonnelBean j = factory.getPersonnelDAO().getPersonnel(8000000009L);
+		assertEquals(",,,,,", j.getMessageFilter());
+		String filter = "Bob,Cat,Bat,,,";
+		personnelEditor.editMessageFilter(filter, 8000000009L);
+		j = factory.getPersonnelDAO().getPersonnel(8000000009L);
+		assertEquals("Bob,Cat,Bat,,,", j.getMessageFilter());
+	}
 	
+	/**
+	 * Tests the getMessageFilter() function in PatientDAO.
+	 * @throws Exception
+	 */
+	public void testGetMessageFilter() throws Exception {
+		gen.uap1();
+		personnelEditor = new EditPersonnelAction(factory, 8000000009L, "8000000009");
+		PersonnelBean j = factory.getPersonnelDAO().getPersonnel(8000000009L);
+		assertEquals(",,,,,", j.getMessageFilter());
+		String filter = "Bob,Cat,Bat,,,";
+		personnelEditor.editMessageFilter(filter, 8000000009L);
+		j = factory.getPersonnelDAO().getPersonnel(8000000009L);
+		assertEquals("Bob,Cat,Bat,,,", factory.getPersonnelDAO().getMessageFilter(8000000009L));
+	}
+	
+	/**
+	 * Tests the getMessageFilter() function in PatientDAO.
+	 * @throws Exception
+	 */
+	public void testSetMessageFilter() throws Exception {
+		gen.uap1();
+		personnelEditor = new EditPersonnelAction(factory, 8000000009L, "8000000009");
+		PersonnelBean j = factory.getPersonnelDAO().getPersonnel(8000000009L);
+		assertEquals(",,,,,", j.getMessageFilter());
+		String filter = "Bob,Cat,Bat,,,";
+		factory.getPersonnelDAO().setMessageFilter(filter, 8000000009L);
+		assertEquals("Bob,Cat,Bat,,,", factory.getPersonnelDAO().getMessageFilter(8000000009L));
+		j = factory.getPersonnelDAO().getPersonnel(8000000009L);
+		assertEquals("Bob,Cat,Bat,,,", j.getMessageFilter());
+	}
 }

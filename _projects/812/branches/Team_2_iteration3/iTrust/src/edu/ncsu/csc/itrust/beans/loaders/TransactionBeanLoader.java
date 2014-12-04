@@ -5,9 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import edu.ncsu.csc.itrust.beans.TransactionBean;
-import edu.ncsu.csc.itrust.beans.ViewTransactionBean;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 /**
@@ -22,14 +20,6 @@ public class TransactionBeanLoader implements BeanLoader<TransactionBean> {
 		List<TransactionBean> list = new ArrayList<TransactionBean>();
 		while (rs.next()) {
 			list.add(loadSingle(rs));
-		}
-		return list;
-	}
-	
-	public List<ViewTransactionBean> loadViewList(ResultSet rs) throws SQLException {
-		List<ViewTransactionBean> list = new ArrayList<ViewTransactionBean>();
-		while (rs.next()) {
-			list.add(loadViewSingle(rs));
 		}
 		return list;
 	}
@@ -49,13 +39,4 @@ public class TransactionBeanLoader implements BeanLoader<TransactionBean> {
 		return t;
 	}
 
-	public ViewTransactionBean loadViewSingle(ResultSet rs) throws SQLException {
-		ViewTransactionBean t = new ViewTransactionBean();
-		t.setRole(rs.getString("Role"));
-		t.setTransactionID(rs.getLong("transactionID"));
-		t.setTransactionType(TransactionType.parse(rs.getInt("transactionCode")).toString());
-		t.setTimestamp(rs.getTimestamp("timeLogged"));
-		t.setAdditionalInfo(rs.getString("addedInfo"));
-		return t;
-	}
 }

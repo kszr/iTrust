@@ -47,6 +47,7 @@ CREATE TABLE personnel(
 	phone varchar(12) NOT NULL default '',
 	specialty varchar(40) default NULL,
 	email varchar(55)  default '',
+	Filter varchar(55) default ',,,,,',
 	PRIMARY KEY  (MID)
 ) auto_increment=9000000000 ENGINE=MyISAM;
 
@@ -88,6 +89,7 @@ CREATE TABLE patients(
 	SpiritualPractices varchar(512) default '',
 	AlternateName varchar(32) default '',
 	DateOfDeactivation DATE default NULL,
+	Filter varchar(55) default ',,,,,',
 	PRIMARY KEY (MID)
 ) ENGINE=MyISAM;
 
@@ -101,7 +103,7 @@ CREATE TABLE historypatients(
 	email varchar(55)  default '', 
 	address1 varchar(20)  default '', 
 	address2 varchar(20)  default '', 
-	city varchar(15)  default '', 
+	city varchar(15)  default '',
 	state enum('AK','AL','AR','AZ','CA','CO','CT','DE','DC','FL','GA','HI','IA','ID','IL','IN','KS','KY','LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM','NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA','WI','WV','WY')  default 'AK', 
 	zip varchar(10)  default '', 
 	phone varchar(12) default '',
@@ -132,6 +134,7 @@ CREATE TABLE historypatients(
 	SpiritualPractices varchar(512) default '',
 	AlternateName varchar(32) default '',
 	DateOfDeactivation DATE default NULL,
+	Filter varchar(55) default ',,,,,',
 	PRIMARY KEY (ID)
 ) ENGINE=MyISAM;
 
@@ -637,3 +640,32 @@ CREATE TABLE IF NOT EXISTS zipcodes (
   `full_state` varchar(50) default NULL,
   PRIMARY KEY `zip` (`zip`)
 ) ENGINE=innoDB;
+
+
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+CREATE TABLE IF NOT EXISTS obstetricsinitializationrecords(
+	PatientID BIGINT unsigned NOT NULL COMMENT 'MID of the patient',
+	HCPID BIGINT unsigned NOT NULL,
+	creationDate DATE NOT NULL,
+	LMP DATE NOT NULL
+)ENGINE=innoDB;
+
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+CREATE TABLE IF NOT EXISTS priorpregnancies(
+	PatientID BIGINT unsigned NOT NULL COMMENT 'MID of the patient',
+	yearOfContraception INT NOT NULL,
+	numberOfWeeksPregnant INT NOT NULL,
+	hoursInLabor DOUBLE,
+	deliveryType varchar(50) NOT NULL
+)ENGINE=innoDB;
+
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+CREATE TABLE IF NOT EXISTS obstetricsofficevists(
+	visitDate DATE NOT NULL,
+	numberOfWeeksPregnant INT NOT NULL,
+	BloodPressureSystolic INT NOT NULL,
+	BloodPressureDiastolic INT NOT NULL,
+	FHR INT NOT NULL DEFAULT 0,
+	FHU DOUBLE NOT NULL
+)ENGINE=innoDB;
+
