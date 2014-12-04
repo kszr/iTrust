@@ -111,4 +111,20 @@ public class EditPersonnelActionTest extends TestCase {
 		j = factory.getPersonnelDAO().getPersonnel(8000000009L);
 		assertEquals("Bob,Cat,Bat,,,", factory.getPersonnelDAO().getMessageFilter(8000000009L));
 	}
+	
+	/**
+	 * Tests the getMessageFilter() function in PatientDAO.
+	 * @throws Exception
+	 */
+	public void testSetMessageFilter() throws Exception {
+		gen.uap1();
+		personnelEditor = new EditPersonnelAction(factory, 8000000009L, "8000000009");
+		PersonnelBean j = factory.getPersonnelDAO().getPersonnel(8000000009L);
+		assertEquals(",,,,,", j.getMessageFilter());
+		String filter = "Bob,Cat,Bat,,,";
+		factory.getPersonnelDAO().setMessageFilter(filter, 8000000009L);
+		assertEquals("Bob,Cat,Bat,,,", factory.getPersonnelDAO().getMessageFilter(8000000009L));
+		j = factory.getPersonnelDAO().getPersonnel(8000000009L);
+		assertEquals("Bob,Cat,Bat,,,", j.getMessageFilter());
+	}
 }
