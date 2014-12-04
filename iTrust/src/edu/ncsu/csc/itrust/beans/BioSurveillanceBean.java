@@ -11,12 +11,7 @@ public class BioSurveillanceBean {
 	String zipCode;
 	String date;
 	String threshold;
-	/**
-	 * Constructor for with threshold
-	 * @param diagnosisCode
-	 * @param zipCode
-	 * @param date
-	 */
+	
 
 
 	public BioSurveillanceBean(String diagnosisCode, String zipCode,
@@ -29,7 +24,7 @@ public class BioSurveillanceBean {
 	}
 
 	/**
-	 * Constructor for without threshold
+	 * Constructor for without 
 	 * @param diagnosisCode
 	 * @param zipCode
 	 * @param date
@@ -58,29 +53,6 @@ public class BioSurveillanceBean {
 	public void setDiagnosisCode(String diagnosisCode) {
 		this.diagnosisCode = diagnosisCode;
 	}
-	
-	public boolean isMalariaDiagCode() {
-		String diagnosisCode = this.diagnosisCode;
-		String[] diagCodeInteger = diagnosisCode.split("\\.");
-		if(diagCodeInteger[0].equals("84") || diagCodeInteger[0].equals("084")) {
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	public boolean isInfluenzaDiagCode() {
-		String diagnosisCode = this.diagnosisCode;
-		String[] diagCodeInteger = diagnosisCode.split("\\.");
-		if(diagCodeInteger[0].equals("487")) {
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
 	/**
 	 * 
 	 * @return the zipCode

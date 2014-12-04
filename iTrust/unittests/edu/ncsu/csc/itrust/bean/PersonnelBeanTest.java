@@ -49,8 +49,13 @@ public class PersonnelBeanTest extends TestCase {
 		
 		p.setMID(000001);
 		p1.setMID(000002);
-		
+
 		assertEquals(000001, p.getMID());
+		
+		
+		//Test message filter thing
+		p.setMessageFilter("Nancy,throat,cats,,,");
+		assertEquals("Nancy,throat,cats,,,", p.getMessageFilter());
 		
 		/*
 		assertEquals(0, p.compareTo(p));

@@ -76,3 +76,10 @@ DROP TABLE IF EXISTS recordsrelease;
 DROP TABLE IF EXISTS requiredprocedures;
 
 DROP TABLE IF EXISTS billing;
+
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+DROP TABLE IF EXISTS obstetricsinitializationrecords;
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+DROP TABLE IF EXISTS priorpregnancies;
+/* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
+DROP TABLE IF EXISTS obstetricsofficevists;
