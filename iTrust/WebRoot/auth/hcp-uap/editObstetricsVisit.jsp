@@ -27,6 +27,9 @@ pageTitle = "iTrust - Document "+visitName;
 <%@include file="/header.jsp" %>
 
 <%
+	PersonnelDAO perDAO = prodDAO.getPersonnelDAO();
+	boolean isObstetricsHCP = perDAO.getSpecialty(loggedInMID.longValue()).equals("ob/gyn");
+
 	boolean createVisit = false;
 
     String submittedFormName = request.getParameter("formName");
@@ -40,6 +43,9 @@ pageTitle = "iTrust - Document "+visitName;
     }
 	
 	EditObstetricsVisitAction ovaction = null;
+	
+	
+	
 	
 	if(ovIDString == null || ovIDString.length() == 0 || ovIDString.equals("-1")) {
 		// submittedFormName must be: "mainForm" or null
@@ -56,18 +62,22 @@ pageTitle = "iTrust - Document "+visitName;
     	EditObstetricsVisitForm form = new BeanBuilder<EditObstetricsVisitForm>().build(request.getParameterMap(), new EditObstetricsVisitForm());
     	form.setHcpID("" + visit.getHcpID());
         form.setPatientID("" + visit.getPatientID());
-        try {
-        	confirm = ovaction.updateInformation(form, false);
-        	ovIDString = ""+ovaction.getOvID();
-        	if (createVisit) {        		
-       			ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_CREATE);
-        		createVisit = false;
-        	} else {
-                ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_EDIT);
-        	}
-        } catch (FormValidationException e) {
-            e.printHTML(pageContext.getOut());
-            confirm = "Input not valid";
+        if (isObstetricsHCP){
+	        try {
+	        	confirm = ovaction.updateInformation(form, false);
+	        	ovIDString = ""+ovaction.getOvID();
+	        	if (createVisit) {        		
+	       			ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_CREATE);
+	        		createVisit = false;
+	        	} else {
+	                ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_EDIT);
+	        	}
+	        } catch (FormValidationException e) {
+	            e.printHTML(pageContext.getOut());
+	            confirm = "Input not valid";
+	        }
+        } else {
+            confirm = "Non-obstetrics HCPs cannot edit obstetrics visits";
         }
     } else if (!createVisit) {
         ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_VIEW);
@@ -142,11 +152,14 @@ if (!"".equals(confirm)) {
 	</tr>
 	<tr>
 	   <td colspan="2" align="center">
-		<% if (createVisit) { %>
-		    <input type="submit" name="update" id="update" value="Create" >
+	   <% if (isObstetricsHCP) {
+	   		if (createVisit) { %>
+		    <input type="submit" name="update" id="update" value="Create">
 		<% } else { %>
-		    <input type="submit" name="update" id="update" value="Update" >
-		<% } %>
+		    <input type="submit" name="update" id="update" value="Update">
+		<% } 
+		}%>
+		
 		</td>
     </tr>
 </table>

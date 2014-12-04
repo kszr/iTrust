@@ -7,6 +7,8 @@
 <%@page import="edu.ncsu.csc.itrust.action.AddObstetricsVisitAction"%>
 <%@page import="edu.ncsu.csc.itrust.beans.OfficeVisitBean"%>
 <%@page import="edu.ncsu.csc.itrust.beans.ObstetricsVisitBean"%>
+<%@page import="edu.ncsu.csc.itrust.dao.mysql.PersonnelDAO"%>
+<%@page import="edu.ncsu.csc.itrust.dao.mysql.OIRDAO" %>
 
 <%@include file="/global.jsp"%>
 
@@ -16,6 +18,14 @@
 		visitName = "ER Visit";
 	}
 	pageTitle = "iTrust - Document " + visitName;
+	
+	PersonnelDAO perDAO = prodDAO.getPersonnelDAO();
+	String loggedInSpecialty = perDAO.getSpecialty(loggedInMID.longValue());
+	
+	
+	
+	boolean isObstetricsHCP = loggedInSpecialty.equals("ob/gyn");
+	
 %>
 
 <%@include file="/header.jsp"%>
@@ -27,6 +37,13 @@
 		response.sendRedirect("/iTrust/auth/getPatientID.jsp?forward=/iTrust/auth/hcp-uap/documentOfficeVisit.jsp");
 		return;
 	}
+	
+	OIRDAO oirDAO = prodDAO.getOIRDAO();
+	boolean isObstetricsPatient = false;
+	try {
+		isObstetricsPatient = oirDAO.getOIRListForPatient(Long.parseLong(pidString)).size() > 0;
+	} catch (Exception e) {}
+	
 
 	AddOfficeVisitAction officeAction = new AddOfficeVisitAction(prodDAO,
 			pidString);
@@ -50,8 +67,10 @@
 		Are you sure you want to document a <em>new</em> visit for <b><%=StringEscapeUtils.escapeHtml("" + (officeAction.getUserName()))%></b>?<br />
 		<br /> <input style="font-size: 150%; font-weight: bold;" type=submit
 			name=officeVisit value="Yes, Document <%=visitName%>">
-		<br /> <input style="font-size: 150%; font-weight: bold;" type=submit
+		<% if (isObstetricsHCP && isObstetricsPatient) { %>
+		<br/><br/><input style="font-size: 150%; font-weight: bold;" type=submit
 			name=obstetricsVisit value="Yes, Document Obstetrics Visit">
+		<%}%>
 	</form>
 	<br /> Click on an old office visit to modify:<br />
 	<%
@@ -79,7 +98,7 @@
 		}
 	%>
 	
-	<br /> Click on an old obstetrics visit to modify:<br />
+	<br /> Click on an old obstetrics visit to view<%if (isObstetricsHCP && isObstetricsPatient){%> or modify<%}%>:<br />
 	<%
 		for (ObstetricsVisitBean ov : obstetricsVisits) {
 			if (!userRole.equals("er")) {
