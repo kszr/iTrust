@@ -73,8 +73,8 @@ pageTitle = "iTrust - Document "+visitName;
         ovaction.logObstetricsVisitEvent(TransactionType.OBSTETRICS_VISIT_VIEW);
     }
     
-    String disableSubformsString = createVisit ? "disabled=\"true\"" : "";
     String disableMainformString = createVisit ? "" : "disabled=\"true\"";
+    String readonlyMainformString = createVisit ? "" : "readonly";
     
 	ObstetricsVisitBean ovbean = ovaction.getObstetricsVisit();
 	
@@ -112,7 +112,7 @@ if (!"".equals(confirm)) {
 	<tr>
 		<td class="subHeaderVertical">Date of Visit:</td>
 		<td>
-		  <input name="visitDate" value="<%= StringEscapeUtils.escapeHtml("" + (ovbean.getVisitDateStr())) %>" <%= disableMainformString %>/>
+		  <input name="visitDate" value="<%= StringEscapeUtils.escapeHtml("" + (ovbean.getVisitDateStr())) %>" <%= readonlyMainformString %>/>
 		  <input type="button" value="Select Date" onclick="displayDatePicker('visitDate');" <%= disableMainformString %>/>
 		</td>
 	</tr>
