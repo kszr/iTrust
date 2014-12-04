@@ -198,10 +198,10 @@ public class PersonnelDAO {
 		try {
 			conn = factory.getConnection();
 			pstmt = conn.prepareStatement("UPDATE personnel SET AMID=?,firstName=?,lastName=?,"
-					+ "phone=?, address1=?,address2=?,city=?, state=?, zip=?, specialty=?, email=?"
+					+ "phone=?, address1=?,address2=?,city=?, state=?, zip=?, specialty=?, Filter=?, email=?"
 					+ " WHERE MID=?");
 			personnelLoader.loadParameters(pstmt, pBean);
-			pstmt.setLong(12, pBean.getMID());
+			pstmt.setLong(13, pBean.getMID());
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (SQLException e) {
@@ -211,7 +211,7 @@ public class PersonnelDAO {
 			DBUtil.closeConnection(conn, pstmt);
 		}
 	}
-
+	
 	/**
 	 * Indicates whether a certain personnel is in the database.
 	 * 

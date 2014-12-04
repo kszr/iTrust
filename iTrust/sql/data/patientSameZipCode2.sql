@@ -27,7 +27,8 @@ FatherMID,
 BloodType,
 Ethnicity,
 Gender,
-TopicalNotes
+TopicalNotes,
+filter
 )
 VALUES (
 2000,
@@ -58,7 +59,8 @@ VALUES (
 'O-',
 'Caucasian',
 'Male',
-'This person is absolutely crazy. Do not touch them.'
+'This person is absolutely crazy. Do not touch them.',
+',,,,,'
 )  ON DUPLICATE KEY UPDATE MID = MID;
 
 INSERT INTO users(MID, password, role, sQuestion, sAnswer) 
