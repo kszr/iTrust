@@ -32,7 +32,7 @@ public class PersonnelBean implements Serializable {
 	private String phone = "";
 	private String email = "";
 	private String specialty = "";
-	private String filter = "";
+	private String filter = ",,,,,";
 	
 	public void setMessageFilter(String filter) {
 		this.filter = filter;

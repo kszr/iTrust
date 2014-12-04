@@ -134,6 +134,7 @@ CREATE TABLE historypatients(
 	SpiritualPractices varchar(512) default '',
 	AlternateName varchar(32) default '',
 	DateOfDeactivation DATE default NULL,
+	Filter varchar(55) default ',,,,,',
 	PRIMARY KEY (ID)
 ) ENGINE=MyISAM;
 
@@ -639,7 +640,6 @@ CREATE TABLE IF NOT EXISTS zipcodes (
   `full_state` varchar(50) default NULL,
   PRIMARY KEY `zip` (`zip`)
 ) ENGINE=innoDB;
-
 
 /* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
 CREATE TABLE IF NOT EXISTS obstetricsinitializationrecords(

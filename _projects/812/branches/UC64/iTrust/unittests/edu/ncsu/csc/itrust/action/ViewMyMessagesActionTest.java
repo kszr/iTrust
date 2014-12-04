@@ -26,6 +26,7 @@ public class ViewMyMessagesActionTest extends TestCase {
 	private DAOFactory evilFactory;
 	private long mId = 2L;
 	private long hcpId = 9000000000L;
+	private long systemReminderId = 0L;
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -69,6 +70,14 @@ public class ViewMyMessagesActionTest extends TestCase {
 	 */
 	public void testGetPersonnelName() throws ITrustException {
 		assertEquals("Kelly Doctor", action.getPersonnelName(this.hcpId));
+	}
+	
+	/**
+	 * testGetSystemReminderName
+	 * @throws ITrustException
+	 */
+	public void testGetSystemReminderName() throws ITrustException {
+		assertEquals("System Reminder", action.getName(this.systemReminderId));
 	}
 	
 	/**
@@ -297,4 +306,33 @@ public class ViewMyMessagesActionTest extends TestCase {
 			assertNull(resultList);
 		}
 	}
+
+	/**
+	 * testGetAllMyMessagesTimeDescending
+	 * @throws DBException
+	 * @throws SQLException
+	 */
+	public void testGetAllMyMessagesTimeDescending() throws DBException, SQLException {		
+		
+		List<MessageBean> mbList = action2.getAllMyMessagesTimeDescending();
+		
+		assertEquals(14, mbList.size());
+		
+		assertTrue(mbList.get(1).getSentDate().before(mbList.get(0).getSentDate()));
+	}
+
+	/**
+	 * testGetAllMyMessagesFromTimeDescending
+	 * @throws DBException
+	 * @throws SQLException
+	 */
+	public void testGetAllMyMessagesFromTimeDescending() throws DBException, SQLException {		
+		
+		List<MessageBean> mbList = action2.getAllMySentMessagesTimeDescending();
+		
+		assertEquals(2, mbList.size());
+		
+		assertTrue(mbList.get(1).getSentDate().before(mbList.get(0).getSentDate()));
+	}
+	
 }

@@ -161,4 +161,14 @@ public class EditPatientAction extends PatientBaseAction {
 		
 		return true;
 	}
+
+	/**
+	 * Edits the saved message filter for a member.
+	 * @param nf
+	 */
+	public void editMessageFilter(String nf, long mid) throws ITrustException {
+		PatientBean p=patientDAO.getPatient(mid);
+		p.setMessageFilter(nf);
+		patientDAO.editPatient(p, loggedInMID);
+	}
 }
