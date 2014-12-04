@@ -25,6 +25,7 @@ import edu.ncsu.csc.itrust.dao.DAOFactory;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.http.iTrustHTTPTest;
 import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
+
 /**
  * Use Case 30
  */
@@ -87,7 +88,7 @@ public class MessageFilterTest extends iTrustHTTPTest {
 		String DIR = "sql/data";
 		DAOFactory factory = TestDAOFactory.getTestInstance();
 		new DBBuilder(factory).executeSQLFile(DIR + "/clearMessages.sql");
-		new DBBuilder(factory).executeSQLFile(DIR + "/messageCase4.sql");
+		new DBBuilder(factory).executeSQLFile(DIR + "/messageCase7.sql");
 		
 		// Login
 		WebConversation wc = login("2", "pw");
@@ -104,7 +105,6 @@ public class MessageFilterTest extends iTrustHTTPTest {
 		assertTrue(wr.getTableWithID("mailbox").getRows()[1].getText().contains("2010-03-25 16:39"));
 		
 		assertTrue(wr.getTableWithID("mailbox").getRows()[2].getText().contains("Kelly Doctor"));
-		assertTrue(wr.getTableWithID("mailbox").getRows()[2].getText().contains("RE: Vaccines"));
 		assertTrue(wr.getTableWithID("mailbox").getRows()[2].getText().contains("2010-01-21 20:22"));	
 	}
 	
