@@ -67,7 +67,7 @@ public class PregnancyActionTest extends TestCase {
 		}
 	}
 	
-	public void testCreatePregnancy() throws Exception{
+	public void testCreatePregnancyValid1() throws Exception{
 		PregnancyBean p = new PregnancyBean();
 		p.setPatientID(12345L);
 		p.setNumberOfWeeksPregnant(12);
@@ -83,6 +83,63 @@ public class PregnancyActionTest extends TestCase {
 			fail(e.getMessage());
 		}
 		
+	}
+	
+	public void testCreatePregnancyValid2() throws Exception{
+		PregnancyBean p = new PregnancyBean();
+		p.setPatientID(12345L);
+		p.setNumberOfWeeksPregnant(38);
+		p.setNumberOfDaysPregnant(5);
+		p.setHoursInLabor(20.0);
+		p.setYearOfContraception(2005);
+		p.setDeliveryType(PregnancyBean.DeliveryType.CAESAREAN_SECTION);
+		
+		PregnancyAction pregnancyAction = new PregnancyAction(factory, 9000000000L);
+		try{
+			pregnancyAction.createPregnancy(p);
+		} catch (Exception e){
+			fail(e.getMessage());
+		}
+		
+	}
+	
+	public void testCreatePregnancyInvalid1() throws Exception{
+		PregnancyBean p = new PregnancyBean();
+		p.setPatientID(12345L);
+		p.setNumberOfWeeksPregnant(12);
+		p.setNumberOfDaysPregnant(100);
+		p.setHoursInLabor(3.4);
+		p.setYearOfContraception(2011);
+		p.setDeliveryType(PregnancyBean.DeliveryType.VAGINAL_DELIVERY);
+		
+		PregnancyAction pregnancyAction = new PregnancyAction(factory, 9000000000L);
+		try{
+			pregnancyAction.createPregnancy(p);
+			fail("Exception should have been thrown");
+		} catch (Exception e){
+			boolean daysPregnantIsInError = e.getMessage().contains("Days Pregnant");
+			assertTrue(daysPregnantIsInError);
+		}
+		
+	}
+	
+	public void testCreatePregnancyInvalid2() throws Exception{
+		PregnancyBean p = new PregnancyBean();
+		p.setPatientID(12345L);
+		p.setNumberOfWeeksPregnant(-5);
+		p.setNumberOfDaysPregnant(2);
+		p.setHoursInLabor(3.4);
+		p.setYearOfContraception(1111);
+		p.setDeliveryType(PregnancyBean.DeliveryType.CAESAREAN_SECTION);
+		
+		PregnancyAction pregnancyAction = new PregnancyAction(factory, 9000000000L);
+		try{
+			pregnancyAction.createPregnancy(p);
+			fail("Exception should have been thrown");
+		} catch (Exception e){
+			boolean weeksPregnantIsInError = e.getMessage().contains("Weeks Pregnant");
+			assertTrue(weeksPregnantIsInError);
+		}
 		
 	}
 

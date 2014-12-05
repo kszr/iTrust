@@ -64,8 +64,6 @@ public class PregnancyBean {
 	}
 
 	public void setNumberOfDaysPregnant(int numberOfDaysPregnant) {
-		if(numberOfDaysPregnant < 0)
-			numberOfDaysPregnant = 0;
 		this.numberOfDaysPregnant = numberOfDaysPregnant;
 	}
 	
@@ -74,8 +72,6 @@ public class PregnancyBean {
 	}
 
 	public void setNumberOfWeeksPregnant(int numberOfWeeksPregnant) {
-		if(numberOfDaysPregnant < 0)
-			numberOfDaysPregnant = 0;
 		this.numberOfWeeksPregnant = numberOfWeeksPregnant;
 	}
 
@@ -84,8 +80,6 @@ public class PregnancyBean {
 	}
 
 	public void setHoursInLabor(double hoursInLabor) {
-		if(hoursInLabor < 0.0)
-			hoursInLabor = 0.0;
 		this.hoursInLabor = hoursInLabor;
 	}
 
@@ -107,8 +101,6 @@ public class PregnancyBean {
 		}else if(deliveryType.equals(DeliveryType.MISCARRIAGE.toString())){
 			this.deliveryType = DeliveryType.MISCARRIAGE;
 			
-		}else{
-			this.deliveryType = null;
 		}
 	}
 	

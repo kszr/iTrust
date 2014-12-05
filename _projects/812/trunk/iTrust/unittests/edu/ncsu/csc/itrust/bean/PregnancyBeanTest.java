@@ -11,34 +11,35 @@ public class PregnancyBeanTest extends TestCase {
 		pBean = new PregnancyBean();
 	}
 	
-	public void testDeliveryType(){
+	public void testDeliveryType() throws Exception{
 		pBean = new PregnancyBean();
 		pBean.setDeliveryType(PregnancyBean.DeliveryType.VAGINAL_DELIVERY);
 		assertEquals("Vaginal Delivery", pBean.getDeliveryType().toString());
 	}
 	
-	public void testNegativeHoursInLabor(){
-		pBean = new PregnancyBean();
-		pBean.setHoursInLabor(-4.5);
-		assertEquals((double) 0, pBean.getHoursInLabor());
-	}
-	
-	public void testHoursInLabor(){
+	public void testHoursInLabor() throws Exception{
 		pBean = new PregnancyBean();
 		pBean.setHoursInLabor(3.2);
 		assertEquals((double) 3.2, pBean.getHoursInLabor());
 	}
 	
-	public void testPatient(){
+	public void testPatient() throws Exception{
 		pBean = new PregnancyBean();
 		pBean.setPatientID((long)54321);
 		
 		assertEquals((long)54321, pBean.getPatientID());
 	}
 	
-	public void testYearOfContraception(){
+	public void testYearOfContraception() throws Exception{
 		pBean = new PregnancyBean();
 		pBean.setYearOfContraception(2002);
 		assertEquals(2002, pBean.getYearOfContraception());
+	}
+	
+	public void test() throws Exception{
+		pBean = new PregnancyBean();
+		pBean.setNumberOfWeeksPregnant(20);
+		pBean.setNumberOfDaysPregnant(5);
+		assertEquals("20 weeks and 5 days", pBean.getWeeksAndDaysPregnantString());
 	}
 }
