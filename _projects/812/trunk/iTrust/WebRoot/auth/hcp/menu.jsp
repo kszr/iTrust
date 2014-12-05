@@ -19,7 +19,7 @@
 			<li><a href="/iTrust/auth/hcp/changeDependency.jsp">Patient Dependency</a>
 			<!--<li><a href="/iTrust/auth/hcp-uap/deactivatePatient.jsp">Deactivate Patient</a>  -->
 			<li><a href="/iTrust/auth/hcp/auditPage.jsp">Audit Patients</a>
-			<li><a href="/iTrust/auth/hcp/obstetricsPage.jsp">Obstetrics</a>
+			<li><a href="/iTrust/auth/hcp/OIRList.jsp">Obstetrics</a>
 		</ul>
 	</div>
 </div>

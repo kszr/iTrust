@@ -70,6 +70,14 @@ public class TestDataGenerator {
 	public void additionalOfficeVisits() throws SQLException, FileNotFoundException, IOException {
 		new DBBuilder(factory).executeSQLFile(DIR + "/ovAdditional.sql");
 	}
+	
+	public void OIR() throws SQLException, FileNotFoundException, IOException {
+		new DBBuilder(factory).executeSQLFile(DIR + "/OIR.sql");
+	}
+	
+	public void priorPregnancy() throws SQLException, FileNotFoundException, IOException {
+		new DBBuilder(factory).executeSQLFile(DIR + "/priorPregnancy.sql");
+	}
 
 	public void admin1() throws SQLException, FileNotFoundException, IOException {
 		new DBBuilder(factory).executeSQLFile(DIR + "/admin1.sql");
@@ -177,6 +185,10 @@ public class TestDataGenerator {
 
 	public void er4() throws SQLException, FileNotFoundException, IOException {
 		new DBBuilder(factory).executeSQLFile(DIR + "/er6.sql");
+	}
+	
+	public void hcpobgyn() throws SQLException, FileNotFoundException, IOException {
+		new DBBuilder(factory).executeSQLFile(DIR + "/hcp-obgyn.sql");
 	}
 
 	public void hcp0() throws SQLException, FileNotFoundException, IOException {
@@ -763,10 +775,14 @@ public class TestDataGenerator {
 		hospitals();
 		hcp0();
 		
+		OIR();
+		priorPregnancy();
+		
 		ltData0();
 		ltData1();
 		ltData2();
 		
+		hcpobgyn();
 		hcp3();
 		hcp7();
 		er4();
