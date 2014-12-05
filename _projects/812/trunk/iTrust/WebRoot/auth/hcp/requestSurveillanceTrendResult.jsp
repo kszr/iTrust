@@ -20,7 +20,7 @@ pageTitle = "iTrust - BioSurveillance Trend Result";
 String date = request.getParameter("date");
 String zipcode = request.getParameter("zipcode");
 String diagcode = request.getParameter("diagcode");
-System.out.println(date+zipcode+diagcode);
+
 
 RequestBiosurveillanceTrendAction rt = new RequestBiosurveillanceTrendAction(prodDAO);
 

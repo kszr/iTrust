@@ -128,8 +128,7 @@
 	//IF redirected from trend form submit
 	if (trendFormIsFilled) {
 		try {
-			System.out.println("in Trend");
-
+		
 			//variables for trend
 			String trendDiagCode = request
 					.getParameter("trendDiagnosisCode");
@@ -184,7 +183,7 @@
 									+ trendDiagCode);
 					response.setStatus(response.SC_MOVED_TEMPORARILY);
 					response.setHeader("Location", site);
-					System.out.println("success request trend");
+					
 				}
 				else {
 					%>
@@ -195,7 +194,7 @@
 				}
 			} else {
 
-				System.out.println("FAIL request trend");
+				
 			}}
 			//print out form validate error
 		} catch (FormValidationException e) {
