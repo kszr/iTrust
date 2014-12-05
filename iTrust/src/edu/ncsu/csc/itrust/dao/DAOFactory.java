@@ -166,6 +166,14 @@ public class DAOFactory {
 	public NDCodesDAO getNDCodesDAO() {
 		return new NDCodesDAO(this);
 	}
+	
+	/**
+	 * 
+	 * @return this DAOFactory's ObstetricsVisitDAO
+	 */
+	public ObstetricsVisitDAO getObstetricsVisitDAO() {
+		return new ObstetricsVisitDAO(this);
+	}
 
 	/**
 	 * 
@@ -349,6 +357,22 @@ public class DAOFactory {
 	 */
 	public PatientInstructionsDAO getPatientInstructionsDAO() {
 		return new PatientInstructionsDAO(this);
+	}
+	
+	/**
+	 * 
+	 * @return this DAOFactory's PregnancyDAO
+	 */
+	public PregnancyDAO getPregnancyDAO() {
+		return new PregnancyDAO(this);
+	}
+	
+	/**
+	 * 
+	 * @return this DAOFactory's OIRDAO
+	 */
+	public OIRDAO getOIRDAO() {
+		return new OIRDAO(this);
 	}
 	
 	/**

@@ -105,7 +105,6 @@ public class MessageFilterTest extends iTrustHTTPTest {
 		assertTrue(wr.getTableWithID("mailbox").getRows()[1].getText().contains("2010-03-25 16:39"));
 		
 		assertTrue(wr.getTableWithID("mailbox").getRows()[2].getText().contains("Kelly Doctor"));
-		assertTrue(wr.getTableWithID("mailbox").getRows()[2].getText().contains("2010-01-21 20:22"));	
 	}
 	
 	public void testpatientApplyMessageFilter2() throws Exception {

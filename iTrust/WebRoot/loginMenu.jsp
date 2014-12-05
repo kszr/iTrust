@@ -130,6 +130,14 @@ if( ! "true".equals(System.getProperty("itrust.production") ) ) {
 				<a class="iTrustTestNavlink" onclick="fillLoginFields('9999999999','pw')" href="javascript:void(0)">Tester</a>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<a class="iTrustTestNavlink" onclick="fillLoginFields('3000','pw')" href="javascript:void(0)">ob/gyn doctor</a>
+			</td>
+			<td>
+				
+			</td>
+		</tr>
 	</table>
 	</div>
 <% 

@@ -85,6 +85,40 @@ public class PersonnelDAO {
 			DBUtil.closeConnection(conn, pstmt);
 		}
 	}
+	
+	/**
+	 * Returns the specialty for a given MID
+	 * 
+	 * @param mid The MID of the personnel in question.
+	 * @return A String representing the specialty of the personnel.
+	 * @throws ITrustException
+	 * @throws DBException
+	 */
+	public String getSpecialty(final long mid) throws ITrustException, DBException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = factory.getConnection();
+			pstmt = conn.prepareStatement("SELECT specialty FROM personnel WHERE MID=?");
+			pstmt.setLong(1, mid);
+			ResultSet results;
+			
+			results = pstmt.executeQuery();
+			if (results.next()) {
+				final String result = results.getString("specialty"); 
+				results.close();
+				pstmt.close();
+				return result;
+			} else {
+				throw new ITrustException("User does not exist");
+			}
+		} catch (SQLException e) {
+			
+			throw new DBException(e);
+		} finally {
+			DBUtil.closeConnection(conn, pstmt);
+		}
+	}
 
 	public long getNextID(final Role role) throws DBException, ITrustException {
 		Connection conn = null;
