@@ -23,7 +23,7 @@ pageTitle = "iTrust - View Transaction Log";
 
 <h2 align="center">View Transaction Log</h2>
 <% 
-//System.out.println(request.getParameter("formIsFilled"));
+
 TransactionBean tb = new TransactionBean();
 
 if(request.getParameter("formIsFilled") != null && request.getParameter("formIsFilled").equals("true") )

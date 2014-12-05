@@ -41,7 +41,7 @@ ViewTransactionBean bean = new ViewTransactionBean(loggedUser,secondaryUser,type
 ViewTransactionAction action = new ViewTransactionAction(prodDAO);
 List<ViewTransactionBean> transactionList = new ArrayList<ViewTransactionBean>();
 transactionList = action.getTransactionView(bean);
-System.out.println(transactionList.size());
+
 
 
 

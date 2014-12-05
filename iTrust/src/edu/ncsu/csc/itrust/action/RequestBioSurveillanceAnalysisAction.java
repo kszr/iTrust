@@ -73,7 +73,7 @@ public class RequestBioSurveillanceAnalysisAction {
 
 	private boolean determineMalaria(BioSurveillanceBean requestBio)
 			throws DBException {
-		System.out.println("malaria");
+		
 		int numberOfCasesWeekOne = 0;
 		int numberOfCasesWeekTwo = 0;
 
@@ -176,14 +176,14 @@ public class RequestBioSurveillanceAnalysisAction {
 			}
 //			System.out.println("week 1 prev : " + numberOfCasesWeekOnePrevious
 //					+ "week 2 prev " + numberOfCasesWeekTwoPrevious);
-			System.out.println("min year : " + tempMinYear + "max year : " + tempMaxYear );
+			
 
 			numberOfYearsCasesOccur = tempMaxYear - tempMinYear + 1;
 			double avgWeekOne = numberOfCasesWeekOnePrevious
 					/ numberOfYearsCasesOccur;
 			double avgWeekTwo = numberOfCasesWeekTwoPrevious
 					/ numberOfYearsCasesOccur;
-			System.out.println("avg 1 : " + avgWeekOne + " avg 2 : " + avgWeekTwo);
+			
 			// loop for counting the current year
 			for (int i = 0; i < beans.size(); i++) {
 				Date officeVisitDate = beans.get(i).getVisitDate();
@@ -212,8 +212,7 @@ public class RequestBioSurveillanceAnalysisAction {
 				}
 
 			}
-			System.out.println("number of cases 1 : " + numberOfCasesWeekOne
-			 + " number of case 2 : " + numberOfCasesWeekTwo);
+			
 			// System.out.println("avg 1st week : "+ avgWeekOne +
 			// "avg 2nd week :" + avgWeekTwo);
 			weekOneThresholdCompared = (numberOfCasesWeekOne / avgWeekOne) * 100;
@@ -247,7 +246,7 @@ public class RequestBioSurveillanceAnalysisAction {
 
 	private boolean determineInfluenza(BioSurveillanceBean requestBio)
 			throws DBException {
-		System.out.println("influenza");
+		
 		int numberOfCasesWeekOne = 0;
 		int numberOfCasesWeekTwo = 0;
 		Date requestDate;

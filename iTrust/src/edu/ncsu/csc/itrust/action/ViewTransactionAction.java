@@ -29,19 +29,10 @@ public class ViewTransactionAction {
 		List<ViewTransactionBean> ret = new ArrayList<ViewTransactionBean>();
 
 		try {
-			// System.out.println("logguser: " +
-			// viewTransactionBean.getLoggedInRole());
-			// System.out.println("second: " +
-			// viewTransactionBean.getSecondaryRole());
-			// System.out.println("startdate: " +
-			// viewTransactionBean.getStartDate());
-			// System.out.println("enddate: " +
-			// viewTransactionBean.getEndDate());
-			// System.out.println("Transactiontype: " +
-			// viewTransactionBean.getTransactionType());
+			
 			ret = viewTransactionDao
 					.getSelectedTransactions(viewTransactionBean);
-			System.out.println("hey");
+
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,12 +147,6 @@ public class ViewTransactionAction {
 		// printMap(map);
 		return map;
 	}
-	/*
-	 * private static void printMap(Map mp) { Iterator it =
-	 * mp.entrySet().iterator(); while (it.hasNext()) { Map.Entry pairs =
-	 * (Map.Entry)it.next(); System.out.println(pairs.getKey() + " = " +
-	 * pairs.getValue()); it.remove(); // avoids a
-	 * ConcurrentModificationException } }
-	 */
+
 
 }
