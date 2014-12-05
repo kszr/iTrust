@@ -96,14 +96,14 @@
 				<br/>
 				<br/>
 				<br/>
-				<p>Prior Pregnancy successfully added!</p>
+				<p id="OIR_CREATION_SUCCESS">Prior Pregnancy successfully added!</p>
 				<%
 				return;
 			} catch (Exception e){
 				errorBuffer.append(e.getMessage());
 				errorString = errorBuffer.toString();
 				%>
-				<font color="red">Error: <%= errorBuffer.toString() %></font>
+				<font color="red" id="OIR_CREATION_FAILURE">Error: <%= errorBuffer.toString() %></font>
 				<br/>
 				<%
 			}
@@ -111,7 +111,7 @@
 		/* Errors exist that were picked up by frontend */
 		}else{
 			%>
-			<font color="red">Error: <%= errorBuffer.toString() %></font>
+			<font color="red" id="OIR_CREATION_FAILURE">Error: <%= errorBuffer.toString() %></font>
 			<br/>
 			<%
 		}

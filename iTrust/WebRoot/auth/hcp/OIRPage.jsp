@@ -88,7 +88,7 @@
 				<input type="submit" value="Back"
 					onClick="window.location= '/iTrust/auth/hcp/OIRList.jsp'">
 				</br>
-				<p>Obstetrics Initialization Record successfully added!</p>
+				<p id="OIR_CREATION_SUCCESS">Obstetrics Initialization Record successfully added!</p>
 				<%
 				return;
 				
@@ -96,7 +96,7 @@
 				errorBuffer.append(e.getMessage());
 				errorString = errorBuffer.toString();
 				%>
-				<font color="red">Error: <%= errorBuffer.toString() %></font>
+				<font color="red" id="OIR_CREATION_FAILURE">Error: <%= errorBuffer.toString() %></font>
 				<br/>
 				<%
 			}
@@ -104,7 +104,7 @@
 		/* Errors exist that were picked up by frontend */
 		}else{
 			%>
-			<font color="red">Error: <%= errorBuffer.toString() %></font>
+			<font color="red" id="OIR_CREATION_FAILURE">Error: <%= errorBuffer.toString() %></font>
 			<br/>
 			<%
 		}
@@ -277,8 +277,7 @@
 	/* Show prior pregnancy button if on create mode */
 	if(isCreateMode){
 		%>
-		<input type=button id="addPriorPregnancy" value="Add a prior pregnancy"
-			onclick="location.href='/iTrust/auth/hcp/priorPregnancy.jsp'">
+		<a id="addPriorPregnancy" href='/iTrust/auth/hcp/priorPregnancy.jsp'>Add a prior pregnancy</a>
 		<%
 	}
 %>
