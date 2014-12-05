@@ -20,6 +20,8 @@
 			<!--<li><a href="/iTrust/auth/hcp-uap/deactivatePatient.jsp">Deactivate Patient</a>  -->
 			<li><a href="/iTrust/auth/hcp/auditPage.jsp">Audit Patients</a>
 			<li><a href="/iTrust/auth/hcp/OIRList.jsp">Obstetrics</a>
+			<li><a href="/iTrust/auth/hcp-uap/viewListOfDeceasedPatients.jsp">List of Deceased Patients</a>
+			<li><a href="/iTrust/auth/hcp-uap/viewCauseOfDeathTrendsReport.jsp">Cause of Death Trends Report</a>
 		</ul>
 	</div>
 </div>
