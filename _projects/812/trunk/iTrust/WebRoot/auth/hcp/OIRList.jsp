@@ -3,6 +3,7 @@
 
 <%@page import="edu.ncsu.csc.itrust.beans.PatientBean"%>
 <%@page import="edu.ncsu.csc.itrust.beans.OIRBean"%>
+
 <%@page import="edu.ncsu.csc.itrust.action.EditPatientAction"%>
 <%@page import="edu.ncsu.csc.itrust.action.OIRAction"%>
 
@@ -90,19 +91,20 @@
 		<th>Last Menstrual Period (LMP)</th>
 		<th></th>
 	</tr>
-
 	<%
 		/* Populate with OIRs */
 		Iterator<OIRBean> itr = oirBeanList.iterator();
+		int count = 0;
 			while (itr.hasNext()) {
+				count++;
 				OIRBean oirBean = itr.next();
 	%>
 	<tr>
 		<td><%=oirBean.getCreationDate().toString()%></td>
 		<td><%=oirBean.getLMP().toString()%></td>
-		<td><input type="button" id="" value="view this record"
-			onClick="viewRecord(<%=String.valueOf(oirBean.getRecordID())%>)"></td>
-	</tr>
+		<td><a id="viewRecord<%= count %>"
+			href="OIRPage.jsp?OIRID=<%=String.valueOf(oirBean.getRecordID())%>">view
+				this record</a></tr>
 	<%
 		}
 	%>
@@ -126,8 +128,7 @@
 	if (loggedInSpecialty.equals("ob/gyn")) {
 		%>
 		<p>
-		<input type="button" id="" value="Create a new obstetrics record"
-			onClick="window.location='OIRPage.jsp'">
+		<a id="CreateNewOIR" href='OIRPage.jsp'>Create a new obstetrics record</a>
 		</p>
 		<%
 	/* Alert non ob/gyns that they cannot edit */
