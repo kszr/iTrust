@@ -60,7 +60,7 @@ public class ObstetricsVisitDAO {
 		PreparedStatement ps = null;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("INSERT INTO obstetricsofficevists (VisitDate, HCPID, PatientID, WeeksPregnant, DaysPregnant, FetalHeartRate, FundalHeightOfUterus) VALUES (?,?,?,?,?,?,?)");
+			ps = conn.prepareStatement("INSERT INTO obstetricsofficevisits (VisitDate, HCPID, PatientID, WeeksPregnant, DaysPregnant, FetalHeartRate, FundalHeightOfUterus) VALUES (?,?,?,?,?,?,?)");
 			setValues(ps, ov);
 			ps.executeUpdate();
 			ps.close();
@@ -94,7 +94,7 @@ public class ObstetricsVisitDAO {
 		PreparedStatement ps = null;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("UPDATE obstetricsofficevists SET VisitDate=?, HCPID=?, "
+			ps = conn.prepareStatement("UPDATE obstetricsofficevisits SET VisitDate=?, HCPID=?, "
 					+ "PatientID=?, WeeksPregnant=?, DaysPregnant=?, FetalHeartRate=?, FundalHeightOfUterus=? WHERE ID=?");
 			setValues(ps, ov);
 			ps.setLong(8, ov.getID());
@@ -120,7 +120,7 @@ public class ObstetricsVisitDAO {
 		PreparedStatement ps = null;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("Select * From obstetricsofficevists Where ID = ?");
+			ps = conn.prepareStatement("Select * From obstetricsofficevisits Where ID = ?");
 			ps.setLong(1, visitID);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()){
@@ -155,7 +155,7 @@ public class ObstetricsVisitDAO {
 		PreparedStatement ps = null;
 		try {
 			conn = factory.getConnection();
-			ps = conn.prepareStatement("SELECT * FROM obstetricsofficevists WHERE ID=? AND PatientID=?");
+			ps = conn.prepareStatement("SELECT * FROM obstetricsofficevisits WHERE ID=? AND PatientID=?");
 			ps.setLong(1, ovID);
 			ps.setLong(2, pid);
 			ResultSet rs = ps.executeQuery();
@@ -184,7 +184,7 @@ public class ObstetricsVisitDAO {
 		try {
 			conn = factory.getConnection();
 			ps = conn
-					.prepareStatement("SELECT * FROM obstetricsofficevists WHERE PatientID=? ORDER BY VisitDate DESC");
+					.prepareStatement("SELECT * FROM obstetricsofficevisits WHERE PatientID=? ORDER BY VisitDate DESC");
 			ps.setLong(1, pid);
 			ResultSet rs = ps.executeQuery();
 			List<ObstetricsVisitBean> loadlist = obstetricsVisitLoader.loadList(rs);
@@ -192,35 +192,6 @@ public class ObstetricsVisitDAO {
 			ps.close();
 			return loadlist;
 		} catch (SQLException e) {
-			throw new DBException(e);
-		} finally {
-			DBUtil.closeConnection(conn, ps);
-		}
-	}
-	
-	/**
-	 * Returns a list of all obstetrics visits for a given patient
-	 * 
-	 * @param mid The MID of the LHCP you are looking up.
-	 * @return A java.util.List of Obstetrics Visits.
-	 * @throws DBException
-	 */
-	public List<ObstetricsVisitBean> getAllObstetricsVisitsForLHCP(long mid) throws DBException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		try {
-			if (mid == 0L) throw new SQLException("HCPID cannot be null");
-			conn = factory.getConnection();
-			ps = conn
-					.prepareStatement("SELECT * FROM obstetricsofficevists WHERE HCPID=? ORDER BY VisitDate DESC");
-			ps.setLong(1, mid);
-			ResultSet rs = ps.executeQuery();
-			List<ObstetricsVisitBean> loadlist = obstetricsVisitLoader.loadList(rs);
-			rs.close();
-			ps.close();
-			return loadlist;
-		} catch (SQLException e) {
-			
 			throw new DBException(e);
 		} finally {
 			DBUtil.closeConnection(conn, ps);

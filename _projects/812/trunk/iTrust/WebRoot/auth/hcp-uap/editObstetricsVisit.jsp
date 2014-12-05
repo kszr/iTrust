@@ -97,10 +97,10 @@ if (!"".equals(confirm)) {
 	<% } else if ("success".equals(confirm)) { 
 			
 	%>
-		<span class="iTrustMessage">Information Successfully Updated</span>
+		<span id="message_success" class="iTrustMessage">Information Successfully Updated</span>
 <%	}
 	else { %>
-		<span class="iTrustError"><%= StringEscapeUtils.escapeHtml("" + (confirm)) %></span>		
+		<span id="error_failure" class="iTrustError"><%= StringEscapeUtils.escapeHtml("" + (confirm)) %></span>		
 <%	}
 }	
 %>

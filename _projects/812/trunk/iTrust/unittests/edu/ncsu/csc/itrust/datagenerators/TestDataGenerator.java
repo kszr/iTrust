@@ -317,6 +317,10 @@ public class TestDataGenerator {
 		new DBBuilder(factory).executeSQLFile(DIR + "/ov0Multiple.sql");
 	}
 	
+	public void obstetricsVisit1() throws SQLException, FileNotFoundException, IOException {
+		new DBBuilder(factory).executeSQLFile(DIR + "/obv1.sql");
+	}
+	
 	public void officeVisit1() throws SQLException, FileNotFoundException, IOException {
 		new DBBuilder(factory).executeSQLFile(DIR + "/ov1.sql");
 	}

@@ -70,3 +70,4 @@ DELETE FROM requiredprocedures;
 DELETE FROM recordsrelease;
 ALTER TABLE recordsrelease AUTO_INCREMENT = 0;
 
+DELETE FROM obstetricsofficevisits;
