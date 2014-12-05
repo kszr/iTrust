@@ -662,7 +662,7 @@ CREATE TABLE IF NOT EXISTS priorpregnancies(
 )ENGINE=innoDB;
 
 /* New table for UC63 and UC64 (Team 1: Vincent & Walker) */
-CREATE TABLE IF NOT EXISTS obstetricsofficevists(
+CREATE TABLE IF NOT EXISTS obstetricsofficevisits(
 	ID INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	PatientID BIGINT(20) UNSIGNED,
 	HCPID BIGINT(20) UNSIGNED,
