@@ -55,7 +55,7 @@ public class ViewTransactionAction {
 			if (distinct_logged_in_map.containsKey(element.getLoggedInRole())) {
 				int prevValue = (int) distinct_logged_in_map.get(element
 						.getLoggedInRole());
-				distinct_logged_in_map.replace(element.getLoggedInRole(),
+				distinct_logged_in_map.put(element.getLoggedInRole(),
 						++prevValue);
 
 			} else {
@@ -80,7 +80,7 @@ public class ViewTransactionAction {
 					.getSecondaryRole())) {
 				int prevValue = (int) distinct_secondary_user_map.get(element
 						.getSecondaryRole());
-				distinct_secondary_user_map.replace(element.getSecondaryRole(),
+				distinct_secondary_user_map.put(element.getSecondaryRole(),
 						++prevValue);
 
 			} else {
@@ -116,7 +116,7 @@ public class ViewTransactionAction {
 			String time = element.getTimestamp().toString().substring(0, 7);
 			if (map.containsKey(time)) {
 				int prevValue = (int) map.get(time);
-				map.replace(time, ++prevValue);
+				map.put(time, ++prevValue);
 			} else {
 				map.put(time, 1);
 			}
@@ -138,7 +138,7 @@ public class ViewTransactionAction {
 		for (ViewTransactionBean element : beanList) {
 			if (map.containsKey(element.getTransactionType())) {
 				int prevValue = (int) map.get(element.getTransactionType());
-				map.replace(element.getTransactionType(), ++prevValue);
+				map.put(element.getTransactionType(), ++prevValue);
 
 			} else {
 				map.put(element.getTransactionType(), 1);
