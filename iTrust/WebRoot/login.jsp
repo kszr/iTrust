@@ -93,6 +93,8 @@ if(request.getParameter("loginError") != null) {
 	<h1>- quotes by Dr. Jenkins</h1>
 	<!-- patient-centered -->
 </div>
+<br/><br/>
+ <a href="/iTrust/addon/ebolaCheck.jsp">EBOLA CHECK</a> 
 <%
 	if(!loginFailureAction.needsCaptcha()) {
 %>
