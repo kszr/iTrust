@@ -434,11 +434,11 @@ public enum TransactionType {
 	/**CREATE_INITIAL_OBSTETRICS_RECORD*/
 	CREATE_INITIAL_OBSTETRICS_RECORD(6300, "HCP initialized a new obstetrics record.", "obstetrics record created", true),
 	/**VIEW_INITIAL_OBSTETRICS_RECORD*/
-	VIEW_INITIAL_OBSTETRICS_RECORD(6300, "HCP viewed an existing obstetrics record.", "obstetrics record viewed", true),
+	VIEW_INITIAL_OBSTETRICS_RECORD(6301, "HCP viewed an existing obstetrics record.", "obstetrics record viewed", true),
 	/**SENT_REMINDERS*/
 	SENT_REMINDERS(8203, "Admin sent appointment reminders to patients", "sent reminders", false),
 	/**PATIENT_EBOLA_RISK*/
-	PATIENT_EBOLA_RISK(8204, "Patient is at risk for ebola.", "is at risk", false);
+	PATIENT_EBOLA_RISK(9901, "Patient is at risk for ebola.", "is at risk", false);
 	/**
 	 * This string is used in the SQL statement associated with pulling events for
 	 * display in a patient's Access Log

@@ -61,8 +61,9 @@ function fillLoginFields(u,p) {
 	<input type="submit" value="Login"><br /><br />
 
 	<a style="font-size: 80%;" href="/iTrust/util/resetPassword.jsp">Reset Password</a>
-
+	
 	</form>
+	
 <%
 	}
 if( ! "true".equals(System.getProperty("itrust.production") ) ) { 

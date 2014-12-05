@@ -12,6 +12,7 @@
 <%@page import="edu.ncsu.csc.itrust.action.AddApptRequestAction"%>
 <%@page import="edu.ncsu.csc.itrust.beans.ApptRequestBean"%>
 <%@page import="java.util.List"%>
+<%@page import="edu.ncsu.csc.itrust.action.CheckEbolaAction"%>
 
 <%@include file="/global.jsp"%>
 
@@ -37,14 +38,25 @@
 	String tod = "";
 	String apptType = "";
 	String prompt = "";
+	String countries = "";
 	if (request.getParameter("request") != null) {
 		ApptBean appt = new ApptBean();
 		appt.setPatient(loggedInMID);
 		hcpid = Long.parseLong(request.getParameter("lhcp"));
 		appt.setHcp(hcpid);
+		countries = request.getParameter("countries");
+		
+		CheckEbolaAction ebolaAction = new CheckEbolaAction(countries);
+		int ebolaRisk = ebolaAction.checkEbolaRisk();
+	
+		
+	
+		
 		comment = request.getParameter("comment");
-		if (request.getParameter("ebolarisk") != null) {
-			appt.setComment(comment + "<div style=\"margin: 8px; padding: 8px; background-color: red; color: white; font-weight: strong;\">!!! This patient is at risk for ebola. !!!</div>");
+		//if (request.getParameter("ebolarisk") != null || ebolaRisk>0) {
+			if(ebolaRisk>0){
+			String ebolaWarningText = "!!! This patient has " + ebolaRisk +" % risk of Ebola !!!";
+			appt.setComment(comment + "<div style=\"margin: 8px; padding: 8px; background-color: red; color: white; font-weight: strong;\">"+ebolaWarningText+"</div>");
 			loggingAction.logEvent(TransactionType.PATIENT_EBOLA_RISK, loggedInMID, hcpid, "");
 		} else {
 			appt.setComment(comment);
@@ -178,11 +190,18 @@
 		<option <%if ("PM".equals(tod))
 				out.print("selected");%> value="PM">PM</option>
 	</select>
+	<br/><br/>
+	<p>Please List Countries You Have Been Traveled to over The Past 30 days.</p> <br/>
+	<p>(Sample Input Format : Thailand,Singapore,Vietnam)</p>
+	 <textarea name="countries" cols="100" rows="10"></textarea>
 	<p>Comment:</p>
 	<textarea name="comment" cols="100" rows="10"><%=StringEscapeUtils.escapeHtml("" + (comment))%></textarea>
+	<!--  
 	<p>Have you been to &lt;INSERT LIST OF COUNTRIES HERE&gt; within the last &lt;INSERT TIMESPAN HERE&gt;?</p>
 	<input type="checkbox" name="ebolarisk" value="yes">Yes, I have been to &lt;INSERT LIST OF COUNTRIES HERE&gt; within the last &lt;INSERT TIMESPAN HERE&gt;.
+	-->
 	<br /> <br /> <input type="submit" name="request" value="Request" />
+	
 </form>
 <%
 	
