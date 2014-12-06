@@ -44,7 +44,7 @@ public class SendRemindersTest extends iTrustHTTPTest {
 		// Select Patient
 		WebForm wf = wr.getFormWithID("mainForm");
 
-		wf.getScriptableObject().setParameterValue("daysInAdvance", "6");
+		wf.getScriptableObject().setParameterValue("daysInAdvance", "10");
 		wr = wf.submit();
 
 		assertLogged(TransactionType.SENT_REMINDERS, this.adminId, 0L, "");
@@ -54,7 +54,7 @@ public class SendRemindersTest extends iTrustHTTPTest {
 		Date date = new Date();
 		String stamp = dateFormat.format(date);
 		
-		assertTrue(wr.getText().contains("Sent a reminder to patients with an appointment within 6 days."));
+		assertTrue(wr.getText().contains("Sent a reminder to patients with an appointment within 10 days."));
 		
 		// Check message in outbox
 		wr = wr.getLinkWith("Reminders Outbox").click();
